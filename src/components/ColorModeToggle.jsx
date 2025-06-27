@@ -1,17 +1,20 @@
-import { IconButton, useColorMode } from "@chakra-ui/react";
-import { FaMoon, FaSun } from "react-icons/fa";
+// src/components/ColorModeToggle.jsx
+import { Box, Switch, useColorMode } from "@chakra-ui/react";
 
-export default function ColorModeToggle() {
+const ColorModeToggle = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <IconButton
-      icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
-      onClick={toggleColorMode}
-      isRound
-      size="md"
-      m={2}
-      aria-label="Toggle color mode"
-    />
+    <Box>
+      <Switch
+        isChecked={colorMode === "dark"}
+        onChange={toggleColorMode}
+        size="md"
+        colorScheme="pink"
+        aria-label="Toggle color mode"
+      />
+    </Box>
   );
-}
+};
+
+export default ColorModeToggle;

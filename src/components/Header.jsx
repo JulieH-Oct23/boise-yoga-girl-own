@@ -1,35 +1,38 @@
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Box, Flex, IconButton, useColorMode } from "@chakra-ui/react";
+// src/components/Header.jsx
+import {
+  Flex,
+  Heading,
+  IconButton,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
+  const bg = useColorModeValue("brand.light.headerBg", "brand.dark.headerBg");
+  const color = useColorModeValue("brand.light.headerTitleText", "brand.dark.headerTitleText");
+
   return (
     <Flex
       as="header"
-      position="sticky"
-      top={0}
-      zIndex={10}
-      w="100%"
       align="center"
       justify="space-between"
-      px={6}
-      py={4}
-      bg={colorMode === "light" ? "brand.light.background" : "brand.dark.background"}
-      borderBottom="1px solid"
-      borderColor={colorMode === "light" ? "gray.200" : "gray.600"}
+      padding="1rem 2rem"
+      bg={bg}
+      color={color}
+      boxShadow="md"
     >
-      <Box fontWeight="bold" fontSize="xl" color={colorMode === "light" ? "brand.light.text" : "brand.dark.text"}>
-        Boise Yoga Girl
-      </Box>
+      <Heading size="lg">Boise Yoga Girl</Heading>
 
       <IconButton
-        aria-label="Toggle color mode"
-        icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         onClick={toggleColorMode}
-        variant="ghost"
+        icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
+        isRound
         size="md"
-        color={colorMode === "light" ? "brand.light.text" : "brand.dark.text"}
+        colorScheme="pink"
+        aria-label="Toggle color mode"
       />
     </Flex>
   );

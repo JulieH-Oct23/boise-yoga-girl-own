@@ -1,11 +1,10 @@
+// src/App.jsx
 import {
   Box,
   Link as ChakraLink,
-  Heading,
   Text,
-  VStack,
-  useColorMode,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import {
   Route,
@@ -22,78 +21,78 @@ import SavedSequencesPage from "./pages/SavedSequencesPages";
 import SequenceBuilderPage from "./pages/SequenceBuilderPage";
 import YinYogaPage from "./pages/YinYogaPage";
 
+import { useColorMode } from "@chakra-ui/react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
-import ColorModeToggle from "./components/ColorModeToggle";
-import { muiDarkTheme, muiLightTheme } from "./theme/muiTheme";
+import Header from "./components/Header";
+import { muiDarkTheme, muiLightTheme } from "./theme/theme";
 
 function App() {
   const { colorMode } = useColorMode();
   const muiTheme = colorMode === "light" ? muiLightTheme : muiDarkTheme;
 
-  const headerBg = useColorModeValue("brand.light.surface", "brand.dark.surface");
-  const sidebarBg = useColorModeValue("brand.light.surface", "brand.dark.surface");
-  const mainBg = useColorModeValue("brand.light.background", "brand.dark.background");
-  const textColor = useColorModeValue("brand.light.text", "brand.dark.text");
-  const accent = useColorModeValue("brand.light.primary", "brand.dark.primary");
+  const headerTitleColor = useColorModeValue("brand.light.headerTitleText", "brand.dark.headerTitleText");
+  const sidebarBg = useColorModeValue("brand.light.sidebarBg", "brand.dark.sidebarBg");
+  const mainBg = useColorModeValue("brand.light.mainBg", "brand.dark.mainBg");
+  const sidebarTextColor = useColorModeValue("brand.light.sidebarText", "brand.dark.sidebarText");
+  const mainTitleColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
+  const borderColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
 
   return (
     <MUIThemeProvider theme={muiTheme}>
       <Router>
-        {/* HEADER */}
-        <Box
-          bg={headerBg}
-          px={6}
-          py={4}
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          borderBottom="1px solid"
-          borderColor={useColorModeValue("gray.200", "gray.600")}
-        >
-          <Heading color={accent} fontSize="2xl">
-            Boise Yoga Girl
-          </Heading>
-          <ColorModeToggle />
-        </Box>
+        <Header />
 
-        {/* MAIN LAYOUT */}
-        <Box display="flex" flexDirection={["column", "row"]}>
+        <Box display="flex" flexDirection={["column", "row"]} height="100vh">
           {/* SIDEBAR */}
           <Box
             bg={sidebarBg}
             width={["100%", "250px"]}
             p={4}
-            borderRight={["none", "1px solid #ccc"]}
+            borderRight={["none", "1px solid"]}
+            borderColor={borderColor}
             minH="calc(100vh - 64px)"
-            color={textColor}
+            color={sidebarTextColor}
           >
             <VStack align="stretch" spacing={4}>
               <Box>
-                <Text fontWeight="bold" fontSize="lg" color={accent}>
+                <Text fontWeight="bold" fontSize="lg" color={headerTitleColor}>
                   Yoga Encyclopedia
                 </Text>
-                <ChakraLink as={RouterLink} to="/allposes">All Poses</ChakraLink>
+                <ChakraLink as={RouterLink} to="/allposes" color={sidebarTextColor} textDecoration="none">
+                  All Poses
+                </ChakraLink>
               </Box>
               <Box>
-                <Text fontWeight="bold" fontSize="lg" color={accent}>
+                <Text fontWeight="bold" fontSize="lg" color={headerTitleColor}>
                   Yoga Classes
                 </Text>
-                <ChakraLink as={RouterLink} to="/poweryoga">Power Yoga</ChakraLink>
-                <ChakraLink as={RouterLink} to="/yinyoga">Yin Yoga</ChakraLink>
-                <ChakraLink as={RouterLink} to="/restorativeyoga">Restorative Yoga</ChakraLink>
+                <ChakraLink as={RouterLink} to="/poweryoga" color={sidebarTextColor} textDecoration="none">
+                  Power Yoga
+                </ChakraLink>
+                <ChakraLink as={RouterLink} to="/yinyoga" color={sidebarTextColor} textDecoration="none" display="block">
+                  Yin Yoga
+                </ChakraLink>
+                <ChakraLink as={RouterLink} to="/restorativeyoga" color={sidebarTextColor} textDecoration="none" display="block">
+                  Restorative Yoga
+                </ChakraLink>
               </Box>
               <Box>
-                <Text fontWeight="bold" fontSize="lg" color={accent}>
+                <Text fontWeight="bold" fontSize="lg" color={headerTitleColor}>
                   Sequence Builder
                 </Text>
-                <ChakraLink as={RouterLink} to="/sequencebuilder">Create New</ChakraLink>
-                <ChakraLink as={RouterLink} to="/savedsequences">Saved Sequences</ChakraLink>
+                <ChakraLink as={RouterLink} to="/sequencebuilder" color={sidebarTextColor} textDecoration="none">
+                  Create New
+                </ChakraLink>
+                <br />
+                <ChakraLink as={RouterLink} to="/savedsequences" color={sidebarTextColor} textDecoration="none">
+                  Saved Sequences
+                </ChakraLink>
               </Box>
             </VStack>
           </Box>
 
           {/* MAIN CONTENT */}
-          <Box flex="1" p={6} bg={mainBg} color={textColor}>
+          <Box flex="1" p={6} bg={mainBg} color={mainTitleColor}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/allposes" element={<AllPosesPage />} />

@@ -1,11 +1,15 @@
-// src/pages/LandingPage.jsx
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 
 const LandingPage = () => {
+  const headingColor = useColorModeValue("brand.light.headerTitleText", "brand.dark.headerTitleText");
+  const textColor = useColorModeValue("brand.light.sidebarText", "brand.dark.sidebarText");
+
   return (
-    <Box color="white">
-      <Heading mb={4} color="teal.200">Welcome to Boise Yoga Girl</Heading>
-      <Text fontSize="lg" color="gray.300">
+    <Box>
+      <Heading mb={4} color={headingColor}>
+        Welcome to Boise Yoga Girl
+      </Heading>
+      <Text fontSize="lg" color={textColor}>
         Use the sidebar to explore yoga poses and create custom sequences.
       </Text>
     </Box>

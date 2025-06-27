@@ -17,10 +17,13 @@ const AllPosesPage = () => {
   const [filterValue, setFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Use theme colors for text, spinner, etc
-  const headingColor = useColorModeValue("brand.light.primary", "brand.dark.primary");
-  const spinnerColor = useColorModeValue("brand.light.accent", "brand.dark.accent");
+  const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
+  const spinnerColor = useColorModeValue("brand.light.poseCardTitle", "brand.dark.poseCardTitle");
   const loadingTextColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
+
+  // 🎯 Custom filter styles
+  const filterBg = "#94695E";
+  const filterText = "#FBE3D2";
 
   useEffect(() => {
     fetch("http://localhost:4000/api/poses")
@@ -109,6 +112,11 @@ const AllPosesPage = () => {
             setFilterKey(e.target.value);
             setFilterValue("");
           }}
+          bg={filterBg}
+          color={filterText}
+          borderColor={filterBg}
+          _hover={{ bg: filterBg }}
+          _focus={{ borderColor: filterText }}
         >
           <option value="category">Category</option>
           <option value="level">Level</option>
@@ -121,6 +129,11 @@ const AllPosesPage = () => {
           placeholder="Choose value"
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
+          bg={filterBg}
+          color={filterText}
+          borderColor={filterBg}
+          _hover={{ bg: filterBg }}
+          _focus={{ borderColor: filterText }}
         >
           {filterOptions.map((val, i) => (
             <option key={i} value={val}>

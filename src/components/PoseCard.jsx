@@ -3,9 +3,9 @@ import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 const PoseCard = ({ name, category, description, image }) => {
   const bg = useColorModeValue("brand.light.surface", "brand.dark.surface");
   const borderColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
-  const textColor = useColorModeValue("brand.light.text", "brand.dark.text");
+  const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
   const categoryColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
-  const nameColor = useColorModeValue("brand.light.primary", "brand.dark.primary");
+  const nameColor = useColorModeValue("brand.light.poseCardTitle", "brand.dark.poseCardTitle");
 
   return (
     <Box
