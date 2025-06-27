@@ -5,6 +5,7 @@ import {
   SimpleGrid,
   Spinner,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useMemo, useState } from "react";
 import PoseCard from "../components/PoseCard";
@@ -16,7 +17,11 @@ const AllPosesPage = () => {
   const [filterValue, setFilterValue] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Fetch poses from backend
+  // Use theme colors for text, spinner, etc
+  const headingColor = useColorModeValue("brand.light.primary", "brand.dark.primary");
+  const spinnerColor = useColorModeValue("brand.light.accent", "brand.dark.accent");
+  const loadingTextColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
+
   useEffect(() => {
     fetch("http://localhost:4000/api/poses")
       .then((res) => res.json())
@@ -31,7 +36,6 @@ const AllPosesPage = () => {
       });
   }, []);
 
-  // Build dropdown options based on current filterKey
   const filterOptions = useMemo(() => {
     if (!poses.length) return [];
 
@@ -56,7 +60,6 @@ const AllPosesPage = () => {
     }
   }, [poses, filterKey]);
 
-  // Filter poses based on filterKey + filterValue
   useEffect(() => {
     if (!filterValue) {
       setFilteredPoses(poses);
@@ -94,12 +97,11 @@ const AllPosesPage = () => {
 
   return (
     <Box>
-      <Heading color="teal.200" mb={4}>
+      <Heading color={headingColor} mb={4}>
         All Poses
       </Heading>
 
       <Box display="flex" gap={4} mb={6}>
-        {/* Filter by field */}
         <Select
           placeholder="Filter by..."
           value={filterKey}
@@ -115,7 +117,6 @@ const AllPosesPage = () => {
           <option value="counterIndications">Counter Indications</option>
         </Select>
 
-        {/* Filter by value */}
         <Select
           placeholder="Choose value"
           value={filterValue}
@@ -131,8 +132,8 @@ const AllPosesPage = () => {
 
       {loading ? (
         <Box textAlign="center">
-          <Spinner size="xl" color="teal.300" />
-          <Text color="gray.400" mt={4}>
+          <Spinner size="xl" color={spinnerColor} />
+          <Text color={loadingTextColor} mt={4}>
             Loading poses...
           </Text>
         </Box>
