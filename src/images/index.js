@@ -4,7 +4,7 @@ import BoiseYogaGirl from "./BoiseYogaGirl.png";
 import Bridge from "./Bridge.png";
 import Camel from "./Camel.png";
 import Cat from "./Cat.png";
-import ClosedChild from "./ClosedChild.png";
+import Child from "./Child.png";
 import Cobra from "./Cobra.png";
 import Cow from "./Cow.png";
 import CowFace from "./CowFace.png";
@@ -38,8 +38,8 @@ import ReverseTableTop from "./ReverseTableTop.png";
 import RevolvedSeatedHeadToKnee from "./RevolvedSeatedHeadToKnee.png";
 import RevolvedTriangle from "./RevolvedTriangle.png";
 import Savasana from "./Savasana.png";
-import SeatedForeheadToKnee from "./SeatedForeheadToKnee.png";
 import SeatedForwardFold from "./SeatedForwardFold.png";
+import SeatedHeadToKnee from "./SeatedHeadToKnee.png";
 import SeatedTwist from "./SeatedTwist.png";
 import ShoulderStand from "./ShoulderStand.png";
 import SideChair from "./SideChair.png";
@@ -54,7 +54,7 @@ import StandingSideStretch from "./StandingSideStretch.png";
 import StandingSplit from "./StandingSplit.png";
 import ThreeLegDownDog from "./ThreeLegDownDog.png";
 import ToeStand from "./ToeStand.png";
-import TopSeatedForeheadToKnee from "./TopSeatedForeheadToKnee.png";
+import TopSeatedHeadToKnee from "./TopSeatedHeadToKnee";
 import Tree from "./Tree.png";
 import Triangle from "./Triangle.png";
 import UpwardFacingDog from "./UpwardFacingDog.png";
@@ -71,7 +71,7 @@ export default {
   Bridge,
   Camel,
   Cat,
-  ClosedChild,
+  Child,
   Cobra,
   Cow,
   CowFace,
@@ -105,7 +105,7 @@ export default {
   RevolvedSeatedHeadToKnee,
   RevolvedTriangle,
   Savasana,
-  SeatedForeheadToKnee,
+  SeatedHeadToKnee,
   SeatedForwardFold,
   SeatedTwist,
   ShoulderStand,
@@ -121,7 +121,7 @@ export default {
   StandingSplit,
   ThreeLegDownDog,
   ToeStand,
-  TopSeatedForeheadToKnee,
+  TopSeatedHeadToKnee,
   Tree,
   Triangle,
   UpwardFacingDog,
