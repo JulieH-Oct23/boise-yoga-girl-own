@@ -37,11 +37,6 @@ import Puppy from "./Puppy.png";
 import ReverseTableTop from "./ReverseTableTop.png";
 import RevolvedSeatedHeadToKnee from "./RevolvedSeatedHeadToKnee.png";
 import RevolvedTriangle from "./RevolvedTriangle.png";
-import Savasana from "./Savasana.png";
-import SeatedForwardFold from "./SeatedForwardFold.png";
-import SeatedHeadToKnee from "./SeatedHeadToKnee.png";
-import SeatedTwist from "./SeatedTwist.png";
-import ShoulderStand from "./ShoulderStand.png";
 import SideChair from "./SideChair.png";
 import SideEagle from "./SideEagle.png";
 import SideGarland from "./SideGarland.png";
@@ -54,7 +49,7 @@ import StandingSideStretch from "./StandingSideStretch.png";
 import StandingSplit from "./StandingSplit.png";
 import ThreeLegDownDog from "./ThreeLegDownDog.png";
 import ToeStand from "./ToeStand.png";
-import TopSeatedHeadToKnee from "./TopSeatedHeadToKnee";
+import TopSeatedHeadToKnee from "./TopSeatedHeadToKnee.png";
 import Tree from "./Tree.png";
 import Triangle from "./Triangle.png";
 import UpwardFacingDog from "./UpwardFacingDog.png";
@@ -104,11 +99,6 @@ export default {
   ReverseTableTop,
   RevolvedSeatedHeadToKnee,
   RevolvedTriangle,
-  Savasana,
-  SeatedHeadToKnee,
-  SeatedForwardFold,
-  SeatedTwist,
-  ShoulderStand,
   SideChair,
   SideEagle,
   SideGarland,
