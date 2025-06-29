@@ -1,7 +1,6 @@
 import BabyDragon from "./BabyDragon.png";
 import BackwardBending from "./BackwardBending.png";
 import Boat from "./Boat.png";
-import BoiseYogaGirl from "./BoiseYogaGirl.png";
 import Bridge from "./Bridge.png";
 import Butterfly from "./Butterfly.png";
 import Camel from "./Camel.png";
@@ -92,7 +91,6 @@ export default {
   BabyDragon,
   BackwardBending,
   Boat,
-  BoiseYogaGirl,
   Butterfly,
   Bridge,
   Camel,
