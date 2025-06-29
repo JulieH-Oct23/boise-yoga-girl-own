@@ -16,43 +16,60 @@ import Crow from "./Crow.png";
 import Dancer from "./Dancer.png";
 import DownwardDog from "./DownwardDog.png";
 import Dragonfly from "./Dragonfly.png";
-import DragonFlyingHigh from "./DragonFlyingHigh";
-import DragonFlyingLow from "./DragonFlyingLow";
+import DragonFlyingHigh from "./DragonFlyingHigh.png";
+import DragonFlyingLow from "./DragonFlyingLow.png";
 import Eagle from "./Eagle.png";
 import Easy from "./Easy.png";
 import ExtendedSideAngle from "./ExtendedSideAngle.png";
+import Firefly from "./FIrefly.png";
 import Fish from "./Fish.png";
 import FloorBow from "./FloorBow.png";
+import ForearmStand from "./ForearmStand.png";
 import ForwardFold from "./ForwardFold.png";
-import FourLimbbedStaff from "./Four-LimbbedStaff.png";
+import FourLimbbedStaff from "./FourLimbbedStaff.png";
 import Garland from "./Garland.png";
 import Goddess from "./Goddess.png";
 import HalfButterfly from "./HalfButterfly.png";
 import HalfFrog from "./HalfFrog.png";
+import HalfLordOfFishes from "./HalfLordOfFishes.png";
 import HalfMoon from "./HalfMoon.png";
+import Headstand from "./Headstand.png";
 import HeartMelting from "./HeartMelting.png";
 import Hero from "./Hero.png";
+import HighLunge from "./HighLunge.png";
 import HighPlank from "./HighPlank.png";
 import LegUpWall from "./LegUpWall.png";
 import Locust from "./Locust.png";
 import LowLunge from "./LowLunge.png";
 import LowPlank from "./LowPlank.png";
 import Mermaid from "./Mermaid.png";
+import MissingPhoto from "./MissingPhoto.jpeg";
 import Mountain from "./Mountain.png";
 import Pigeon from "./Pigeon.png";
+import Plank from "./Plank.png";
+import Plow from "./Plow.png";
 import Puppy from "./Puppy.png";
+import Pyramid from "./Pyramid.png";
 import ReverseTableTop from "./ReverseTableTop.png";
 import RevolvedSeatedHeadToKnee from "./RevolvedSeatedHeadToKnee.png";
 import RevolvedTriangle from "./RevolvedTriangle.png";
 import Savasana from "./Savasana.png";
+import SeatedForwardFold from "./SeatedForwardFold.png";
+import SeatedHeadToKnee from "./SeatedHeadToKnee.png";
+import SeatedTwist from "./SeatedTwist.png";
+import Shoelace from "./Shoelace.png";
+import ShoulderStand from "./ShoulderStand.png";
+import SideAngle from "./SideAngle.png";
 import SideChair from "./SideChair.png";
 import SideEagle from "./SideEagle.png";
 import SideGarland from "./SideGarland.png";
 import SidePlank from "./SidePlank.png";
 import SideStanding from "./SideStanding.png";
 import Snail from "./Snail.png";
+import Staff from "./Staff.png";
+import StandingForwardFold from "./StandingForwardFold.png";
 import StandingHandToBigToe from "./StandingHandToBigToe.png";
-import StandingSeparationForwardFold from "./StandingSeparateLegForwardFold.png";
+import StandingSeparateLegForwardFold from "./StandingSeparateLegForwardFold.png";
 import StandingSideStretch from "./StandingSideStretch.png";
 import StandingSplit from "./StandingSplit.png";
 import SupineTwist from "./SupineTwist.png";
@@ -96,16 +113,21 @@ export default {
   Easy,
   ExtendedSideAngle,
   Fish,
+  Firefly,
   FloorBow,
+  ForearmStand,
   ForwardFold,
   FourLimbbedStaff,
   Garland,
   Goddess,
+  Headstand,
+  HalfLordOfFishes,
   HalfMoon,
   HalfFrog,
   HalfButterfly,
   HeartMelting,
   Hero,
+  HighLunge,
   HighPlank,
   LegUpWall,
   Locust,
@@ -113,20 +135,32 @@ export default {
   LowPlank,
   Mermaid,
   Mountain,
+  MissingPhoto,
   Pigeon,
+  Plow,
   Puppy,
+  Plank,
+  Pyramid,
   ReverseTableTop,
   RevolvedSeatedHeadToKnee,
   RevolvedTriangle,
   Savasana,
+  SeatedForwardFold,
+  SeatedHeadToKnee,
+  SeatedTwist,
+  Shoelace,
+  ShoulderStand,
+  SideAngle,
   SideChair,
   SideEagle,
   SideGarland,
   SidePlank,
   SideStanding,
   Snail,
+  Staff,
+  StandingForwardFold,
   StandingHandToBigToe,
-  StandingSeparationForwardFold,
+  StandingSeparateLegForwardFold,
   StandingSideStretch,
   StandingSplit,
   SupineTwist,
