@@ -1,85 +1,36 @@
-import { extendTheme } from "@chakra-ui/react";
-import { createTheme as createMuiTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
-const chakraTheme = extendTheme({
-  config: {
-    initialColorMode: "dark",
-    useSystemColorMode: false,
-  },
-  fonts: {
-    heading: `'Quicksand', sans-serif`,
-    body: `'Quicksand', sans-serif`,
-  },
-  colors: {
-    brand: {
-      light: {
-        headerBg: "#FDEFE8",
-        sidebarBg: "#FFFFFF",
-        mainBg: "#FFFFFF",
-        headerTitleText: "#94626D",
-        sidebarText: "#97834E",
-        mainTitleText: "#FDEFE8",
-        buttonBg: "#94626D",
-        buttonText: "#FDEFE8",
-        poseCardTitle: "#97834E",
-        poseCardText: "#27241C",
-        muted: "#332F27",
-        surface: "#FDEFE8",
-        text: "#332F27",
-      },
-      dark: {
-        headerBg: "#FDEFE8", // updated lighter pink
-        sidebarBg: "#332F27",
-        mainBg: "#332F27",
-        headerTitleText: "#94695E",
-        sidebarText: "#FDEFE8",
-        mainTitleText: "#FDEFE8",
-        buttonBg: "#94695E",
-        buttonText: "#FDEFE8",
-        poseCardTitle: "#97834E",
-        poseCardText: "#97834E",
-        muted: "#332F27",
-        surface: "#FDEFE8",
-        text: "#97834E",
-      },
-    },
-  },
-});
-
-const muiLightTheme = createMuiTheme({
+export const muiLightTheme = createTheme({
   palette: {
     mode: "light",
     background: {
-      default: "#FDEFE8",
-      paper: "#FFFFFF",
+      default: "#FCF8F7",
+      paper: "#F1E9E7",
     },
     primary: {
-      main: "#94695E",
-      contrastText: "#FDEFE8",
+      main: "#BFA39D",
     },
     text: {
-      primary: "#332F27",
-      secondary: "#97834E",
+      primary: "#3B3B3B",
+      secondary: "#776E6B",
     },
   },
 });
 
-const muiDarkTheme = createMuiTheme({
+export const muiDarkTheme = createTheme({
   palette: {
     mode: "dark",
     background: {
-      default: "#26231D",
-      paper: "#332F27",
+      default: "#2B2B28",
+      paper: "#4A4A3D",
     },
     primary: {
-      main: "#94695E",
-      contrastText: "#FDEFE8",
+      main: "#B1B381",
     },
     text: {
-      primary: "#FDEFE8",
-      secondary: "#97834E",
+      primary: "#FAFAF9",
+      secondary: "#E4E2D4",
     },
   },
 });
 
-export { chakraTheme, muiDarkTheme, muiLightTheme };

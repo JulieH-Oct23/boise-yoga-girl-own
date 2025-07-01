@@ -1,4 +1,3 @@
-
 import {
   Box,
   Link as ChakraLink,
@@ -57,16 +56,21 @@ function App() {
           <Header />
         </Box>
 
-        {/* Layout Wrapper with Top Padding */}
-        <Box pt="64px" display="flex" flexDirection={["column", "row"]} minHeight="100vh">
-          {/* SIDEBAR */}
+        {/* Scrollable Content Area */}
+        <Box
+          display="flex"
+          flexDirection={["column", "row"]}
+          pt="64px"
+          minH="100vh"
+          overflowX="hidden"
+          overflowY="auto"
+        >
+          {/* Sidebar */}
           <Box
             bg={sidebarBg}
             width={["100%", "250px"]}
             p={4}
-            borderRight="none"
-            minH="100vh"
-            overflowY="auto"
+            flexShrink={0}
             color={sidebarTextColor}
           >
             <VStack align="stretch" spacing={4} pt={6}>
@@ -139,7 +143,7 @@ function App() {
             </VStack>
           </Box>
 
-          {/* MAIN CONTENT */}
+          {/* Main Content */}
           <Box flex="1" p={6} bg={mainBg} color={mainTitleColor}>
             <Routes>
               <Route path="/" element={<LandingPage />} />
