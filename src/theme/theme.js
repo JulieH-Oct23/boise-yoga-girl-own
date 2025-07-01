@@ -30,7 +30,7 @@ export const chakraTheme = extendTheme({
         mainBg: "#27241D",
         mainTitleText: "#FAFAF9",
         sidebarText: "#E4E2D4",
-        headerTitleText: "#93685E",
+        headerTitleText: "#FAEDEC",
         poseCardText: "#FAFAF9",
         poseCardTitle: "#B1B381",
       },
