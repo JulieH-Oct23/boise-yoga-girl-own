@@ -1,5 +1,44 @@
+// src/theme/theme.js
+import { extendTheme } from "@chakra-ui/react";
 import { createTheme } from "@mui/material/styles";
 
+// ✅ Chakra UI Theme
+export const chakraTheme = extendTheme({
+  config: {
+    initialColorMode: "light",
+    useSystemColorMode: false,
+  },
+  colors: {
+    brand: {
+      light: {
+        surface: "#FAEDEC",
+        muted: "#A98984",
+        header: "#FAEDEC",
+        sidebarBg: "#ffffff",
+        mainBg: "#FFFFFF",
+        mainTitleText: "#332F27",
+        sidebarText: "#332F27",
+        headerTitleText: "#c6A76B",
+        poseCardText: "#3B3B3B",
+        poseCardTitle: "#93685E",
+      },
+      dark: {
+        surface: "#332F27",
+        muted: "#BFA39D",
+        header: "ffffff",
+        sidebarBg: "#332F27",
+        mainBg: "#27241D",
+        mainTitleText: "#FAFAF9",
+        sidebarText: "#E4E2D4",
+        headerTitleText: "#b1b381",
+        poseCardText: "#FAFAF9",
+        poseCardTitle: "#B1B381",
+      },
+    },
+  },
+});
+
+// ✅ MUI Themes
 export const muiLightTheme = createTheme({
   palette: {
     mode: "light",
