@@ -347,18 +347,23 @@ const AllPosesPage = () => {
           </Text>
         </Box>
       ) : (
-        <SimpleGrid columns={[1, 2, 3]} spacing={6}>
-          {filteredPoses.map((pose) => (
-            <PoseCard
-              key={pose._id}
-              _id={pose._id}
-              name={pose.name}
-              image={pose.image}
-              category={pose.category}
-              description={pose.description}
-            />
-          ))}
-        </SimpleGrid>
+<SimpleGrid
+  columns={{ base: 1, sm: 2, md: 3 }}
+  spacing={6}
+  px={{ base: 4, sm: 6, md: 8 }}
+  pb={10}
+>
+  {filteredPoses.map((pose) => (
+    <PoseCard
+      key={pose._id}
+      _id={pose._id}
+      name={pose.name}
+      image={pose.image}
+      category={pose.category}
+      description={pose.description}
+    />
+  ))}
+</SimpleGrid>
       )}
     </Box>
   );
