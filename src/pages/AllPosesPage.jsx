@@ -1,3 +1,4 @@
+
 // import { ChevronDownIcon } from "@chakra-ui/icons";
 // import {
 //   Box,
@@ -31,7 +32,6 @@
 //     "brand.light.muted",
 //     "brand.dark.muted"
 //   );
-
 //   const filterBg = "#94626D";
 //   const filterText = "#FBE3D2";
 
@@ -42,16 +42,15 @@
 //     fetch("http://localhost:4000/api/poses")
 //       .then((res) => res.json())
 //       .then((data) => {
-//         console.log("Fetched poses example:", data[0]); // DEBUG: check anatomy
-//         const enrichedPoses = data.map((pose) => {
+//         const enriched = data.map((pose) => {
 //           const imageKey = getImageKey(pose.photoName);
 //           return {
 //             ...pose,
 //             image: images[imageKey] || null,
 //           };
 //         });
-//         setPoses(enrichedPoses);
-//         setFilteredPoses(enrichedPoses);
+//         setPoses(enriched);
+//         setFilteredPoses(enriched);
 //         setLoading(false);
 //       })
 //       .catch((err) => {
@@ -60,60 +59,80 @@
 //       });
 //   }, []);
 
-//   const filterOptions = useMemo(() => {
-//     if (!poses.length) return [];
+// // const filterOptions = useMemo(() => {
+// //   if (!poses.length) return [];
 
-//     if (
-//       filterKey === "category" ||
-//       filterKey === "indications" ||
-//       filterKey === "counterIndications" ||
-//       filterKey === "anatomy"
-//     ) {
-//       // flatten arrays and get unique values
-//       const options = [...new Set(poses.flatMap((pose) => pose[filterKey] || []))].filter(Boolean);
-//       // Sort options alphabetically for nicer UI
-//       options.sort((a, b) => a.localeCompare(b));
-//       return options;
-//     } else {
-//       const options = [...new Set(poses.map((pose) => pose[filterKey]))].filter(Boolean);
-//       options.sort((a, b) => a.localeCompare(b));
-//       return options;
+// //   const rawValues = poses.flatMap((pose) => {
+// //     const val = pose[filterKey];
+
+// //     if (Array.isArray(val)) {
+// //       return val.map((v) => v?.trim().toLowerCase());
+// //     }
+
+// //     if (typeof val === "string") {
+// //       return val.split(",").map((v) => v?.trim().toLowerCase());
+// //     }
+
+// //     return [];
+// //   });
+
+// const filterOptions = useMemo(() => {
+//   if (!poses.length) return [];
+
+//   let allValues = [];
+
+//   poses.forEach((pose) => {
+//     const val = pose[filterKey];
+
+//     if (Array.isArray(val)) {
+//       // Flatten all values in array (like anatomy)
+//       allValues = allValues.concat(val);
+//     } else if (typeof val === "string") {
+//       allValues.push(val);
 //     }
-//   }, [poses, filterKey]);
+//   });
+
+//   // Clean and unique values (case-insensitive)
+//   const uniqueValues = [...new Set(
+//     allValues
+//       .filter(Boolean)
+//       .map((v) => v.toString().toLowerCase().trim())
+//   )];
+
+//   console.log(`Filter key: ${filterKey}, options:`, uniqueValues);
+
+//   return uniqueValues;
+// }, [poses, filterKey]);
 
 //   useEffect(() => {
 //     if (!filterValue) {
 //       setFilteredPoses(poses);
-//     } else if (
-//       ["category", "indications", "counterIndications", "anatomy"].includes(filterKey)
-//     ) {
-//       setFilteredPoses(
-//         poses.filter((pose) => {
-//           const field = pose[filterKey];
-//           if (Array.isArray(field)) {
-//             return field.some(
-//               (val) => val.toLowerCase() === filterValue.toLowerCase()
-//             );
-//           }
-//           return false;
-//         })
-//       );
 //     } else {
 //       setFilteredPoses(
-//         poses.filter((pose) =>
-//           pose[filterKey]?.toLowerCase().includes(filterValue.toLowerCase())
-//         )
+//         poses.filter((pose) => {
+//           const value = pose[filterKey];
+
+//           if (Array.isArray(value)) {
+//             return value.some((v) =>
+//               v.toLowerCase().includes(filterValue.toLowerCase())
+//             );
+//           }
+
+//           return (
+//             typeof value === "string" &&
+//             value.toLowerCase().includes(filterValue.toLowerCase())
+//           );
+//         })
 //       );
 //     }
-//   }, [filterKey, filterValue, poses]);
+//   }, [filterValue, filterKey, poses]);
 
 //   return (
-//     <Box>
+//     <Box p={6}>
 //       <Heading color={headingColor} mb={4}>
-//         All Poses
 //       </Heading>
 
-//       <Box display="flex" gap={4} mb={6}>
+//       <Box display="flex" gap={4} mb={6} flexWrap="wrap">
 //         <Select
 //           placeholder="Filter by..."
 //           value={filterKey}
@@ -128,11 +147,6 @@
 //           _hover={{ bg: filterBg }}
 //           _focus={{ borderColor: filterText }}
 //           icon={<ChevronDownIcon />}
-//           style={{
-//             appearance: "none",
-//             WebkitAppearance: "none",
-//             MozAppearance: "none",
-//           }}
 //         >
 //           <option value="category">Category</option>
 //           <option value="level">Level</option>
@@ -152,21 +166,12 @@
 //           _hover={{ bg: filterBg }}
 //           _focus={{ borderColor: filterText }}
 //           icon={<ChevronDownIcon />}
-//           style={{
-//             appearance: "none",
-//             WebkitAppearance: "none",
-//             MozAppearance: "none",
-//           }}
 //         >
-//           {filterOptions.length === 0 ? (
-//             <option disabled>No options</option>
-//           ) : (
-//             filterOptions.map((val, i) => (
-//               <option key={i} value={val}>
-//                 {val}
-//               </option>
-//             ))
-//           )}
+//           {filterOptions.map((val, i) => (
+//             <option key={i} value={val}>
+//               {val}
+//             </option>
+//           ))}
 //         </Select>
 //       </Box>
 
@@ -178,18 +183,23 @@
 //           </Text>
 //         </Box>
 //       ) : (
-//         <SimpleGrid columns={[1, 2, 3]} spacing={6}>
-//           {filteredPoses.map((pose) => (
-//             <PoseCard
-//               key={pose._id}
-//               _id={pose._id}
-//               name={pose.name}
-//               image={pose.image}
-//               category={pose.category}
-//               description={pose.description}
-//             />
-//           ))}
-//         </SimpleGrid>
+// <SimpleGrid
+//   columns={{ base: 1, sm: 2, md: 3 }}
+//   spacing={6}
+//   px={{ base: 4, sm: 6, md: 8 }}
+//   pb={10}
+// >
+//   {filteredPoses.map((pose) => (
+//     <PoseCard
+//       key={pose._id}
+//       _id={pose._id}
+//       name={pose.name}
+//       image={pose.image}
+//       category={pose.category}
+//       description={pose.description}
+//     />
+//   ))}
+// </SimpleGrid>
 //       )}
 //     </Box>
 //   );
@@ -250,6 +260,15 @@ const AllPosesPage = () => {
         setPoses(enriched);
         setFilteredPoses(enriched);
         setLoading(false);
+
+        // Debug: check anatomy field exists and is array
+        console.log(
+          "Loaded poses sample:",
+          enriched.slice(0, 5).map((p) => ({
+            name: p.name,
+            anatomy: p.anatomy,
+          }))
+        );
       })
       .catch((err) => {
         console.error("Error fetching poses:", err);
@@ -257,15 +276,34 @@ const AllPosesPage = () => {
       });
   }, []);
 
+  // Debug: log filterKey changes
+  useEffect(() => {
+    console.log("Filter key changed:", filterKey);
+    setFilterValue(""); // reset filter value when key changes
+  }, [filterKey]);
+
   const filterOptions = useMemo(() => {
     if (!poses.length) return [];
 
-    if (["category", "indications", "counterIndications", "anatomy"].includes(filterKey)) {
-      const values = poses.flatMap((pose) => pose[filterKey] || []);
-      return [...new Set(values)].filter(Boolean);
-    }
+    console.log("Computing filter options for key:", filterKey);
 
-    return [...new Set(poses.map((pose) => pose[filterKey]).filter(Boolean))];
+    let allValues = [];
+
+    poses.forEach((pose) => {
+      const val = pose[filterKey];
+      if (Array.isArray(val)) {
+        allValues = allValues.concat(val.filter(Boolean));
+      } else if (typeof val === "string") {
+        allValues.push(val);
+      }
+    });
+
+    // Normalize values: lowercase and trimmed
+    const uniqueValues = [...new Set(allValues.map((v) => v.toLowerCase().trim()))];
+
+    console.log("Unique filter options:", uniqueValues);
+
+    return uniqueValues;
   }, [poses, filterKey]);
 
   useEffect(() => {
@@ -277,14 +315,14 @@ const AllPosesPage = () => {
           const value = pose[filterKey];
 
           if (Array.isArray(value)) {
-            return value.some((v) =>
-              v.toLowerCase().includes(filterValue.toLowerCase())
+            return value.some(
+              (v) => v.toLowerCase().trim() === filterValue.toLowerCase().trim()
             );
           }
 
           return (
             typeof value === "string" &&
-            value.toLowerCase().includes(filterValue.toLowerCase())
+            value.toLowerCase().trim() === filterValue.toLowerCase().trim()
           );
         })
       );
@@ -294,6 +332,7 @@ const AllPosesPage = () => {
   return (
     <Box p={6}>
       <Heading color={headingColor} mb={4}>
+        All Poses
       </Heading>
 
       <Box display="flex" gap={4} mb={6} flexWrap="wrap">
@@ -302,7 +341,6 @@ const AllPosesPage = () => {
           value={filterKey}
           onChange={(e) => {
             setFilterKey(e.target.value);
-            setFilterValue("");
           }}
           bg={filterBg}
           color={filterText}
@@ -330,6 +368,7 @@ const AllPosesPage = () => {
           _hover={{ bg: filterBg }}
           _focus={{ borderColor: filterText }}
           icon={<ChevronDownIcon />}
+          isDisabled={!filterOptions.length}
         >
           {filterOptions.map((val, i) => (
             <option key={i} value={val}>
@@ -347,23 +386,23 @@ const AllPosesPage = () => {
           </Text>
         </Box>
       ) : (
-<SimpleGrid
-  columns={{ base: 1, sm: 2, md: 3 }}
-  spacing={6}
-  px={{ base: 4, sm: 6, md: 8 }}
-  pb={10}
->
-  {filteredPoses.map((pose) => (
-    <PoseCard
-      key={pose._id}
-      _id={pose._id}
-      name={pose.name}
-      image={pose.image}
-      category={pose.category}
-      description={pose.description}
-    />
-  ))}
-</SimpleGrid>
+        <SimpleGrid
+          columns={{ base: 1, sm: 2, md: 3 }}
+          spacing={6}
+          px={{ base: 4, sm: 6, md: 8 }}
+          pb={10}
+        >
+          {filteredPoses.map((pose) => (
+            <PoseCard
+              key={pose._id}
+              _id={pose._id}
+              name={pose.name}
+              image={pose.image}
+              category={pose.category}
+              description={pose.description}
+            />
+          ))}
+        </SimpleGrid>
       )}
     </Box>
   );

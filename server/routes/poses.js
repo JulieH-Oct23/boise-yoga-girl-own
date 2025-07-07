@@ -3,13 +3,13 @@ import Pose from "../models/PoseModel.js";
 
 const router = express.Router();
 
-// Get all poses
 router.get("/", async (req, res) => {
   try {
     const poses = await Pose.find();
-    res.json(poses);
+    res.json(poses); // ✅ make sure poses is an array
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("❌ Error fetching poses:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
