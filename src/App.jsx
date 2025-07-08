@@ -183,6 +183,7 @@ import SavedSequencesPage from "./pages/SavedSequencesPages";
 import SequenceBuilderPage from "./pages/SequenceBuilderPage";
 import YinYogaPage from "./pages/YinYogaPage";
 
+
 import { useColorMode } from "@chakra-ui/react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
 import Header from "./components/Header";

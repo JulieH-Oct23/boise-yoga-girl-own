@@ -6,7 +6,7 @@ const PoseList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/poses')
+    fetch('http://localhost:4000/api/poses')
       .then((res) => res.json())
       .then((data) => {
         setPoses(data);
