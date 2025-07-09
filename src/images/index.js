@@ -42,7 +42,7 @@ import Locust from "./Locust.png";
 import LowLunge from "./LowLunge.png";
 import LowPlank from "./LowPlank.png";
 import Mermaid from "./Mermaid.png";
-import MissingPhoto from "./MissingPhoto.jpeg";
+import MissingPhoto from "./MissingPhoto99.png";
 import Mountain from "./Mountain.png";
 import Pigeon from "./Pigeon.png";
 import Plank from "./Plank.png";

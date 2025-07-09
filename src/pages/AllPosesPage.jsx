@@ -457,7 +457,7 @@ const AllPosesPage = () => {
 
   return (
     <Box p={6}>
-      <Heading mb={4}>All Poses</Heading>
+      <Heading mb={4}>Filter through yoga poses using drop down menus:</Heading>
 
       <Box display="flex" gap={4} mb={6} flexWrap="wrap">
         <Select
@@ -467,8 +467,8 @@ const AllPosesPage = () => {
             setFilterKey(e.target.value);
             setFilterValue("");
           }}
-          bg={filterBg}
-          color={filterText}
+          bg="#A18E88"
+          color="#FAEDEC"
           borderColor={filterBg}
           borderRadius="md"
           _hover={{ bg: filterBg }}
@@ -481,24 +481,27 @@ const AllPosesPage = () => {
           <option value="counterIndications">Counter Indications</option>
         </Select>
 
-        <Select
-          placeholder="Choose value"
-          value={filterValue}
-          onChange={(e) => setFilterValue(e.target.value)}
-          bg={filterBg}
-          color={filterText}
-          borderColor={filterBg}
-          borderRadius="md"
-          _hover={{ bg: filterBg }}
-          _focus={{ borderColor: filterText }}
-          isDisabled={!filterOptions.length}
-        >
-          {filterOptions.map((val, i) => (
-            <option key={i} value={val}>
-              {val}
-            </option>
-          ))}
-        </Select>
+      <Select
+  placeholder="Choose value"
+  value={filterValue}
+  onChange={(e) => setFilterValue(e.target.value)}
+  isDisabled={!filterOptions.length}
+  bg="#A18E88"
+  color="white"
+  borderColor="#A18E88"
+  borderRadius="md"
+  _hover={{ borderColor: "#92636B" }}
+  _focus={{
+    borderColor: "#92636B",
+    boxShadow: "0 0 0 1px #92636B",
+  }}
+>
+  {filterOptions.map((val, i) => (
+    <option key={i} value={val} style={{ backgroundColor: "#A18E88", color: "white" }}>
+      {val}
+    </option>
+  ))}
+</Select>
       </Box>
 
       <SimpleGrid

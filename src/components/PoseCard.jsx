@@ -3,11 +3,11 @@ import { Box, Heading, Image, Text, useColorModeValue } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import images from "../images"; // ✅ adjust path if needed
 
-const PoseCard = ({ _id, name, category, description, image }) => {
+const PoseCard = ({ _id, name, image }) => {
   const bg = useColorModeValue("brand.light.surface", "brand.dark.surface");
   const borderColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
   const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
-  const categoryColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
+  // const categoryColor = useColorModeValue("brand.light.muted", "brand.dark.muted");
   const nameColor = useColorModeValue("brand.light.poseCardTitle", "brand.dark.poseCardTitle");
 
   // ✅ Strip .png from the image filename
@@ -57,12 +57,12 @@ const PoseCard = ({ _id, name, category, description, image }) => {
         <Heading size="md" mb={2} color={nameColor} noOfLines={1}>
           {name}
         </Heading>
-        <Text fontSize="sm" mb={1} color={categoryColor} noOfLines={1}>
+        {/* <Text fontSize="sm" mb={1} color={categoryColor} noOfLines={1}>
           Category: {Array.isArray(category) ? category.join(", ") : category}
         </Text>
         <Text fontSize="sm" color={textColor} noOfLines={2}>
           {description}
-        </Text>
+        </Text> */}
       </Box>
     </Link>
   );
