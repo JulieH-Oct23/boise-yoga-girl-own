@@ -96,9 +96,10 @@ export const chakraTheme = extendTheme({
         headerTitleText: "#A18E88",
         poseCardText: "#3B3B3B",
         poseCardTitle: "#93685E",
+        accent: "#92636B", // ✅ NEW accent color for dropdowns, highlights, etc.
       },
       dark: {
-        surface: "#332F27",
+        surface: "#27241D",
         muted: "#BFA39D",
         header: "#A18E88",
         sidebarBg: "#332F27",
@@ -108,6 +109,7 @@ export const chakraTheme = extendTheme({
         headerTitleText: "#FAEDEC",
         poseCardText: "#FAFAF9",
         poseCardTitle: "#B1B381",
+        accent: "#92636B", // ✅ NEW accent color for dropdowns, highlights, etc.
       },
     },
   },
@@ -122,11 +124,11 @@ export const muiLightTheme = createTheme({
   palette: {
     mode: "light",
     background: {
-      default: "#FCF8F7",
-      paper: "#F1E9E7",
+      default: "#FAEDEC",
+      paper: "#FAEDEC",
     },
     primary: {
-      main: "#BFA39D",
+      main: "#FAEDEC",
     },
     text: {
       primary: "#3B3B3B",
