@@ -1,4 +1,4 @@
-
+// // export default App;
 // import {
 //   Box,
 //   Link as ChakraLink,
@@ -13,6 +13,7 @@
 //   Routes,
 // } from "react-router-dom";
 
+
 // import AllPosesPage from "./pages/AllPosesPage";
 // import LandingPage from "./pages/LandingPage";
 // import PoseDetailPage from "./pages/PoseDetailPage";
@@ -21,6 +22,7 @@
 // import SavedSequencesPage from "./pages/SavedSequencesPages";
 // import SequenceBuilderPage from "./pages/SequenceBuilderPage";
 // import YinYogaPage from "./pages/YinYogaPage";
+
 
 // import { useColorMode } from "@chakra-ui/react";
 // import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
@@ -57,16 +59,21 @@
 //           <Header />
 //         </Box>
 
-//         {/* Layout Wrapper with Top Padding */}
-//         <Box pt="64px" display="flex" flexDirection={["column", "row"]} minHeight="100vh">
-//           {/* SIDEBAR */}
+//         {/* Scrollable Content Area */}
+//         <Box
+//           display="flex"
+//           flexDirection={["column", "row"]}
+//           pt="64px"
+//           minH="100vh"
+//           overflowX="hidden"
+//           overflowY="auto"
+//         >
+//           {/* Sidebar */}
 //           <Box
 //             bg={sidebarBg}
 //             width={["100%", "250px"]}
 //             p={4}
-//             borderRight="none"
-//             minH="100vh"
-//             overflowY="auto"
+//             flexShrink={0}
 //             color={sidebarTextColor}
 //           >
 //             <VStack align="stretch" spacing={4} pt={6}>
@@ -139,7 +146,7 @@
 //             </VStack>
 //           </Box>
 
-//           {/* MAIN CONTENT */}
+//           {/* Main Content */}
 //           <Box flex="1" p={6} bg={mainBg} color={mainTitleColor}>
 //             <Routes>
 //               <Route path="/" element={<LandingPage />} />
@@ -171,8 +178,8 @@ import {
   BrowserRouter as Router,
   Link as RouterLink,
   Routes,
+  useLocation,
 } from "react-router-dom";
-
 
 import AllPosesPage from "./pages/AllPosesPage";
 import LandingPage from "./pages/LandingPage";
@@ -183,13 +190,15 @@ import SavedSequencesPage from "./pages/SavedSequencesPages";
 import SequenceBuilderPage from "./pages/SequenceBuilderPage";
 import YinYogaPage from "./pages/YinYogaPage";
 
-
 import { useColorMode } from "@chakra-ui/react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
 import Header from "./components/Header";
 import { muiDarkTheme, muiLightTheme } from "./theme/theme";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isLandingPage = location.pathname === "/";
+
   const { colorMode } = useColorMode();
   const muiTheme = colorMode === "light" ? muiLightTheme : muiDarkTheme;
 
@@ -213,22 +222,22 @@ function App() {
 
   return (
     <MUIThemeProvider theme={muiTheme}>
-      <Router>
-        {/* Fixed Header */}
-        <Box position="fixed" top={0} left={0} right={0} zIndex={1000}>
-          <Header />
-        </Box>
+      {/* Fixed Header */}
+      <Box position="fixed" top={0} left={0} right={0} zIndex={1000}>
+        <Header />
+      </Box>
 
-        {/* Scrollable Content Area */}
-        <Box
-          display="flex"
-          flexDirection={["column", "row"]}
-          pt="64px"
-          minH="100vh"
-          overflowX="hidden"
-          overflowY="auto"
-        >
-          {/* Sidebar */}
+      {/* Scrollable Content Area */}
+      <Box
+        display="flex"
+        flexDirection={["column", "row"]}
+        pt="64px"
+        minH="100vh"
+        overflowX="hidden"
+        overflowY="auto"
+      >
+        {/* Sidebar (hidden only on landing page) */}
+        {!isLandingPage && (
           <Box
             bg={sidebarBg}
             width={["100%", "250px"]}
@@ -305,23 +314,31 @@ function App() {
               </Box>
             </VStack>
           </Box>
+        )}
 
-          {/* Main Content */}
-          <Box flex="1" p={6} bg={mainBg} color={mainTitleColor}>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/allposes" element={<AllPosesPage />} />
-              <Route path="/poweryoga" element={<PowerYogaPage />} />
-              <Route path="/restorativeyoga" element={<RestorativeYogaPage />} />
-              <Route path="/yinyoga" element={<YinYogaPage />} />
-              <Route path="/sequencebuilder" element={<SequenceBuilderPage />} />
-              <Route path="/savedsequences" element={<SavedSequencesPage />} />
-              <Route path="/pose/:poseId" element={<PoseDetailPage />} />
-            </Routes>
-          </Box>
+        {/* Main Content */}
+        <Box flex="1" bg={mainBg} color={mainTitleColor}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/allposes" element={<AllPosesPage />} />
+            <Route path="/poweryoga" element={<PowerYogaPage />} />
+            <Route path="/restorativeyoga" element={<RestorativeYogaPage />} />
+            <Route path="/yinyoga" element={<YinYogaPage />} />
+            <Route path="/sequencebuilder" element={<SequenceBuilderPage />} />
+            <Route path="/savedsequences" element={<SavedSequencesPage />} />
+            <Route path="/pose/:poseId" element={<PoseDetailPage />} />
+          </Routes>
         </Box>
-      </Router>
+      </Box>
     </MUIThemeProvider>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 
