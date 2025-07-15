@@ -20,7 +20,6 @@ import DragonFlyingLow from "./DragonFlyingLow.png";
 import Eagle from "./Eagle.png";
 import Easy from "./Easy.png";
 import ExtendedSideAngle from "./ExtendedSideAngle.png";
-import Firefly from "./Firefly.png";
 import Fish from "./Fish.png";
 import FloorBow from "./FloorBow.png";
 import ForearmStand from "./ForearmStand.png";
@@ -112,7 +111,6 @@ export default {
   Easy,
   ExtendedSideAngle,
   Fish,
-  Firefly,
   FloorBow,
   ForearmStand,
   ForwardFold,
