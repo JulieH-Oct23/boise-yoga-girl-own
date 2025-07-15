@@ -86,6 +86,7 @@ import Wheel from "./Wheel.png";
 import WideLegForwardFold from "./WideLegForwardFold.png";
 import WindRemoving from "./WindRemoving.png";
 import WingedDragon from "./WingedDragon.png";
+import landingpagebackground from "./landingpagebackground.jpeg"
 
 export default {
   BabyDragon,
@@ -127,6 +128,7 @@ export default {
   Hero,
   HighLunge,
   HighPlank,
+  landingpagebackground,
   LegUpWall,
   Locust,
   LowLunge,
