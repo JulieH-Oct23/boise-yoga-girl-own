@@ -34,6 +34,10 @@ mongoose
 app.use("/api/poses", posesRoutes);
 
 // Catch-all 404 handler for unknown routes
+app.get("/", (req, res) => {
+  res.send("Boise Yoga Girl backend is running 🧘‍♀️");
+});
+
 app.use((req, res) => {
   res.status(404).json({ message: "Not Found" });
 });
@@ -43,8 +47,4 @@ const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-});
-
-app.get("/", (req, res) => {
-  res.send("Boise Yoga Girl backend is running 🧘‍♀️");
 });
