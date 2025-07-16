@@ -10,6 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
+// Make sure this environment variable is set correctly for local and deployed backend URL
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 const SequenceBuilderPage = () => {
   const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
   const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
@@ -19,27 +22,28 @@ const SequenceBuilderPage = () => {
 
   const [poses, setPoses] = useState([]);
   const [selectedPoses, setSelectedPoses] = useState([]);
-
-  const API_BASE = import.meta.env.VITE_API_BASE;
+  const [loading, setLoading] = useState(true); // FIX: added loading state
 
   useEffect(() => {
-    const fetchPoses = async () => {
+    async function fetchPoses() {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/poses`);
+        const res = await fetch(`${API_BASE}/api/poses`);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setPoses(data);
-      } catch (err) {
-        console.error("Failed to fetch poses:", err);
+      } catch (error) {
+        console.error("Failed to fetch poses:", error);
         toast({
           title: "Error fetching poses.",
-          description: err.message,
+          description: error.message,
           status: "error",
           duration: 4000,
           isClosable: true,
         });
+      } finally {
+        setLoading(false);
       }
-    };
+    }
     fetchPoses();
   }, [toast]);
 
@@ -51,6 +55,14 @@ const SequenceBuilderPage = () => {
       setSelectedPoses([...selectedPoses, pose]);
     }
   };
+
+  if (loading) {
+    return (
+      <Box textAlign="center" py={20}>
+        <Text>Loading poses...</Text>
+      </Box>
+    );
+  }
 
   return (
     <Box p={6}>
@@ -96,7 +108,8 @@ const SequenceBuilderPage = () => {
               bg="white"
             >
               <img
-                src={pose.image}
+                // FIX: prepend backend URL to pose.image for correct path
+                src={`${API_BASE}/images/${pose.image}`}
                 alt={pose.name}
                 style={{ width: "100%", height: "auto", borderRadius: "12px" }}
               />
