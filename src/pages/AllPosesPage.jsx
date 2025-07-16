@@ -1,303 +1,101 @@
-// import React, { useEffect, useState } from "react";
-// import {
-//   Box,
-//   Heading,
-//   Spinner,
-//   Text,
-//   SimpleGrid,
-//   Select,
-//   useColorModeValue,
-// } from "@chakra-ui/react";
-// import PoseCard from "../components/PoseCard";
-
-// const AllPosesPage = () => {
-//   const [poses, setPoses] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   const [filterKey, setFilterKey] = useState("");
-//   const [filterValue, setFilterValue] = useState("");
-//   const [filterOptions, setFilterOptions] = useState([]);
-
-//   const filterBg = useColorModeValue("brand.light.surface", "brand.dark.surface");
-//   const filterText = useColorModeValue("brand.light.text", "brand.dark.text");
-
-//   useEffect(() => {
-//     async function fetchPoses() {
-//       try {
-//         const res = await fetch("/api/poses");
-//         const data = await res.json();
-//         setPoses(data);
-//       } catch (error) {
-//         console.error("Failed to fetch poses:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     }
-//     fetchPoses();
-//   }, []);
-
-//   useEffect(() => {
-//     if (!filterKey) {
-//       setFilterOptions([]);
-//       setFilterValue("");
-//       return;
-//     }
-
-//     const values = new Set();
-
-//     poses.forEach((pose) => {
-//       const val = pose[filterKey];
-//       if (Array.isArray(val)) {
-//         val.forEach((item) => values.add(item));
-//       } else if (val) {
-//         values.add(val);
-//       }
-//     });
-
-//     setFilterOptions(Array.from(values).sort());
-//   }, [filterKey, poses]);
-
-//   const filteredPoses = filterKey && filterValue
-//     ? poses.filter((pose) => {
-//         const field = pose[filterKey];
-//         if (Array.isArray(field)) {
-//           return field.includes(filterValue);
-//         }
-//         return field === filterValue;
-//       })
-//     : poses;
-
-//   if (loading) {
-//     return (
-//       <Box textAlign="center" py={20}>
-//         <Spinner size="xl" />
-//       </Box>
-//     );
-//   }
-
-//   if (!poses.length) {
-//     return (
-//       <Box textAlign="center" py={20}>
-//         <Text>No poses found.</Text>
-//       </Box>
-//     );
-//   }
-
-//   return (
-//     <Box p={6}>
-//       <Heading mb={4}>Filter through yoga poses using drop down menus:</Heading>
-
-//       <Box display="flex" gap={4} mb={6} flexWrap="wrap">
-//         <Select
-//           placeholder="Filter by..."
-//           value={filterKey}
-//           onChange={(e) => {
-//             setFilterKey(e.target.value);
-//             setFilterValue("");
-//           }}
-//           bg="#A18E88"
-//           color="#FAEDEC"
-//           borderColor={filterBg}
-//           borderRadius="md"
-//           _hover={{ bg: filterBg }}
-//           _focus={{ borderColor: filterText }}
-//         >
-//           <option value="category">Category</option>
-//           <option value="level">Level</option>
-//           <option value="anatomy">Anatomy</option>
-//           <option value="indications">Indications</option>
-//           <option value="counterIndications">Counter Indications</option>
-//         </Select>
-
-//       <Select
-//   placeholder="Choose value"
-//   value={filterValue}
-//   onChange={(e) => setFilterValue(e.target.value)}
-//   isDisabled={!filterOptions.length}
-//   bg="#A18E88"
-//   color="white"
-//   borderColor="#A18E88"
-//   borderRadius="md"
-//   _hover={{ borderColor: "#92636B" }}
-//   _focus={{
-//     borderColor: "#92636B",
-//     boxShadow: "0 0 0 1px #92636B",
-//   }}
-// >
-//   {filterOptions.map((val, i) => (
-//     <option key={i} value={val} style={{ backgroundColor: "#A18E88", color: "white" }}>
-//       {val}
-//     </option>
-//   ))}
-// </Select>
-//       </Box>
-
-//       <SimpleGrid
-//         columns={{ base: 1, sm: 2, md: 3 }}
-//         spacingX={6}
-//         spacingY={8}
-//         minChildWidth="250px"
-//       >
-//         {filteredPoses.map((pose) => (
-//           <PoseCard key={pose._id} _id={pose._id} name={pose.name} image={pose.image} />
-//         ))}
-//       </SimpleGrid>
-//     </Box>
-//   );
-// };
-
-// export default AllPosesPage;
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Heading,
-  Spinner,
   Text,
-  SimpleGrid,
-  Select,
+  VStack,
   useColorModeValue,
+  SimpleGrid,
+  useToast,
 } from "@chakra-ui/react";
 import PoseCard from "../components/PoseCard";
 
-// ✅ ADDED: use VITE_API_BASE to work on Vercel and locally
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-const AllPosesPage = () => {
+const SequenceBuilderPage = () => {
   const [poses, setPoses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedPoses, setSelectedPoses] = useState([]);
+  const toast = useToast();
 
-  const [filterKey, setFilterKey] = useState("");
-  const [filterValue, setFilterValue] = useState("");
-  const [filterOptions, setFilterOptions] = useState([]);
+  const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
+  const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
+  const buttonBg = useColorModeValue("brand.light.button", "brand.dark.button");
+  const buttonText = useColorModeValue("brand.light.surface", "brand.dark.surface");
 
-  const filterBg = useColorModeValue("brand.light.surface", "brand.dark.surface");
-  const filterText = useColorModeValue("brand.light.text", "brand.dark.text");
-
+  // ✅ Fetch poses from backend
   useEffect(() => {
     async function fetchPoses() {
       try {
-        // ✅ UPDATED: use full backend URL
         const res = await fetch(`${API_BASE}/api/poses`);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setPoses(data);
-      } catch (error) {
-        console.error("Failed to fetch poses:", error);
-      } finally {
-        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch poses:", err);
+        toast({
+          title: "Error fetching poses.",
+          description: err.message,
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+        });
       }
     }
     fetchPoses();
   }, []);
 
-  useEffect(() => {
-    if (!filterKey) {
-      setFilterOptions([]);
-      setFilterValue("");
-      return;
-    }
-
-    const values = new Set();
-
-    poses.forEach((pose) => {
-      const val = pose[filterKey];
-      if (Array.isArray(val)) {
-        val.forEach((item) => values.add(item));
-      } else if (val) {
-        values.add(val);
-      }
-    });
-
-    setFilterOptions(Array.from(values).sort());
-  }, [filterKey, poses]);
-
-  const filteredPoses = filterKey && filterValue
-    ? poses.filter((pose) => {
-        const field = pose[filterKey];
-        if (Array.isArray(field)) {
-          return field.includes(filterValue);
-        }
-        return field === filterValue;
-      })
-    : poses;
-
-  if (loading) {
-    return (
-      <Box textAlign="center" py={20}>
-        <Spinner size="xl" />
-      </Box>
+  // ✅ Toggle pose in the selected list
+  const togglePoseSelection = (pose) => {
+    setSelectedPoses((prev) =>
+      prev.find((p) => p._id === pose._id)
+        ? prev.filter((p) => p._id !== pose._id)
+        : [...prev, pose]
     );
-  }
-
-  if (!poses.length) {
-    return (
-      <Box textAlign="center" py={20}>
-        <Text>No poses found.</Text>
-      </Box>
-    );
-  }
+  };
 
   return (
     <Box p={6}>
-      <Heading mb={4}>Filter through yoga poses using drop down menus:</Heading>
+      <Heading mb={4} color={headingColor}>
+        Sequence Builder
+      </Heading>
+      <Text fontSize="lg" mb={6} color={textColor}>
+        Click on poses below to add them to your sequence.
+      </Text>
 
-      <Box display="flex" gap={4} mb={6} flexWrap="wrap">
-        <Select
-          placeholder="Filter by..."
-          value={filterKey}
-          onChange={(e) => {
-            setFilterKey(e.target.value);
-            setFilterValue("");
-          }}
-          bg="#A18E88"
-          color="#FAEDEC"
-          borderColor={filterBg}
-          borderRadius="md"
-          _hover={{ bg: filterBg }}
-          _focus={{ borderColor: filterText }}
-        >
-          <option value="category">Category</option>
-          <option value="level">Level</option>
-          <option value="anatomy">Anatomy</option>
-          <option value="indications">Indications</option>
-          <option value="counterIndications">Counter Indications</option>
-        </Select>
+      <VStack spacing={4} align="start" mb={6}>
+        <Button bg={buttonBg} color={buttonText}>
+          Save Sequence (Coming Soon)
+        </Button>
+      </VStack>
 
-        <Select
-          placeholder="Choose value"
-          value={filterValue}
-          onChange={(e) => setFilterValue(e.target.value)}
-          isDisabled={!filterOptions.length}
-          bg="#A18E88"
-          color="white"
-          borderColor="#A18E88"
-          borderRadius="md"
-          _hover={{ borderColor: "#92636B" }}
-          _focus={{
-            borderColor: "#92636B",
-            boxShadow: "0 0 0 1px #92636B",
-          }}
-        >
-          {filterOptions.map((val, i) => (
-            <option key={i} value={val} style={{ backgroundColor: "#A18E88", color: "white" }}>
-              {val}
-            </option>
-          ))}
-        </Select>
-      </Box>
-
+      <Heading fontSize="xl" mb={4} color={headingColor}>
+        All Poses
+      </Heading>
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3 }}
         spacingX={6}
         spacingY={8}
         minChildWidth="250px"
       >
-        {filteredPoses.map((pose) => (
-          <PoseCard key={pose._id} _id={pose._id} name={pose.name} image={pose.image} />
-        ))}
+        {poses.map((pose) => {
+          const isSelected = selectedPoses.find((p) => p._id === pose._id);
+          return (
+            <Box
+              key={pose._id}
+              borderWidth={isSelected ? "2px" : "1px"}
+              borderColor={isSelected ? "#92636B" : "gray.200"}
+              borderRadius="lg"
+              cursor="pointer"
+              onClick={() => togglePoseSelection(pose)}
+            >
+              <PoseCard _id={pose._id} name={pose.name} image={pose.image} />
+            </Box>
+          );
+        })}
       </SimpleGrid>
     </Box>
   );
 };
 
-export default AllPosesPage;
+export default SequenceBuilderPage;

@@ -1,30 +1,3 @@
-// import { Box, Button, Heading, Text, VStack } from "@chakra-ui/react";
-
-// const SequenceBuilderPage = () => {
-//   return (
-//     <Box color="white" p={6}>
-//       <Heading mb={4} color="teal.200">Sequence Builder</Heading>
-//       <Text fontSize="lg" color="gray.300" mb={6}>
-//         Use this page to create your personalized yoga sequences. Select poses, arrange their order, and save your flow for future practice.
-//       </Text>
-
-//       <VStack spacing={4} align="start">
-//         {/* Placeholder buttons for pose selection */}
-//         <Button colorScheme="teal" variant="outline" isDisabled>
-//           Select Poses (Coming Soon)
-//         </Button>
-//         <Button colorScheme="teal" variant="outline" isDisabled>
-//           Arrange Sequence (Coming Soon)
-//         </Button>
-//         <Button colorScheme="teal" isDisabled>
-//           Save Sequence (Coming Soon)
-//         </Button>
-//       </VStack>
-//     </Box>
-//   );
-// };
-
-// export default SequenceBuilderPage;
 import {
   Box,
   Button,
@@ -32,13 +5,50 @@ import {
   Text,
   VStack,
   useColorModeValue,
+  useToast,
+  SimpleGrid,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 const SequenceBuilderPage = () => {
   const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
   const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
   const buttonBg = useColorModeValue("brand.light.button", "brand.dark.button");
   const buttonText = useColorModeValue("brand.light.surface", "brand.dark.surface");
+  const toast = useToast();
+
+  const [poses, setPoses] = useState([]);
+  const [selectedPoses, setSelectedPoses] = useState([]);
+
+  useEffect(() => {
+    const fetchPoses = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/api/poses`);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        setPoses(data);
+      } catch (err) {
+        console.error("Failed to fetch poses:", err);
+        toast({
+          title: "Error fetching poses.",
+          description: err.message,
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+        });
+      }
+    };
+    fetchPoses();
+  }, [toast]);
+
+  const handlePoseClick = (pose) => {
+    const isSelected = selectedPoses.find((p) => p._id === pose._id);
+    if (isSelected) {
+      setSelectedPoses(selectedPoses.filter((p) => p._id !== pose._id));
+    } else {
+      setSelectedPoses([...selectedPoses, pose]);
+    }
+  };
 
   return (
     <Box p={6}>
@@ -49,17 +59,80 @@ const SequenceBuilderPage = () => {
         Use this page to create your personalized yoga sequences. Select poses, arrange their order, and save your flow for future practice.
       </Text>
 
-      <VStack spacing={4} align="start">
-        <Button bg={buttonBg} color={buttonText} variant="solid" isDisabled>
-          Select Poses (Coming Soon)
-        </Button>
-        <Button bg={buttonBg} color={buttonText} variant="solid" isDisabled>
-          Arrange Sequence (Coming Soon)
-        </Button>
-        <Button bg={buttonBg} color={buttonText} variant="solid" isDisabled>
-          Save Sequence (Coming Soon)
-        </Button>
-      </VStack>
+      <Button
+        bg="#A18E88"
+        color="#FAEDEC"
+        _hover={{ bg: "#92636B" }}
+        mb={6}
+        onClick={() => {
+          toast({
+            title: "Form coming soon!",
+            status: "info",
+            duration: 2000,
+            isClosable: true,
+          });
+        }}
+      >
+        Build a New Sequence
+      </Button>
+
+      <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
+        {poses.map((pose) => {
+          const isSelected = selectedPoses.find((p) => p._id === pose._id);
+          return (
+            <Box
+              key={pose._id}
+              borderWidth={2}
+              borderColor={isSelected ? "#92636B" : "transparent"}
+              borderRadius="xl"
+              overflow="hidden"
+              p={2}
+              cursor="pointer"
+              onClick={() => handlePoseClick(pose)}
+              _hover={{ boxShadow: "md", transform: "scale(1.03)" }}
+              transition="all 0.2s"
+              bg="white"
+            >
+              <img
+                src={pose.image}
+                alt={pose.name}
+                style={{ width: "100%", height: "auto", borderRadius: "12px" }}
+              />
+              <Text mt={2} fontWeight="bold" textAlign="center">
+                {pose.name}
+              </Text>
+            </Box>
+          );
+        })}
+      </SimpleGrid>
+
+      {selectedPoses.length > 0 && (
+        <VStack mt={8} align="start">
+          <Heading size="md" color={headingColor}>
+            Selected Poses:
+          </Heading>
+          {selectedPoses.map((pose, idx) => (
+            <Text key={pose._id} color={textColor}>
+              {idx + 1}. {pose.name}
+            </Text>
+          ))}
+          <Button
+            mt={4}
+            bg={buttonBg}
+            color={buttonText}
+            onClick={() => {
+              toast({
+                title: "Save functionality coming soon!",
+                status: "info",
+                duration: 2000,
+                isClosable: true,
+              });
+            }}
+          >
+            Save Sequence
+          </Button>
+        </VStack>
+      )}
     </Box>
   );
 };
