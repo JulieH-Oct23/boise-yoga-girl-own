@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import process from "process";
 import posesRoutes from "./routes/poses.js";
 
-
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
@@ -33,11 +32,12 @@ mongoose
 // Register your API routes
 app.use("/api/poses", posesRoutes);
 
-// Catch-all 404 handler for unknown routes
+// Root route - must come after API routes
 app.get("/", (req, res) => {
   res.send("Boise Yoga Girl backend is running 🧘‍♀️");
 });
 
+// Catch-all 404 handler for unknown routes
 app.use((req, res) => {
   res.status(404).json({ message: "Not Found" });
 });
