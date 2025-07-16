@@ -11,7 +11,7 @@ import {
 import PoseCard from "../components/PoseCard";
 
 // ✅ ADDED: use VITE_API_BASE to work on Vercel and locally
-const API_BASE = import.meta.env.VITE_API_BASE;
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 const AllPosesPage = () => {
   const [poses, setPoses] = useState([]);
