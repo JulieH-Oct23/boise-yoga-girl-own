@@ -20,6 +20,8 @@ const SequenceBuilderPage = () => {
   const [poses, setPoses] = useState([]);
   const [selectedPoses, setSelectedPoses] = useState([]);
 
+  const API_BASE = import.meta.env.VITE_API_BASE;
+
   useEffect(() => {
     const fetchPoses = async () => {
       try {
