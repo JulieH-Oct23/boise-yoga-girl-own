@@ -7,11 +7,63 @@ import {
   useColorModeValue,
   useToast,
   SimpleGrid,
+  HStack,
+  IconButton,
+  Input,
+  Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { CloseIcon } from "@chakra-ui/icons";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import images from "../images";
 
-// Make sure this environment variable is set correctly for local and deployed backend URL
-const API_BASE = import.meta.env.VITE_API_BASE;
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+
+const SortablePose = ({ pose, index, onRemove }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id: pose._id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <Box ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <HStack
+        bg="#92636B"
+        color="#FAEDEC"
+        px={4}
+        py={2}
+        borderRadius="md"
+        mb={2}
+        justifyContent="space-between"
+        w="100%"
+      >
+        <Text>{index + 1}. {pose.name}</Text>
+        <IconButton
+          icon={<CloseIcon />}
+          size="sm"
+          colorScheme="pink"
+          onClick={() => onRemove(pose._id)}
+          aria-label="Remove pose"
+        />
+      </HStack>
+    </Box>
+  );
+};
 
 const SequenceBuilderPage = () => {
   const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
@@ -22,7 +74,12 @@ const SequenceBuilderPage = () => {
 
   const [poses, setPoses] = useState([]);
   const [selectedPoses, setSelectedPoses] = useState([]);
-  const [loading, setLoading] = useState(true); // FIX: added loading state
+  const [loading, setLoading] = useState(true);
+
+  const [showForm, setShowForm] = useState(false);
+  const [sequenceName, setSequenceName] = useState("");
+  const [sequenceType, setSequenceType] = useState("");
+  const [sequenceDifficulty, setSequenceDifficulty] = useState("");
 
   useEffect(() => {
     async function fetchPoses() {
@@ -33,19 +90,12 @@ const SequenceBuilderPage = () => {
         setPoses(data);
       } catch (error) {
         console.error("Failed to fetch poses:", error);
-        toast({
-          title: "Error fetching poses.",
-          description: error.message,
-          status: "error",
-          duration: 4000,
-          isClosable: true,
-        });
       } finally {
         setLoading(false);
       }
     }
     fetchPoses();
-  }, [toast]);
+  }, []);
 
   const handlePoseClick = (pose) => {
     const isSelected = selectedPoses.find((p) => p._id === pose._id);
@@ -54,6 +104,54 @@ const SequenceBuilderPage = () => {
     } else {
       setSelectedPoses([...selectedPoses, pose]);
     }
+  };
+
+  const handleRemovePose = (id) => {
+    setSelectedPoses(selectedPoses.filter((pose) => pose._id !== id));
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over?.id) {
+      const oldIndex = selectedPoses.findIndex(p => p._id === active.id);
+      const newIndex = selectedPoses.findIndex(p => p._id === over.id);
+      setSelectedPoses(arrayMove(selectedPoses, oldIndex, newIndex));
+    }
+  };
+
+  const handleSave = () => {
+    if (!sequenceName || !sequenceType || !sequenceDifficulty) {
+      toast({
+        title: "Please complete all fields.",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const sequence = {
+      name: sequenceName,
+      type: sequenceType,
+      difficulty: sequenceDifficulty,
+      poses: selectedPoses.map((p) => p._id),
+    };
+
+    // Simulate save
+    console.log("✅ Sequence to save:", sequence);
+    toast({
+      title: "Sequence saved (mock)!",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+
+    // Reset form
+    setSequenceName("");
+    setSequenceType("");
+    setSequenceDifficulty("");
+    setSelectedPoses([]);
+    setShowForm(false);
   };
 
   if (loading) {
@@ -78,21 +176,45 @@ const SequenceBuilderPage = () => {
         color="#FAEDEC"
         _hover={{ bg: "#92636B" }}
         mb={6}
-        onClick={() => {
-          toast({
-            title: "Form coming soon!",
-            status: "info",
-            duration: 2000,
-            isClosable: true,
-          });
-        }}
+        onClick={() => setShowForm(!showForm)}
       >
-        Build a New Sequence
+        {showForm ? "Cancel" : "Build a New Sequence"}
       </Button>
+
+      {showForm && (
+        <VStack align="start" spacing={4} mb={6}>
+          <Input
+            placeholder="Sequence Name"
+            value={sequenceName}
+            onChange={(e) => setSequenceName(e.target.value)}
+          />
+          <Select
+            placeholder="Select Type"
+            value={sequenceType}
+            onChange={(e) => setSequenceType(e.target.value)}
+          >
+            <option value="Power">Power</option>
+            <option value="Yin">Yin</option>
+            <option value="Restorative">Restorative</option>
+          </Select>
+          <Select
+            placeholder="Select Difficulty"
+            value={sequenceDifficulty}
+            onChange={(e) => setSequenceDifficulty(e.target.value)}
+          >
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </Select>
+        </VStack>
+      )}
 
       <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
         {poses.map((pose) => {
           const isSelected = selectedPoses.find((p) => p._id === pose._id);
+          const imgKey = pose.image?.replace(".png", "") || "";
+          const resolvedImage = images[imgKey] || images.MissingPhoto;
+
           return (
             <Box
               key={pose._id}
@@ -108,8 +230,7 @@ const SequenceBuilderPage = () => {
               bg="white"
             >
               <img
-                // FIX: prepend backend URL to pose.image for correct path
-                src={`${API_BASE}/images/${pose.image}`}
+                src={resolvedImage}
                 alt={pose.name}
                 style={{ width: "100%", height: "auto", borderRadius: "12px" }}
               />
@@ -122,27 +243,28 @@ const SequenceBuilderPage = () => {
       </SimpleGrid>
 
       {selectedPoses.length > 0 && (
-        <VStack mt={8} align="start">
+        <VStack mt={8} align="start" spacing={4}>
           <Heading size="md" color={headingColor}>
             Selected Poses:
           </Heading>
-          {selectedPoses.map((pose, idx) => (
-            <Text key={pose._id} color={textColor}>
-              {idx + 1}. {pose.name}
-            </Text>
-          ))}
+          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={selectedPoses.map((pose) => pose._id)} strategy={verticalListSortingStrategy}>
+              {selectedPoses.map((pose, index) => (
+                <SortablePose
+                  key={pose._id}
+                  pose={pose}
+                  index={index}
+                  onRemove={handleRemovePose}
+                />
+              ))}
+            </SortableContext>
+          </DndContext>
+
           <Button
             mt={4}
             bg={buttonBg}
             color={buttonText}
-            onClick={() => {
-              toast({
-                title: "Save functionality coming soon!",
-                status: "info",
-                duration: 2000,
-                isClosable: true,
-              });
-            }}
+            onClick={handleSave}
           >
             Save Sequence
           </Button>

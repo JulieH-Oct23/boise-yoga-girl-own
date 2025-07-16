@@ -1,19 +1,40 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
+import images from "../images";
 
-const SequenceCard = ({ name, focus, difficulty, onClick }) => {
+const SequenceCard = ({ pose }) => {
+  const imgKey = pose.image?.replace(".png", "") || "";
+  const resolvedImage = images[imgKey] || images.MissingPhoto;
+
   return (
     <Box
-      bg="#FAEDEC"
-      p={6}
-      borderRadius="xl"
-      boxShadow="md"
-      cursor="pointer"
-      onClick={onClick}
-      _hover={{ boxShadow: "lg", transform: "scale(1.02)" }}
+      width="140px" // ✅ Smaller than AllPosesPage
+      height="180px"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      borderColor="#A18E88"
+      bg="white"
+      textAlign="center"
+      boxShadow="sm"
     >
-      <Heading size="md" mb={2}>{name}</Heading>
-      <Text><strong>Focus:</strong> {focus}</Text>
-      <Text><strong>Difficulty:</strong> {difficulty}</Text>
+      <Image
+        src={resolvedImage}
+        alt={pose.name}
+        objectFit="cover"
+        width="100%"
+        height="110px" // ✅ Fixed height for uniformity
+        borderTopRadius="lg"
+      />
+      <Text
+        mt={2}
+        px={2}
+        fontSize="sm"
+        fontWeight="medium"
+        color="#92636B"
+        noOfLines={2}
+      >
+        {pose.name}
+      </Text>
     </Box>
   );
 };
