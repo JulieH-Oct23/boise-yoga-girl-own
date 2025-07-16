@@ -100,11 +100,10 @@ const AllPosesPage = () => {
             setFilterKey(e.target.value);
             setFilterValue("");
           }}
-          bg="#A18E88"
+          bg={filterKey ? "#92636B" : "#A18E88"}
           color="#FAEDEC"
           borderColor={filterBg}
           borderRadius="md"
-          _hover={{ bg: filterBg }}
           _focus={{ borderColor: filterText }}
         >
           <option value="category">Category</option>
@@ -119,7 +118,7 @@ const AllPosesPage = () => {
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
           isDisabled={!filterOptions.length}
-          bg="#A18E88"
+          bg={filterKey ? "#92636B" : "#A18E88"}
           color="white"
           borderColor="#A18E88"
           borderRadius="md"
