@@ -1,6 +1,5 @@
 import { Box, Heading, Text, useColorModeValue, SimpleGrid } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import SequenceCard from "../components/SequenceCard";
 
 const PowerYogaPage = () => {
   const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");

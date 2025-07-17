@@ -1,94 +1,46 @@
+// import React, { useEffect, useState } from "react";
 // import {
 //   Box,
-//   Button,
 //   Heading,
+//   Spinner,
 //   Text,
-//   VStack,
-//   useColorModeValue,
-//   useToast,
 //   SimpleGrid,
-//   HStack,
-//   IconButton,
-//   Input,
 //   Select,
+//   Input,
+//   Button,
+//   useColorModeValue,
+//   Wrap,
+//   WrapItem,
 // } from "@chakra-ui/react";
-// import { useEffect, useState } from "react";
-// import { CloseIcon } from "@chakra-ui/icons";
-// import { DndContext, closestCenter } from "@dnd-kit/core";
-// import {
-//   arrayMove,
-//   SortableContext,
-//   useSortable,
-//   verticalListSortingStrategy,
-// } from "@dnd-kit/sortable";
-// import { CSS } from "@dnd-kit/utilities";
-// import images from "../images";
-// import SequenceCard from "../components/SortablePose";
+// import PoseCard from "../components/PoseCard";
 
 // const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
-// const SortablePose = ({ pose, index, onRemove }) => {
-//   const {
-//     attributes,
-//     listeners,
-//     setNodeRef,
-//     transform,
-//     transition,
-//   } = useSortable({ id: pose._id });
-
-//   const style = {
-//     transform: CSS.Transform.toString(transform),
-//     transition,
-//   };
-
-//   return (
-//     <Box ref={setNodeRef} style={style} {...attributes} {...listeners}>
-//       <HStack
-//         bg="#92636B"
-//         color="#FAEDEC"
-//         px={4}
-//         py={2}
-//         borderRadius="md"
-//         mb={2}
-//         justifyContent="space-between"
-//         w="100%"
-//       >
-//         <Text>{index + 1}. {pose.name}</Text>
-//         <IconButton
-//           icon={<CloseIcon />}
-//           size="sm"
-//           colorScheme="pink"
-//           onClick={() => onRemove(pose._id)}
-//           aria-label="Remove pose"
-//         />
-//       </HStack>
-//     </Box>
-//   );
-// };
-
 // const SequenceBuilderPage = () => {
-//   const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
-//   const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
-//   const buttonBg = useColorModeValue("brand.light.button", "brand.dark.button");
-//   const buttonText = useColorModeValue("brand.light.surface", "brand.dark.surface");
-//   const toast = useToast();
-
 //   const [poses, setPoses] = useState([]);
-//   const [selectedPoses, setSelectedPoses] = useState([]);
 //   const [loading, setLoading] = useState(true);
 
-//   const [showForm, setShowForm] = useState(false);
 //   const [sequenceName, setSequenceName] = useState("");
-//   const [sequenceType, setSequenceType] = useState("");
-//   const [sequenceDifficulty, setSequenceDifficulty] = useState("");
+//   const [style, setStyle] = useState("");
+//   const [difficulty, setDifficulty] = useState("");
+//   const [selectedPoses, setSelectedPoses] = useState([]);
+//   const [savedSequences, setSavedSequences] = useState({
+//     yin: [],
+//     restorative: [],
+//     power: [],
+//   });
+
+//   const bg = useColorModeValue("#FAEDEC", "#2D2D2D"); // page bg
+//   const formBg = "#FAEDEC"; // light gray/brown background for form box
+//   const textColor = useColorModeValue("#353325", "#FAEDEC"); // heading text color
 
 //   useEffect(() => {
 //     async function fetchPoses() {
 //       try {
 //         const res = await fetch(`${API_BASE}/api/poses`);
-//         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 //         const data = await res.json();
 //         setPoses(data);
+//         console.log("✅ poses fetched (sequence):", data);
 //       } catch (error) {
 //         console.error("Failed to fetch poses:", error);
 //       } finally {
@@ -98,179 +50,166 @@
 //     fetchPoses();
 //   }, []);
 
-//   const handlePoseClick = (pose) => {
-//     const isSelected = selectedPoses.find((p) => p._id === pose._id);
-//     if (isSelected) {
-//       setSelectedPoses(selectedPoses.filter((p) => p._id !== pose._id));
-//     } else {
-//       setSelectedPoses([...selectedPoses, pose]);
-//     }
+//   const togglePose = (poseId) => {
+//     setSelectedPoses((prev) =>
+//       prev.includes(poseId) ? prev.filter((id) => id !== poseId) : [...prev, poseId]
+//     );
 //   };
 
-//   const handleRemovePose = (id) => {
-//     setSelectedPoses(selectedPoses.filter((pose) => pose._id !== id));
-//   };
-
-//   const handleDragEnd = (event) => {
-//     const { active, over } = event;
-//     if (active.id !== over?.id) {
-//       const oldIndex = selectedPoses.findIndex(p => p._id === active.id);
-//       const newIndex = selectedPoses.findIndex(p => p._id === over.id);
-//       setSelectedPoses(arrayMove(selectedPoses, oldIndex, newIndex));
-//     }
-//   };
-
-//   const handleSave = () => {
-//     if (!sequenceName || !sequenceType || !sequenceDifficulty) {
-//       toast({
-//         title: "Please complete all fields.",
-//         status: "warning",
-//         duration: 2000,
-//         isClosable: true,
-//       });
+//   const saveSequence = () => {
+//     if (!sequenceName || !style || !difficulty || selectedPoses.length === 0) {
+//       alert("Please fill out all fields and select poses.");
 //       return;
 //     }
 
-//     const sequence = {
+//     const newSequence = {
 //       name: sequenceName,
-//       type: sequenceType,
-//       difficulty: sequenceDifficulty,
-//       poses: selectedPoses.map((p) => p._id),
+//       difficulty,
+//       poses: poses.filter((p) => selectedPoses.includes(p._id)),
 //     };
 
-//     // Simulate save
-//     console.log("✅ Sequence to save:", sequence);
-//     toast({
-//       title: "Sequence saved (mock)!",
-//       status: "success",
-//       duration: 2000,
-//       isClosable: true,
-//     });
+//     setSavedSequences((prev) => ({
+//       ...prev,
+//       [style.toLowerCase()]: [...prev[style.toLowerCase()], newSequence],
+//     }));
 
 //     // Reset form
 //     setSequenceName("");
-//     setSequenceType("");
-//     setSequenceDifficulty("");
+//     setStyle("");
+//     setDifficulty("");
 //     setSelectedPoses([]);
-//     setShowForm(false);
 //   };
 
 //   if (loading) {
 //     return (
-//       <Box textAlign="center" py={20}>
-//         <Text>Loading poses...</Text>
+//       <Box textAlign="center" py={20} bg={bg} color={textColor}>
+//         <Spinner size="xl" />
 //       </Box>
 //     );
 //   }
 
 //   return (
-//     <Box p={6}>
-//       <Heading mb={4} color={headingColor}>
+//     <Box p={6} color={textColor} minH="100vh">
+//       <Heading mb={6} color={textColor}>
 //         Sequence Builder
 //       </Heading>
-//       <Text fontSize="lg" mb={6} color={textColor}>
-//         Use this page to create your personalized yoga sequences. Select poses, arrange their order, and save your flow for future practice.
-//       </Text>
 
-//       <Button
-//         bg="#A18E88"
-//         color="#FAEDEC"
-//         _hover={{ bg: "#92636B" }}
-//         mb={6}
-//         onClick={() => setShowForm(!showForm)}
+//       {/* Form Box with light gray/brown background */}
+//       <Box
+//         bg={formBg}
+//         p={6}
+//         borderRadius="md"
+//         mb={8}
+//         maxW="600px"
+//         mx="auto"
+//         boxShadow="md"
+//         width={["90%", "80%", "60%", "50%"]}
 //       >
-//         {showForm ? "Cancel" : "Build a New Sequence"}
-//       </Button>
+//         <Input
+//           placeholder="Sequence Name"
+//           value={sequenceName}
+//           onChange={(e) => setSequenceName(e.target.value)}
+//           mb={4}
+//           borderRadius="md"
+//           bg="white"
+//           color="black"
+//         />
+//         <Select
+//           placeholder="Select Style"
+//           value={style}
+//           onChange={(e) => setStyle(e.target.value)}
+//           mb={4}
+//           borderRadius="md"
+//           bg="white"
+//           color="black"
+//         >
+//           <option value="yin">Yin</option>
+//           <option value="restorative">Restorative</option>
+//           <option value="power">Power</option>
+//         </Select>
+//         <Select
+//           placeholder="Select Difficulty"
+//           value={difficulty}
+//           onChange={(e) => setDifficulty(e.target.value)}
+//           mb={6}
+//           borderRadius="md"
+//           bg="white"
+//           color="black"
+//         >
+//           <option value="beginner">Beginner</option>
+//           <option value="intermediate">Intermediate</option>
+//           <option value="advanced">Advanced</option>
+//         </Select>
+//         <Button
+//           colorScheme="pink"
+//           borderRadius="md"
+//           onClick={saveSequence}
+//           width="100%"
+//         >
+//           Save Sequence
+//         </Button>
+//       </Box>
 
-//       {showForm && (
-//         <VStack align="start" spacing={4} mb={6}>
-//           <Input
-//             placeholder="Sequence Name"
-//             value={sequenceName}
-//             onChange={(e) => setSequenceName(e.target.value)}
-//           />
-//           <Select
-//             placeholder="Select Type"
-//             value={sequenceType}
-//             onChange={(e) => setSequenceType(e.target.value)}
+//       <SimpleGrid
+//         columns={{ base: 1, sm: 2, md: 3 }}
+//         spacingX={1}
+//         spacingY={3}
+//         minChildWidth="250px"
+//       >
+//         {poses.map((pose) => (
+//           <Box
+//             key={pose._id}
+//             borderRadius="md"
+//             cursor="pointer"
+//             onClick={() => togglePose(pose._id)}
 //           >
-//             <option value="Power">Power</option>
-//             <option value="Yin">Yin</option>
-//             <option value="Restorative">Restorative</option>
-//           </Select>
-//           <Select
-//             placeholder="Select Difficulty"
-//             value={sequenceDifficulty}
-//             onChange={(e) => setSequenceDifficulty(e.target.value)}
-//           >
-//             <option value="Beginner">Beginner</option>
-//             <option value="Intermediate">Intermediate</option>
-//             <option value="Advanced">Advanced</option>
-//           </Select>
-//         </VStack>
-//       )}
-
-//       <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
-//         {poses.map((pose) => {
-//           const isSelected = selectedPoses.find((p) => p._id === pose._id);
-//           const imgKey = pose.image?.replace(".png", "") || "";
-//           const resolvedImage = images[imgKey] || images.MissingPhoto;
-
-//           return (
-//             <Box
-//               key={pose._id}
-//               borderWidth={2}
-//               borderColor={isSelected ? "#92636B" : "transparent"}
-//               borderRadius="xl"
-//               overflow="hidden"
-//               p={2}
-//               cursor="pointer"
-//               onClick={() => handlePoseClick(pose)}
-//               _hover={{ boxShadow: "md", transform: "scale(1.03)" }}
-//               transition="all 0.2s"
-//               bg="white"
-//             >
-//               <img
-//                 src={resolvedImage}
-//                 alt={pose.name}
-//                 style={{ width: "100%", height: "auto", borderRadius: "12px" }}
-//               />
-//               <Text mt={2} fontWeight="bold" textAlign="center">
-//                 {pose.name}
-//               </Text>
-//             </Box>
-//           );
-//         })}
+//             <PoseCard
+//               _id={pose._id}
+//               name={pose.name}
+//               image={pose.image}
+//               size="small"
+//               isSelected={selectedPoses.includes(pose._id)}
+//             />
+//           </Box>
+//         ))}
 //       </SimpleGrid>
 
-//       {selectedPoses.length > 0 && (
-//         <VStack mt={8} align="start" spacing={4}>
-//           <Heading size="md" color={headingColor}>
-//             Selected Poses:
-//           </Heading>
-//           <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-//             <SortableContext items={selectedPoses.map((pose) => pose._id)} strategy={verticalListSortingStrategy}>
-//               {selectedPoses.map((pose, index) => (
-//                 <SortablePose
-//                   key={pose._id}
-//                   pose={pose}
-//                   index={index}
-//                   onRemove={handleRemovePose}
-//                 />
-//               ))}
-//             </SortableContext>
-//           </DndContext>
+//       <Box mt={10} maxW="960px" mx="auto">
+//         <Heading size="lg" mb={4}>
+//           Saved Sequences
+//         </Heading>
 
-//           <Button
-//             mt={4}
-//             bg={buttonBg}
-//             color={buttonText}
-//             onClick={handleSave}
-//           >
-//             Save Sequence
-//           </Button>
-//         </VStack>
-//       )}
+//         {["yin", "restorative", "power"].map((group) => (
+//           <Box key={group} mb={6}>
+//             <Heading size="md" mb={2}>
+//               {group.charAt(0).toUpperCase() + group.slice(1)}
+//             </Heading>
+//             {savedSequences[group].length === 0 ? (
+//               <Text>No sequences yet.</Text>
+//             ) : (
+//               savedSequences[group].map((seq, i) => (
+//                 <Box key={i} p={4} borderWidth="1px" borderRadius="md" mb={4} bg="white">
+//                   <Text fontWeight="bold">
+//                     {seq.name} ({seq.difficulty})
+//                   </Text>
+//                   <Wrap mt={2}>
+//                     {seq.poses.map((pose) => (
+//                       <WrapItem key={pose._id}>
+//                         <PoseCard
+//                           _id={pose._id}
+//                           name={pose.name}
+//                           image={pose.image}
+//                           size="small"
+//                         />
+//                       </WrapItem>
+//                     ))}
+//                   </Wrap>
+//                 </Box>
+//               ))
+//             )}
+//           </Box>
+//         ))}
+//       </Box>
 //     </Box>
 //   );
 // };
@@ -280,137 +219,218 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Heading,
-  Input,
-  Select,
-  SimpleGrid,
+  Spinner,
   Text,
-  VStack,
+  SimpleGrid,
+  Select,
+  Input,
+  Button,
   useColorModeValue,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-
 import PoseCard from "../components/PoseCard";
-import SortablePose from "../components/SortablePose";
 
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 const SequenceBuilderPage = () => {
-  const [allPoses, setAllPoses] = useState([]);
-  const [selectedPoses, setSelectedPoses] = useState([]);
+  const [poses, setPoses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [sequenceName, setSequenceName] = useState("");
   const [style, setStyle] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const [selectedPoses, setSelectedPoses] = useState([]);
+  const [savedSequences, setSavedSequences] = useState({
+    yin: [],
+    restorative: [],
+    power: [],
+  });
 
-  const bgColor = useColorModeValue("#FAEDEC", "#2D2D2D");
-  const headingColor = useColorModeValue("#92636B", "#FAEDEC");
+  const bg = useColorModeValue("#FAEDEC", "#2D2D2D"); // page bg
+  const formBg = "#92636B"; // updated light pink
+  const textColor = useColorModeValue("#353325", "#FAEDEC");
 
   useEffect(() => {
-    const fetchPoses = async () => {
+    async function fetchPoses() {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE}/api/poses`);
-        const data = await response.json();
-        setAllPoses(data);
+        const res = await fetch(`${API_BASE}/api/poses`);
+        const data = await res.json();
+        setPoses(data);
+        console.log("✅ poses fetched (sequence):", data);
       } catch (error) {
-        console.error("Error fetching poses:", error);
+        console.error("Failed to fetch poses:", error);
+      } finally {
+        setLoading(false);
       }
-    };
+    }
     fetchPoses();
   }, []);
 
-  const handlePoseClick = (pose) => {
-    if (!selectedPoses.find((p) => p._id === pose._id)) {
-      setSelectedPoses([...selectedPoses, pose]);
-    }
+  const togglePose = (poseId) => {
+    setSelectedPoses((prev) =>
+      prev.includes(poseId) ? prev.filter((id) => id !== poseId) : [...prev, poseId]
+    );
   };
 
-  const handleRemovePose = (id) => {
-    setSelectedPoses((prev) => prev.filter((pose) => pose._id !== id));
+  const saveSequence = () => {
+    if (!sequenceName || !style || !difficulty || selectedPoses.length === 0) {
+      alert("Please fill out all fields and select poses.");
+      return;
+    }
+
+    const newSequence = {
+      name: sequenceName,
+      difficulty,
+      poses: poses.filter((p) => selectedPoses.includes(p._id)),
+    };
+
+    setSavedSequences((prev) => ({
+      ...prev,
+      [style.toLowerCase()]: [...prev[style.toLowerCase()], newSequence],
+    }));
+
+    // Reset form
+    setSequenceName("");
+    setStyle("");
+    setDifficulty("");
+    setSelectedPoses([]);
   };
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      const oldIndex = selectedPoses.findIndex((pose) => pose._id === active.id);
-      const newIndex = selectedPoses.findIndex((pose) => pose._id === over.id);
-      setSelectedPoses((items) => arrayMove(items, oldIndex, newIndex));
-    }
-  };
+  if (loading) {
+    return (
+      <Box textAlign="center" py={20} bg={bg} color={textColor}>
+        <Spinner size="xl" />
+      </Box>
+    );
+  }
 
   return (
-    <Box p={8} bg={bgColor} minHeight="100vh">
-      <Heading mb={6} color={headingColor}>
-        Build a New Sequence
+    <Box p={6} color={textColor} minH="100vh">
+      <Heading mb={6} color={textColor}>
       </Heading>
 
-      <VStack spacing={4} align="start" mb={8}>
+      {/* Styled Form Box */}
+      <Box
+        bg={formBg}
+        p={6}
+        borderRadius="2xl"
+        mb={8}
+        mx="auto"
+        boxShadow="md"
+        width={["100%", "90%", "80%", "60%"]}
+        maxW="800px"
+      >
         <Input
           placeholder="Sequence Name"
           value={sequenceName}
           onChange={(e) => setSequenceName(e.target.value)}
+          mb={4}
+          borderRadius="xl"
+          bg="white"
+          color="black"
         />
-        <Select placeholder="Style" value={style} onChange={(e) => setStyle(e.target.value)}>
-          <option value="Power">Power</option>
-          <option value="Yin">Yin</option>
-          <option value="Restorative">Restorative</option>
+        <Select
+          placeholder="Select Style"
+          value={style}
+          onChange={(e) => setStyle(e.target.value)}
+          mb={4}
+          borderRadius="xl"
+          bg="white"
+          color="black"
+        >
+          <option value="yin">Yin</option>
+          <option value="restorative">Restorative</option>
+          <option value="power">Power</option>
         </Select>
         <Select
-          placeholder="Difficulty"
+          placeholder="Select Difficulty"
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
+          mb={6}
+          borderRadius="xl"
+          bg="white"
+          color="black"
         >
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
         </Select>
-      </VStack>
+        <Button
+          bg="#FAEDEC"
+          color="black"
+          borderRadius="xl"
+          _hover={{ bg: "#f5b6b6" }}
+          onClick={saveSequence}
+          width="100%"
+        >
+          Save Sequence
+        </Button>
+      </Box>
 
-      <Heading size="md" mb={4} color={headingColor}>
-        Click Poses to Add to Sequence
-      </Heading>
-
-      <SimpleGrid columns={[2, null, 4]} spacing={4}>
-        {allPoses.map((pose) => (
+      {/* Poses */}
+      <SimpleGrid
+        columns={{ base: 1, sm: 2, md: 3 }}
+        spacingX={1}
+        spacingY={3}
+        minChildWidth="250px"
+      >
+        {poses.map((pose) => (
           <Box
             key={pose._id}
-            onClick={() => handlePoseClick(pose)}
+            borderRadius="md"
             cursor="pointer"
-            opacity={selectedPoses.find((p) => p._id === pose._id) ? 0.4 : 1}
+            onClick={() => togglePose(pose._id)}
           >
-            <PoseCard pose={pose} />
+            <PoseCard
+              _id={pose._id}
+              name={pose.name}
+              image={pose.image}
+              size="small"
+              isSelected={selectedPoses.includes(pose._id)}
+            />
           </Box>
         ))}
       </SimpleGrid>
 
-      {selectedPoses.length > 0 && (
-        <VStack mt={10} align="start" spacing={4}>
-          <Heading size="md" color={headingColor}>
-            Selected Poses:
-          </Heading>
-          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext
-              items={selectedPoses.map((pose) => pose._id)}
-              strategy={verticalListSortingStrategy}
-            >
-              {selectedPoses.map((pose, index) => (
-                <SortablePose
-                  key={pose._id}
-                  pose={pose}
-                  index={index}
-                  onRemove={handleRemovePose}
-                />
-              ))}
-            </SortableContext>
-          </DndContext>
-        </VStack>
-      )}
+      {/* Saved Sequences */}
+      <Box mt={10} maxW="960px" mx="auto">
+        <Heading size="lg" mb={4}>
+          Saved Sequences
+        </Heading>
 
-      {/* Save sequence button can go here */}
+        {["yin", "restorative", "power"].map((group) => (
+          <Box key={group} mb={6}>
+            <Heading size="md" mb={2}>
+              {group.charAt(0).toUpperCase() + group.slice(1)}
+            </Heading>
+            {savedSequences[group].length === 0 ? (
+              <Text>No sequences yet.</Text>
+            ) : (
+              savedSequences[group].map((seq, i) => (
+                <Box key={i} p={4} borderWidth="1px" borderRadius="md" mb={4} bg="white">
+                  <Text fontWeight="bold">
+                    {seq.name} ({seq.difficulty})
+                  </Text>
+                  <Wrap mt={2}>
+                    {seq.poses.map((pose) => (
+                      <WrapItem key={pose._id}>
+                        <PoseCard
+                          _id={pose._id}
+                          name={pose.name}
+                          image={pose.image}
+                          size="small"
+                        />
+                      </WrapItem>
+                    ))}
+                  </Wrap>
+                </Box>
+              ))
+            )}
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 };
