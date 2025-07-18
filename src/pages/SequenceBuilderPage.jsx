@@ -1,3 +1,4 @@
+
 // import React, { useEffect, useState } from "react";
 // import {
 //   Box,
@@ -24,10 +25,9 @@
 //   const [style, setStyle] = useState("");
 //   const [difficulty, setDifficulty] = useState("");
 //   const [selectedPoses, setSelectedPoses] = useState([]);
-//   const [savedSequences, setSavedSequences] = useState([]);
 
 //   const bg = useColorModeValue("#ffffff", "#2D2D2D"); // main page bg white / dark mode dark
-//   const formBg = "#A18E88"; // dark pink
+//   const formBg = "#BEB1AE"; // dark pink
 //   const textColor = useColorModeValue("#353325", "#FAEDEC"); // heading text color
 
 //   useEffect(() => {
@@ -36,28 +36,18 @@
 //         const res = await fetch(`${API_BASE}/api/poses`);
 //         const data = await res.json();
 //         setPoses(data);
+//         console.log("✅ poses fetched (sequence):", data);
 //       } catch (error) {
 //         console.error("Failed to fetch poses:", error);
-//       }
-//     }
-
-//     async function fetchSequences() {
-//       try {
-//         const res = await fetch(`${API_BASE}/api/sequences`);
-//         const data = await res.json();
-//         setSavedSequences(data);
-//       } catch (error) {
-//         console.error("Failed to fetch sequences:", error);
 //       } finally {
 //         setLoading(false);
 //       }
 //     }
-
 //     fetchPoses();
-//     fetchSequences();
 //   }, []);
 
 //   const togglePose = (poseId) => {
+//     // Add pose on click (allow duplicates)
 //     const poseToAdd = poses.find((p) => p._id === poseId);
 //     if (poseToAdd) {
 //       setSelectedPoses((prev) => [...prev, poseToAdd]);
@@ -85,22 +75,18 @@
 //       });
 
 //       if (!res.ok) {
-//         throw new Error("Failed to save sequence");
+//         const errorData = await res.json();
+//         throw new Error(errorData.message || "Failed to save sequence");
 //       }
 
-//       const savedSeq = await res.json();
-
-//       // Update local saved sequences state to include the new one
-//       setSavedSequences((prev) => [...prev, savedSeq]);
-
+//       alert("Sequence saved successfully!");
 //       // Reset form and selections
 //       setSequenceName("");
 //       setStyle("");
 //       setDifficulty("");
 //       setSelectedPoses([]);
 //     } catch (error) {
-//       console.error(error);
-//       alert("Error saving sequence. Try again.");
+//       alert(`Error: ${error.message}`);
 //     }
 //   };
 
@@ -127,7 +113,7 @@
 //         Sequence Builder
 //       </Heading>
 
-//       {/* Form Box */}
+//       {/* Form Box with light gray/brown background */}
 //       <Box
 //         bg={formBg}
 //         p={6}
@@ -138,6 +124,7 @@
 //         boxShadow="md"
 //         width={["90%", "80%", "60%", "50%"]}
 //       >
+//         {/* Selected Poses */}
 //         {selectedPoses.length > 0 && (
 //           <Box mb={6}>
 //             <Heading size="md" mb={4}>
@@ -195,12 +182,17 @@
 //           <option value="Intermediate">Intermediate</option>
 //           <option value="Advanced">Advanced</option>
 //         </Select>
-//         <Button bg="#FAEDEC" borderRadius="md" onClick={saveSequence} width="100%">
+//         <Button
+//           bg="#FAEDEC"
+//           borderRadius="md"
+//           onClick={saveSequence}
+//           width="100%"
+//         >
 //           Save Sequence
 //         </Button>
 //       </Box>
 
-//       {/* Poses grid */}
+//       {/* Poses grid for selecting */}
 //       <SimpleGrid
 //         columns={{ base: 1, sm: 2, md: 3 }}
 //         spacingX={1}
@@ -226,38 +218,6 @@
 //           </Box>
 //         ))}
 //       </SimpleGrid>
-
-//       {/* Saved Sequences */}
-//       <Box mt={10} maxW="960px" mx="auto">
-//         <Heading size="lg" mb={4}>
-//           Saved Sequences
-//         </Heading>
-
-//         {savedSequences.length === 0 ? (
-//           <Text>No sequences saved yet.</Text>
-//         ) : (
-//           savedSequences.map((seq) => (
-//             <Box key={seq._id} p={4} borderWidth="1px" borderRadius="md" mb={4} bg="white">
-//               <Text fontWeight="bold" mb={2}>
-//                 {seq.name} ({seq.difficulty})
-//               </Text>
-//               <Wrap>
-//                 {seq.poses.map((pose) => (
-//                   <WrapItem key={pose._id}>
-//                     <PoseCard
-//                       _id={pose._id}
-//                       name={pose.name}
-//                       image={pose.image}
-//                       size="small"
-//                       disableLink={true}
-//                     />
-//                   </WrapItem>
-//                 ))}
-//               </Wrap>
-//             </Box>
-//           ))
-//         )}
-//       </Box>
 //     </Box>
 //   );
 // };
@@ -292,7 +252,7 @@ const SequenceBuilderPage = () => {
   const [selectedPoses, setSelectedPoses] = useState([]);
 
   const bg = useColorModeValue("#ffffff", "#2D2D2D"); // main page bg white / dark mode dark
-  const formBg = "#A18E88"; // dark pink
+  const formBg = "#BEB1AE"; // dark pink
   const textColor = useColorModeValue("#353325", "#FAEDEC"); // heading text color
 
   useEffect(() => {
@@ -312,7 +272,6 @@ const SequenceBuilderPage = () => {
   }, []);
 
   const togglePose = (poseId) => {
-    // Add pose on click (allow duplicates)
     const poseToAdd = poses.find((p) => p._id === poseId);
     if (poseToAdd) {
       setSelectedPoses((prev) => [...prev, poseToAdd]);
@@ -345,7 +304,6 @@ const SequenceBuilderPage = () => {
       }
 
       alert("Sequence saved successfully!");
-      // Reset form and selections
       setSequenceName("");
       setStyle("");
       setDifficulty("");
@@ -355,7 +313,6 @@ const SequenceBuilderPage = () => {
     }
   };
 
-  // Remove selected pose at index i from the sequence being built
   const removeSelectedPoseAtIndex = (index) => {
     setSelectedPoses((prev) => {
       const copy = [...prev];
@@ -372,13 +329,26 @@ const SequenceBuilderPage = () => {
     );
   }
 
+  // The custom arrow SVG styling for no double arrows:
+  const selectArrowStyle = {
+    appearance: "none",
+    WebkitAppearance: "none",
+    MozAppearance: "none",
+    backgroundImage: `url("data:image/svg+xml,%3csvg fill='${encodeURIComponent(
+      textColor
+    )}' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5 7l5 5 5-5z'/%3e%3c/svg%3e")`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "right 0.75rem center",
+    backgroundSize: "1rem",
+    paddingRight: "2.25rem",
+  };
+
   return (
     <Box p={6} color={textColor} minH="100vh" bg={bg}>
       <Heading mb={6} color={textColor} textAlign="center">
         Sequence Builder
       </Heading>
 
-      {/* Form Box with light gray/brown background */}
       <Box
         bg={formBg}
         p={6}
@@ -389,7 +359,6 @@ const SequenceBuilderPage = () => {
         boxShadow="md"
         width={["90%", "80%", "60%", "50%"]}
       >
-        {/* Selected Poses */}
         {selectedPoses.length > 0 && (
           <Box mb={6}>
             <Heading size="md" mb={4}>
@@ -421,6 +390,7 @@ const SequenceBuilderPage = () => {
           bg="white"
           color="black"
         />
+
         <Select
           placeholder="Select Style"
           value={style}
@@ -429,11 +399,13 @@ const SequenceBuilderPage = () => {
           borderRadius="md"
           bg="white"
           color="black"
+          sx={selectArrowStyle}
         >
           <option value="Yin">Yin</option>
           <option value="Restorative">Restorative</option>
           <option value="Power">Power</option>
         </Select>
+
         <Select
           placeholder="Select Difficulty"
           value={difficulty}
@@ -442,22 +414,18 @@ const SequenceBuilderPage = () => {
           borderRadius="md"
           bg="white"
           color="black"
+          sx={selectArrowStyle}
         >
           <option value="Beginner">Beginner</option>
           <option value="Intermediate">Intermediate</option>
           <option value="Advanced">Advanced</option>
         </Select>
-        <Button
-          bg="#FAEDEC"
-          borderRadius="md"
-          onClick={saveSequence}
-          width="100%"
-        >
+
+        <Button bg="#FAEDEC" borderRadius="md" onClick={saveSequence} width="100%">
           Save Sequence
         </Button>
       </Box>
 
-      {/* Poses grid for selecting */}
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3 }}
         spacingX={1}
@@ -473,13 +441,7 @@ const SequenceBuilderPage = () => {
             cursor="pointer"
             onClick={() => togglePose(pose._id)}
           >
-            <PoseCard
-              _id={pose._id}
-              name={pose.name}
-              image={pose.image}
-              size="small"
-              disableLink={true}
-            />
+            <PoseCard _id={pose._id} name={pose.name} image={pose.image} size="small" disableLink={true} />
           </Box>
         ))}
       </SimpleGrid>
