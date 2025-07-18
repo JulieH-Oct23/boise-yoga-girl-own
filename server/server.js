@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import process from "process";
 import posesRoutes from "./routes/poses.js";
+import sequencesRoutes from "./routes/sequences.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -31,6 +32,7 @@ mongoose
 
 // Register your API routes
 app.use("/api/poses", posesRoutes);
+app.use("/api/sequences", sequencesRoutes);
 
 // Root route - must come after API routes
 app.get("/", (req, res) => {
@@ -44,7 +46,6 @@ app.use((req, res) => {
 
 // Use PORT from env or fallback to 4000 to avoid port conflicts
 const PORT = process.env.PORT || 4000;
-
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

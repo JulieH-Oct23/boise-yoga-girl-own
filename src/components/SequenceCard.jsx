@@ -1,36 +1,84 @@
-import { Box, Text, Image, useColorModeValue } from "@chakra-ui/react";
+// import React from "react";
+// import { Box, Image, Text, useColorModeValue } from "@chakra-ui/react";
+
+// const SequenceCard = ({ name, difficulty, imageSrc, onClick }) => {
+//   const bgColor = useColorModeValue("#FAEDEC", "#353325");
+//   const textColor = useColorModeValue("#353325", "#FAEDEC");
+
+//   return (
+//     <Box
+//       onClick={onClick}
+//       cursor="pointer"
+//       borderWidth="1px"
+//       borderRadius="2xl"
+//       overflow="hidden"
+//       bg={bgColor}
+//       color={textColor}
+//       width="200px"  // Reduced from full width
+//       minHeight="240px"
+//       boxShadow="md"
+//       transition="transform 0.2s"
+//       _hover={{ transform: "scale(1.05)" }}
+//     >
+//       {imageSrc && (
+//         <Image
+//           src={imageSrc}
+//           alt={name}
+//           objectFit="cover"
+//           height="140px"
+//           width="100%"
+//         />
+//       )}
+//       <Box p={4}>
+//         <Text fontSize="lg" fontWeight="bold" mb={1}>
+//           {name}
+//         </Text>
+//         <Text fontSize="sm">Difficulty: {difficulty}</Text>
+//       </Box>
+//     </Box>
+//   );
+// };
+
+// export default SequenceCard;
+import React from "react";
+import { Box, Image, Text, useColorModeValue } from "@chakra-ui/react";
 
 const SequenceCard = ({ name, difficulty, imageSrc, onClick }) => {
-  const bg = useColorModeValue("#FAEDEC", "#353325");
-  const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
+  const bgColor = useColorModeValue("#FAEDEC", "#353325");
+  const textColor = useColorModeValue("#353325", "#FAEDEC");
 
   return (
     <Box
-      bg={bg}
-      p={4}
-      borderRadius="xl"
-      boxShadow="md"
-      cursor="pointer"
       onClick={onClick}
-      _hover={{ boxShadow: "lg", transform: "scale(1.02)" }}
+      cursor="pointer"
+      borderWidth="1px"
+      borderRadius="2xl"
+      overflow="hidden"
+      bg={bgColor}
+      color={textColor}
+      width="200px"
+      minHeight="240px"
+      boxShadow="md"
+      transition="transform 0.2s"
+      _hover={{ transform: "scale(1.05)" }}
     >
       {imageSrc && (
-        <Image
-          src={imageSrc}
-          alt={name}
-          borderRadius="lg"
-          mb={3}
-          objectFit="cover"
-          w="100%"
-          h="120px"
-        />
+        <Box height="120px" width="100%" display="flex" alignItems="center" justifyContent="center" bg="#fff">
+          <Image
+            src={imageSrc}
+            alt={name}
+            maxHeight="100%"
+            maxWidth="100%"
+            objectFit="contain"
+          />
+        </Box>
       )}
-      <Text fontSize="xl" fontWeight="bold" color={textColor}>
-        {name}
-      </Text>
-      <Text fontSize="sm" color={textColor}>
-        Difficulty: {difficulty}
-      </Text>
+      <Box p={3}>
+        <Text fontSize="md" fontWeight="bold" mb={1}>
+          {name}
+        </Text>
+        <Text fontSize="sm">Difficulty: {difficulty}</Text>
+      </Box>
     </Box>
   );
 };

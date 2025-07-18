@@ -1,93 +1,130 @@
+// import { Box, Heading, Text, useColorModeValue, SimpleGrid } from "@chakra-ui/react";
+// import { useNavigate } from "react-router-dom";
+// import SequenceCard from "../components/SequenceCard";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import images from "../images"; // Your images map to get pose images by id or name
+
+// const YinYogaPage = () => {
+//   const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
+//   const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
+//   const navigate = useNavigate();
+
+//   const [yinSequences, setYinSequences] = useState([]);
+
+//   useEffect(() => {
+//     async function fetchYinSequences() {
+//       try {
+//         const res = await axios.get("http://localhost:4000/api/sequences");
+//         const filtered = res.data.filter(seq => seq.style.toLowerCase() === "yin");
+//         setYinSequences(filtered);
+//       } catch (err) {
+//         console.error("Error fetching Yin sequences:", err);
+//       }
+//     }
+//     fetchYinSequences();
+//   }, []);
+
+//   const getRandomPoseImage = (poses) => {
+//     if (!poses || poses.length === 0) return "";
+//     const randomPose = poses[Math.floor(Math.random() * poses.length)];
+//     return images[randomPose._id] || images[randomPose.name] || "";
+//   };
+
+//   return (
+//     <Box p={6}>
+//       <Heading mb={4} color={headingColor}>
+//         Yin Yoga Sequences
+//       </Heading>
+//       <Text fontSize="lg" color={textColor} mb={6}>
+//         Explore saved Yin yoga sequences.
+//       </Text>
+
+//       <Box bg="#FAEDEC" p={4} borderRadius="xl" width="100%" display="inline-block">
+//         {yinSequences.length === 0 ? (
+//           <Text color={textColor}>No saved sequences yet.</Text>
+//         ) : (
+//           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}>
+//             {yinSequences.map((seq) => (
+//               <SequenceCard
+//                 key={seq._id}
+//                 name={seq.name}
+//                 difficulty={seq.difficulty}
+//                 imageSrc={getRandomPoseImage(seq.poses)}
+//                 onClick={() => navigate(`/sequence/${seq._id}`)}
+//                 size="small"
+//               />
+//             ))}
+//           </SimpleGrid>
+//         )}
+//       </Box>
+//     </Box>
+//   );
+// };
+
+// export default YinYogaPage;
 import { Box, Heading, Text, useColorModeValue, SimpleGrid } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import PoseCard from "../components/PoseCard";
-import SequenceCard from "../components/SequenceCard"; // newly created component
+import SequenceCard from "../components/SequenceCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import images from "../images"; // Your images map to get pose images by id or name
 
 const YinYogaPage = () => {
   const headingColor = useColorModeValue("brand.light.mainTitleText", "brand.dark.mainTitleText");
   const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
   const navigate = useNavigate();
-  
 
-  // Static featured sequences
-  const yinSequences = [
-    {
-      id: "lunar-stillness",
-      name: "Lunar Stillness",
-      focus: "Hips & Lower Back",
-      difficulty: "Beginner",
-      poseIds: ["66yin12345...", "66yin23456...", "66yin34567..."], // example IDs
-    },
-    {
-      id: "deep-release",
-      name: "Deep Release",
-      focus: "Spine & Fascia",
-      difficulty: "Intermediate",
-      poseIds: ["66yin99999...", "66yin88888...", "66yin77777..."],
-    },
-  ];
-
-  // Saved sequences (fetched from database)
-  const [savedSequences, setSavedSequences] = useState([]);
+  const [yinSequences, setYinSequences] = useState([]);
 
   useEffect(() => {
-    const fetchSequences = async () => {
+    async function fetchYinSequences() {
       try {
         const res = await axios.get("http://localhost:4000/api/sequences");
-        const yinOnly = res.data.filter(seq => seq.style === "Yin");
-        setSavedSequences(yinOnly);
+        const filtered = res.data.filter(seq => seq.style.toLowerCase() === "yin");
+        setYinSequences(filtered);
       } catch (err) {
-        console.error("Failed to fetch saved sequences", err);
+        console.error("Error fetching Yin sequences:", err);
       }
-    };
-
-    fetchSequences();
+    }
+    fetchYinSequences();
   }, []);
+
+  const getRandomPoseImage = (poses) => {
+    if (!poses || poses.length === 0) return "";
+    const randomPose = poses[Math.floor(Math.random() * poses.length)];
+    return images[randomPose._id] || images[randomPose.name] || "";
+  };
 
   return (
     <Box p={6}>
       <Heading mb={4} color={headingColor}>
-        Yin Yoga
+        Yin Yoga Sequences
       </Heading>
       <Text fontSize="lg" color={textColor} mb={6}>
-        This page features long-held, passive poses to target deep connective tissue and stillness.
+        Explore saved Yin yoga sequences.
       </Text>
 
-      {/* Featured Sequences */}
-      <Box bg="#FAEDEC" p={4} borderRadius="xl" mb={10}>
-        <Heading size="md" mb={4} color={headingColor}>
-          Featured Yin Sequences
-        </Heading>
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-          {yinSequences.map((seq) => (
-            <PoseCard
-              key={seq.id}
-              name={seq.name}
-              level={seq.difficulty}
-              onClick={() => navigate(`/yin-sequence/${seq.id}`)}
-            />
-          ))}
-        </SimpleGrid>
-      </Box>
-
-      {/* Saved Yin Sequences */}
-      <Box bg="#FAEDEC" p={4} borderRadius="xl">
-        <Heading size="md" mb={4} color={headingColor}>
-          Saved Yin Sequences
-        </Heading>
-        {savedSequences.length === 0 ? (
+      <Box
+        bg="#FAEDEC"
+        p={4}
+        borderRadius="xl"
+        mx="auto"
+        width="fit-content"
+        maxWidth="100%"
+      >
+        {yinSequences.length === 0 ? (
           <Text color={textColor}>No saved sequences yet.</Text>
         ) : (
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-            {savedSequences.map((seq) => (
+            {yinSequences.map((seq) => (
               <SequenceCard
                 key={seq._id}
                 name={seq.name}
                 difficulty={seq.difficulty}
-                poseIds={seq.poseIds}
+                imageSrc={getRandomPoseImage(seq.poses)}
                 onClick={() => navigate(`/sequence/${seq._id}`)}
+                size="small"
               />
             ))}
           </SimpleGrid>

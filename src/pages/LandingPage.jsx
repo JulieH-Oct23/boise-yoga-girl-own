@@ -11,7 +11,6 @@ import { Link as RouterLink } from "react-router-dom";
 import landingBackground from "../images/landingpagebackground.jpeg";
 
 const LandingPage = () => {
-  // Original color logic restored
   const headingColor = useColorModeValue(
     "brand.light.headerTitleText",
     "brand.dark.headerTitleText"
@@ -20,6 +19,18 @@ const LandingPage = () => {
     "brand.light.sidebarText",
     "brand.dark.sidebarText"
   );
+
+  const menuButtonStyle = {
+    bg: "#FAEDEC",
+    color: "#A18E88",
+    borderRadius: "md",
+    size: "sm",
+    fontSize: "18px",
+    fontWeight: "semibold",
+    px: 4, // horizontal padding (left + right)
+    py: 1, // vertical padding (top + bottom)
+    _hover: { bg: "#f5dbdb" },
+  };
 
   return (
     <Box
@@ -57,37 +68,26 @@ const LandingPage = () => {
         pt={{ base: "60px", md: "120px", lg: "160px" }}
       >
         <Heading mb={6} color={headingColor} fontSize={{ base: "3xl", md: "4xl" }}>
-          Explore the world of yoga, select a path to begin...
+          Explore the world of yoga...
         </Heading>
 
-        <Text fontSize="lg" color={textColor} mb={6}>
-        </Text>
+        <Text fontSize="lg" color={textColor} mb={6}></Text>
 
         <VStack spacing={4}>
           <ChakraLink as={RouterLink} to="/allposes">
-            <Button colorScheme="pink" size="lg" variant="solid" fontSize="18px">
-              Pose Encyclopedia
-            </Button>
+            <Button {...menuButtonStyle}>Pose Encyclopedia</Button>
           </ChakraLink>
           <ChakraLink as={RouterLink} to="/poweryoga">
-            <Button colorScheme="pink" size="lg" variant="outline" fontSize="18px">
-              Power Yoga Sequences
-            </Button>
+            <Button {...menuButtonStyle}>Power Yoga Sequences</Button>
           </ChakraLink>
           <ChakraLink as={RouterLink} to="/yinyoga">
-            <Button colorScheme="pink" size="lg" variant="outline" fontSize="18px">
-              Yin Yoga Sequences
-            </Button>
+            <Button {...menuButtonStyle}>Yin Yoga Sequences</Button>
           </ChakraLink>
           <ChakraLink as={RouterLink} to="/restorativeyoga">
-            <Button colorScheme="pink" size="lg" variant="outline" fontSize="18px">
-              Restorative Yoga Sequences
-            </Button>
+            <Button {...menuButtonStyle}>Restorative Yoga Sequences</Button>
           </ChakraLink>
           <ChakraLink as={RouterLink} to="/sequencebuilder">
-            <Button colorScheme="pink" size="lg" variant="outline" fontSize="18px">
-              Build A Personalized Sequence
-            </Button>
+            <Button {...menuButtonStyle}>Build A Personalized Sequence</Button>
           </ChakraLink>
         </VStack>
       </Box>
