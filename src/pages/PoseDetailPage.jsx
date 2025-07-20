@@ -29,21 +29,38 @@ const PoseDetailPage = () => {
   );
   const cueBoxBg = useColorModeValue("brand.light.box", "brand.dark.box");
 
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/poses/${poseId}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Pose not found");
-        return res.json();
-      })
-      .then((data) => {
-        setPose(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching pose:", err);
-        setLoading(false);
-      });
-  }, [poseId]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:4000/api/poses/${poseId}`)
+  //     .then((res) => {
+  //       if (!res.ok) throw new Error("Pose not found");
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setPose(data);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error fetching pose:", err);
+  //       setLoading(false);
+  //     });
+  // }, [poseId]);
+  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+
+useEffect(() => {
+  fetch(`${API_BASE}/api/poses/${poseId}`)
+    .then((res) => {
+      if (!res.ok) throw new Error("Pose not found");
+      return res.json();
+    })
+    .then((data) => {
+      setPose(data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Error fetching pose:", err);
+      setLoading(false);
+    });
+}, [poseId]);
 
   if (loading) return <Spinner size="xl" />;
   if (!pose) return <Text>Pose not found</Text>;
