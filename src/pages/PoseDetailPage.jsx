@@ -29,21 +29,6 @@ const PoseDetailPage = () => {
   );
   const cueBoxBg = useColorModeValue("brand.light.box", "brand.dark.box");
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:4000/api/poses/${poseId}`)
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error("Pose not found");
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setPose(data);
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error fetching pose:", err);
-  //       setLoading(false);
-  //     });
-  // }, [poseId]);
   const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 useEffect(() => {
@@ -72,15 +57,6 @@ useEffect(() => {
   const imageSrc = images[imageKey] || images["MissingPhoto"];
 
   return (
-    // <Box
-    //   p={6}
-    //   bg={bg}
-    //   color={textColor}
-    //   borderRadius="md"
-    //   maxWidth="800px"
-    //   mx="auto"
-    //   boxShadow="md"
-    // >
     <Box
   p={6}
   mt="30px"   // 👈 This moves the entire box down from the top

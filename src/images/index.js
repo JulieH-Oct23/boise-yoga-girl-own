@@ -1,3 +1,4 @@
+
 import BabyDragon from "./BabyDragon.png";
 import BackwardBending from "./BackwardBending.png";
 import Boat from "./Boat.png";
@@ -85,14 +86,15 @@ import Wheel from "./Wheel.png";
 import WideLegForwardFold from "./WideLegForwardFold.png";
 import WindRemoving from "./WindRemoving.png";
 import WingedDragon from "./WingedDragon.png";
-import landingpagebackground from "./landingpagebackground.jpeg"
+import landingpagebackground from "./landingpagebackground.jpeg";
 
+// ✅ Export as key-value dictionary
 export default {
   BabyDragon,
   BackwardBending,
   Boat,
-  Butterfly,
   Bridge,
+  Butterfly,
   Camel,
   Cat,
   Child,
@@ -117,27 +119,26 @@ export default {
   FourLimbbedStaff,
   Garland,
   Goddess,
-  Headstand,
+  HalfButterfly,
+  HalfFrog,
   HalfLordOfFishes,
   HalfMoon,
-  HalfFrog,
-  HalfButterfly,
+  Headstand,
   HeartMelting,
   Hero,
   HighLunge,
   HighPlank,
-  landingpagebackground,
   LegUpWall,
   Locust,
   LowLunge,
   LowPlank,
   Mermaid,
-  Mountain,
   MissingPhoto,
+  Mountain,
   Pigeon,
+  Plank,
   Plow,
   Puppy,
-  Plank,
   Pyramid,
   ReverseTableTop,
   RevolvedSeatedHeadToKnee,
@@ -162,12 +163,12 @@ export default {
   StandingSideStretch,
   StandingSplit,
   SupineTwist,
+  TempSquare,
   ThreeLegDownDog,
   ToeStand,
   TopSeatedHeadToKnee,
   Tree,
   Triangle,
-  TempSquare,
   UpwardFacingDog,
   Warrior1,
   Warrior2,
@@ -176,4 +177,5 @@ export default {
   WideLegForwardFold,
   WindRemoving,
   WingedDragon,
+  landingpagebackground,
 };

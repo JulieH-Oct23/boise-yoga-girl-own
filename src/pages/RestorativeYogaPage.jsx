@@ -1,3 +1,4 @@
+
 import { Box, Heading, Text, useColorModeValue, SimpleGrid, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import SequenceCard from "../components/SequenceCard";
@@ -28,9 +29,9 @@ const RestorativeYogaPage = () => {
   }, [API_BASE]);
 
   const getRandomPoseImage = (poses) => {
-    if (!poses || poses.length === 0) return "";
+    if (!poses || poses.length === 0) return images.MissingPhoto;
     const randomPose = poses[Math.floor(Math.random() * poses.length)];
-    return images[randomPose._id] || images[randomPose.name] || "";
+    return images[randomPose._id] || images[randomPose.name] || images.MissingPhoto;
   };
 
   return (
@@ -41,8 +42,8 @@ const RestorativeYogaPage = () => {
 
       <Heading mb={4} color={headingColor}>Restorative Yoga Sequences</Heading>
       <Text fontSize="lg" color={textColor} mb={6}>
-        <p>Restorative Yoga is a deeply relaxing and gentle practice designed to promote healing and balance in both body and mind. By using supportive props such as bolsters, blankets, and blocks, practitioners hold passive poses for extended periods, allowing the muscles to fully release tension. This slow, mindful approach calms the nervous system, reduces physical stress, and fosters profound relaxation. It’s especially beneficial for those recovering from injury, managing chronic pain, or looking to restore energy.
-          Beyond physical benefits, Restorative Yoga offers powerful support for mental health. It has been shown to reduce symptoms of anxiety and depression by encouraging deep relaxation, lowering cortisol levels, and cultivating mindfulness. The practice helps soothe the nervous system, quiet racing thoughts, and create a safe space for emotional healing. In a Restorative class, you can expect gentle, slow-paced sequences where the focus is on surrender, breath awareness, and creating a sense of inner peace and calm — making it an ideal practice for anyone seeking relief from stress, anxiety, or emotional overwhelm.</p>
+          Restorative Yoga is a deeply relaxing and gentle practice designed to promote healing and balance in both body and mind. By using supportive props such as bolsters, blankets, and blocks, practitioners hold passive poses for extended periods, allowing the muscles to fully release tension. This slow, mindful approach calms the nervous system, reduces physical stress, and fosters profound relaxation. It’s especially beneficial for those recovering from injury, managing chronic pain, or looking to restore energy.
+          Beyond physical benefits, Restorative Yoga offers powerful support for mental health. It has been shown to reduce symptoms of anxiety and depression by encouraging deep relaxation, lowering cortisol levels, and cultivating mindfulness. The practice helps soothe the nervous system, quiet racing thoughts, and create a safe space for emotional healing. In a Restorative class, you can expect gentle, slow-paced sequences where the focus is on surrender, breath awareness, and creating a sense of inner peace and calm — making it an ideal practice for anyone seeking relief from stress, anxiety, or emotional overwhelm.
       </Text>
 
       <Box bg="#FAEDEC" p={4} borderRadius="xl" maxW="fit-content">

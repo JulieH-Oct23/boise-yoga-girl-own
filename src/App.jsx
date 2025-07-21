@@ -149,7 +149,7 @@ function AppContent() {
             <Route path="/yinyoga" element={<YinYogaPage />} />
             <Route path="/sequencebuilder" element={<SequenceBuilderPage />} />
             <Route path="/pose/:poseId" element={<PoseDetailPage />} />
-            <Route path="/sequences/:id" element={<SequenceDetail />} />
+            <Route path="/sequence/:id" element={<SequenceDetail />} />
           </Routes>
         </Box>
       </Box>

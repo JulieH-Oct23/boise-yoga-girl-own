@@ -28,9 +28,9 @@ const PowerYogaPage = () => {
   }, [API_BASE]);
 
   const getRandomPoseImage = (poses) => {
-    if (!poses || poses.length === 0) return "";
+    if (!poses || poses.length === 0) return images.MissingPhoto;
     const randomPose = poses[Math.floor(Math.random() * poses.length)];
-    return images[randomPose._id] || images[randomPose.name] || "";
+    return images[randomPose._id] || images[randomPose.name] || images.MissingPhoto;
   };
 
   return (
@@ -41,8 +41,8 @@ const PowerYogaPage = () => {
 
       <Heading mb={4} color={headingColor}>Power Yoga Sequences</Heading>
       <Text fontSize="lg" color={textColor} mb={6}>
-       <p>Power Yoga is a dynamic and vigorous style of yoga that emphasizes strength, flexibility, and stamina. It draws inspiration from traditional Ashtanga yoga but offers a more flexible and accessible approach, focusing on continuous movement, breath synchronization, and challenging poses to build muscular endurance and cardiovascular fitness. This style is designed to energize the body and mind, making it a great choice for those looking to build power and increase overall athletic performance.
-        In a Power Yoga class, you can expect a fast-paced, flowing sequence of poses that engage the whole body, often linking breath with movement in a continuous flow. Classes typically include a mix of strength-building postures like planks, arm balances, and core work, combined with dynamic transitions and standing poses. This practice cultivates mental focus, resilience, and physical vitality, leaving you feeling empowered, strong, and energized.</p>
+          Power Yoga is a dynamic and vigorous style of yoga that emphasizes strength, flexibility, and stamina. It draws inspiration from traditional Ashtanga yoga but offers a more flexible and accessible approach, focusing on continuous movement, breath synchronization, and challenging poses to build muscular endurance and cardiovascular fitness. This style is designed to energize the body and mind, making it a great choice for those looking to build power and increase overall athletic performance.
+          In a Power Yoga class, you can expect a fast-paced, flowing sequence of poses that engage the whole body, often linking breath with movement in a continuous flow. Classes typically include a mix of strength-building postures like planks, arm balances, and core work, combined with dynamic transitions and standing poses. This practice cultivates mental focus, resilience, and physical vitality, leaving you feeling empowered, strong, and energized.
       </Text>
 
       <Box bg="#FAEDEC" p={4} borderRadius="xl" maxW="fit-content">
@@ -56,7 +56,7 @@ const PowerYogaPage = () => {
                 name={seq.name}
                 difficulty={seq.difficulty}
                 imageSrc={getRandomPoseImage(seq.poses)}
-                onClick={() => navigate(`/sequences/${seq._id}`)}
+                onClick={() => navigate(`/sequence/${seq._id}`)}
                 size="small"
               />
             ))}

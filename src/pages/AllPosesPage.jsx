@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -11,7 +12,7 @@ import PoseCard from "../components/PoseCard";
 import { useNavigate } from "react-router-dom";
 import poseImages from "../images";
 
-// ✅ API setup
+// API base URL
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 const AllPosesPage = () => {
@@ -22,6 +23,14 @@ const AllPosesPage = () => {
   const [filterOptions, setFilterOptions] = useState([]);
 
   const navigate = useNavigate();
+
+  // Helper to convert pose name/photoName to images key format
+  const getImageKey = (pose) => {
+    if (!pose) return "MissingPhoto";
+    const keyRaw = pose.photoName || pose.name || "";
+    // remove spaces, dashes, apostrophes to match your images keys
+    return keyRaw.replace(/\s+/g, "").replace(/-/g, "").replace(/'/g, "") || "MissingPhoto";
+  };
 
   useEffect(() => {
     async function fetchPoses() {
@@ -59,15 +68,16 @@ const AllPosesPage = () => {
     setFilterOptions(Array.from(values).sort());
   }, [filterKey, poses]);
 
-  const filteredPoses = filterKey && filterValue
-    ? poses.filter((pose) => {
-        const field = pose[filterKey];
-        if (Array.isArray(field)) {
-          return field.includes(filterValue);
-        }
-        return field === filterValue;
-      })
-    : poses;
+  const filteredPoses =
+    filterKey && filterValue
+      ? poses.filter((pose) => {
+          const field = pose[filterKey];
+          if (Array.isArray(field)) {
+            return field.includes(filterValue);
+          }
+          return field === filterValue;
+        })
+      : poses;
 
   if (loading) {
     return (
@@ -154,7 +164,11 @@ const AllPosesPage = () => {
           }}
         >
           {filterOptions.map((val, i) => (
-            <option key={i} value={val} style={{ backgroundColor: "#A18E88", color: "#FAEDEC" }}>
+            <option
+              key={i}
+              value={val}
+              style={{ backgroundColor: "#A18E88", color: "#FAEDEC" }}
+            >
               {val}
             </option>
           ))}
@@ -173,9 +187,11 @@ const AllPosesPage = () => {
             cursor="pointer"
             onClick={() => navigate(`/pose/${pose._id}`)}
           >
-            {/* <PoseCard _id={pose._id} name={pose.name} image={pose.image} /> */}
-            <PoseCard key={pose._id} pose={pose} image={poseImages[pose.image]} />
-            console.log("POSE TEST:", pose);
+            <PoseCard
+              key={pose._id}
+              pose={pose}
+              image={poseImages[getImageKey(pose)] || poseImages.MissingPhoto}
+            />
           </Box>
         ))}
       </SimpleGrid>
