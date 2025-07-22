@@ -1,101 +1,3 @@
-
-// import React, { useEffect, useState } from "react";
-// import {
-//   Box,
-//   Heading,
-//   Text,
-//   Image,
-//   Spinner,
-//   Button,
-//   VStack,
-//   useColorModeValue,
-//   Stack,
-// } from "@chakra-ui/react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import poseImages from "../images";
-
-// const SequenceDetail = () => {
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-//   const [sequence, setSequence] = useState(null);
-//   const [loading, setLoading] = useState(true);
-
-//   const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
-
-//   useEffect(() => {
-//     const fetchSequence = async () => {
-//       try {
-//         const response = await fetch(`${API_BASE}/api/sequences/${id}`);
-//         const data = await response.json();
-//         setSequence(data);
-//       } catch (error) {
-//         console.error("Error fetching sequence:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchSequence();
-//   }, [id, API_BASE]);
-
-//   const bgColor = useColorModeValue("#FAEDEC", "#353325");
-//   const cardColor = useColorModeValue("#FFFFFF", "#4A4A4A");
-//   const textColor = useColorModeValue("#353325", "#FAEDEC");
-
-//   if (loading) {
-//     return (
-//       <Box p={4}>
-//         <Spinner />
-//       </Box>
-//     );
-//   }
-
-//   if (!sequence) {
-//     return (
-//       <Box p={4}>
-//         <Text>Sequence not found.</Text>
-//       </Box>
-//     );
-//   }
-
-//   return (
-//     <Box p={4} bg={bgColor} minHeight="100vh">
-//       <Button onClick={() => navigate(-1)} mb={4} colorScheme="pink">
-//         ← Back
-//       </Button>
-//       <VStack spacing={4} align="start" bg={cardColor} p={4} rounded="xl" shadow="md">
-//         <Heading color={textColor}>{sequence.name}</Heading>
-//         <Text color={textColor}><strong>Style:</strong> {sequence.style}</Text>
-//         <Text color={textColor}><strong>Difficulty:</strong> {sequence.difficulty}</Text>
-
-//         <Box mt={4} w="100%">
-//           <Heading size="md" mb={2} color={textColor}>Poses:</Heading>
-//           <VStack spacing={3} align="stretch">
-//             {sequence.poses.map((pose, index) => {
-//               const key = pose.image || pose.photoName || pose.name?.replace(/\s+/g, "") || "";
-//               const imageSrc = poseImages[key] || poseImages.MissingPhoto;
-
-//               return (
-//                 <Stack key={index} direction="row" spacing={4} align="center">
-//                   <Image
-//                     src={imageSrc}
-//                     alt={pose.name}
-//                     boxSize="80px"
-//                     objectFit="cover"
-//                     borderRadius="md"
-//                   />
-//                   <Text color={textColor} fontWeight="medium">{pose.name}</Text>
-//                 </Stack>
-//               );
-//             })}
-//           </VStack>
-//         </Box>
-//       </VStack>
-//     </Box>
-//   );
-// };
-
-// export default SequenceDetail;
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -258,7 +160,10 @@ const SortablePoseRow = ({ pose, onRemove, textColor }) => {
     transition,
   };
 
-  const key = pose.image || pose.photoName || pose.name?.replace(/\s+/g, "") || "";
+  // Strip .png extension if present to match poseImages keys
+  const key = (pose.image ? pose.image.replace(/\.png$/i, "") :
+               pose.photoName ? pose.photoName.replace(/\s+/g, "") :
+               pose.name ? pose.name.replace(/\s+/g, "") : "") || "MissingPhoto";
 
   return (
     <HStack
@@ -277,7 +182,7 @@ const SortablePoseRow = ({ pose, onRemove, textColor }) => {
         src={poseImages[key] || poseImages.MissingPhoto}
         alt={pose.name}
         boxSize="60px"
-        objectFit="cover"
+        objectFit="contain"
         borderRadius="md"
       />
       <Text flex="1" color={textColor}>
@@ -294,5 +199,49 @@ const SortablePoseRow = ({ pose, onRemove, textColor }) => {
     </HStack>
   );
 };
+// const SortablePoseRow = ({ pose, onRemove, textColor }) => {
+//   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: pose._id });
+
+//   const style = {
+//     transform: CSS.Transform.toString(transform),
+//     transition,
+//   };
+
+//   const key = pose.image || pose.photoName || pose.name?.replace(/\s+/g, "") || "";
+
+//   return (
+//     <HStack
+//       ref={setNodeRef}
+//       style={style}
+//       spacing={4}
+//       p={2}
+//       bg="whiteAlpha.200"
+//       rounded="md"
+//       shadow="sm"
+//     >
+//       <Box {...attributes} {...listeners} cursor="grab" color={textColor}>
+//         <GripVertical />
+//       </Box>
+//       <Image
+//         src={poseImages[key] || poseImages.MissingPhoto}
+//         alt={pose.name}
+//         boxSize="60px"
+//         objectFit="cover"
+//         borderRadius="md"
+//       />
+//       <Text flex="1" color={textColor}>
+//         {pose.name}
+//       </Text>
+//       <IconButton
+//         icon={<CloseIcon />}
+//         size="sm"
+//         onClick={onRemove}
+//         aria-label="Remove pose"
+//         colorScheme="pink"
+//         variant="ghost"
+//       />
+//     </HStack>
+//   );
+// };
 
 export default SequenceDetail;
