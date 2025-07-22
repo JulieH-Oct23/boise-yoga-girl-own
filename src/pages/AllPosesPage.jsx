@@ -24,15 +24,6 @@ const AllPosesPage = () => {
 
   const navigate = useNavigate();
 
-  // Helper to convert pose name/photoName to images key format
-  // const getImageKey = (pose) => {
-  //   if (!pose) return "MissingPhoto";
-  //   const keyRaw = pose.photoName || pose.name || "";
-  //   return (
-  //     keyRaw.replace(/\s+/g, "").replace(/-/g, "").replace(/'/g, "") ||
-  //     "MissingPhoto"
-  //   );
-  // };
     const getImageKey = (pose) => {
   if (!pose) return "MissingPhoto";
 

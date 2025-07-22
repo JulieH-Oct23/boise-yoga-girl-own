@@ -1,4 +1,3 @@
-
 import BabyDragon from "./BabyDragon.png";
 import BackwardBending from "./BackwardBending.png";
 import Boat from "./Boat.png";
@@ -6,7 +5,6 @@ import Bridge from "./Bridge.png";
 import Butterfly from "./Butterfly.png";
 import Camel from "./Camel.png";
 import Cat from "./Cat.png";
-import Child from "./Child.png";
 import Cobra from "./Cobra.png";
 import Cow from "./Cow.png";
 import CowFace from "./CowFace.png";
@@ -87,6 +85,7 @@ import WindRemoving from "./WindRemoving.png";
 import WingedDragon from "./WingedDragon.png";
 import landingpagebackground from "./landingpagebackground.jpeg";
 import StandingHand from "./StandingHand.png";
+import OpenChild from "./OpenChild.png";
 
 // ✅ Export as key-value dictionary
 export default {
@@ -97,7 +96,6 @@ export default {
   Butterfly,
   Camel,
   Cat,
-  Child,
   Cobra,
   Cow,
   CowFace,
@@ -135,6 +133,7 @@ export default {
   Mermaid,
   MissingPhoto,
   Mountain,
+  OpenChild,
   Pigeon,
   Plank,
   Plow,
