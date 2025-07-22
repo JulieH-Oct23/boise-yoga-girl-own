@@ -5,6 +5,7 @@ import Bridge from "./Bridge.png";
 import Butterfly from "./Butterfly.png";
 import Camel from "./Camel.png";
 import Cat from "./Cat.png";
+import Chair from "./Chair.png";
 import Cobra from "./Cobra.png";
 import Cow from "./Cow.png";
 import CowFace from "./CowFace.png";
@@ -20,6 +21,7 @@ import Eagle from "./Eagle.png";
 import Easy from "./Easy.png";
 import ExtendedSideAngle from "./ExtendedSideAngle.png";
 import Fish from "./Fish.png";
+import FixedFirm from "./FixedFirm.png";
 import FloorBow from "./FloorBow.png";
 import ForearmStand from "./ForearmStand.png";
 import ForwardFold from "./ForwardFold.png";
@@ -50,6 +52,7 @@ import Pyramid from "./Pyramid.png";
 import ReverseTableTop from "./ReverseTableTop.png";
 import RevolvedSeatedHeadToKnee from "./RevolvedSeatedHeadToKnee.png";
 import RevolvedTriangle from "./RevolvedTriangle.png";
+import Saddle from "./Saddle.png";
 import Savasana from "./Savasana.png";
 import SeatedForwardFold from "./SeatedForwardFold.png";
 import SeatedHeadToKnee from "./SeatedHeadToKnee.png";
@@ -79,6 +82,7 @@ import UpwardFacingDog from "./UpwardFacingDog.png";
 import Warrior1 from "./Warrior1.png";
 import Warrior2 from "./Warrior2.png";
 import Warrior3 from "./Warrior3.png";
+import WildThing from "./WildThing.png";
 import Wheel from "./Wheel.png";
 import WideLegForwardFold from "./WideLegForwardFold.png";
 import WindRemoving from "./WindRemoving.png";
@@ -96,6 +100,7 @@ export default {
   Butterfly,
   Camel,
   Cat,
+  Chair,
   Cobra,
   Cow,
   CowFace,
@@ -111,6 +116,7 @@ export default {
   Easy,
   ExtendedSideAngle,
   Fish,
+  FixedFirm,
   FloorBow,
   ForearmStand,
   ForwardFold,
@@ -143,6 +149,7 @@ export default {
   RevolvedSeatedHeadToKnee,
   RevolvedTriangle,
   Savasana,
+  Saddle,
   SeatedForwardFold,
   SeatedHeadToKnee,
   SeatedTwist,
@@ -171,6 +178,7 @@ export default {
   Warrior1,
   Warrior2,
   Warrior3,
+  WildThing,
   Wheel,
   WideLegForwardFold,
   WindRemoving,
