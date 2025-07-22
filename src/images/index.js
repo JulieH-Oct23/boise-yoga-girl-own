@@ -67,7 +67,6 @@ import SideStanding from "./SideStanding.png";
 import Snail from "./Snail.png";
 import Staff from "./Staff.png";
 import StandingForwardFold from "./StandingForwardFold.png";
-import StandingHandToBigToe from "./StandingHandToBigToe.png";
 import StandingSeparateLegForwardFold from "./StandingSeparateLegForwardFold.png";
 import StandingSideStretch from "./StandingSideStretch.png";
 import StandingSplit from "./StandingSplit.png";
@@ -87,6 +86,7 @@ import WideLegForwardFold from "./WideLegForwardFold.png";
 import WindRemoving from "./WindRemoving.png";
 import WingedDragon from "./WingedDragon.png";
 import landingpagebackground from "./landingpagebackground.jpeg";
+import StandingHand from "./StandingHand.png";
 
 // ✅ Export as key-value dictionary
 export default {
@@ -158,7 +158,6 @@ export default {
   Snail,
   Staff,
   StandingForwardFold,
-  StandingHandToBigToe,
   StandingSeparateLegForwardFold,
   StandingSideStretch,
   StandingSplit,
@@ -178,4 +177,5 @@ export default {
   WindRemoving,
   WingedDragon,
   landingpagebackground,
+  StandingHand,
 };
