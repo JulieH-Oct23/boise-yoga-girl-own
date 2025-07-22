@@ -119,7 +119,7 @@ const SequenceBuilderPage = () => {
 
       <VStack spacing={4} mb={8} align="center">
         <Box
-          bg="#FAEDEC"
+          bg="#BEB1AE"
           p={6}
           borderRadius="xl"
           boxShadow="md"

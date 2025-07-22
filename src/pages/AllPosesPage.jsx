@@ -8,7 +8,6 @@
 //   Select,
 //   Input,
 // } from "@chakra-ui/react";
-// import PoseCard from "../components/PoseCard";
 // import { useNavigate } from "react-router-dom";
 // import poseImages from "../images";
 
@@ -24,7 +23,6 @@
 
 //   const navigate = useNavigate();
 
-//   // Helper for image key
 //   const getImageKey = (pose) => {
 //     if (!pose) return "MissingPhoto";
 //     const keyRaw = pose.photoName || pose.name || "";
@@ -67,19 +65,21 @@
 //     setFilterOptions(Array.from(values).sort());
 //   }, [filterKey, poses]);
 
-//   // Filter + search filtering combined
 //   const filteredPoses = poses
 //     .filter((pose) => {
 //       if (filterKey && filterValue) {
 //         const field = pose[filterKey];
-//         if (Array.isArray(field)) return field.includes(filterValue);
+//         if (Array.isArray(field)) {
+//           return field.includes(filterValue);
+//         }
 //         return field === filterValue;
 //       }
 //       return true;
 //     })
-//     .filter((pose) =>
-//       pose.name.toLowerCase().includes(searchTerm.toLowerCase())
-//     );
+//     .filter((pose) => {
+//       if (!searchTerm) return true;
+//       return pose.name.toLowerCase().includes(searchTerm.toLowerCase());
+//     });
 
 //   if (loading) {
 //     return (
@@ -99,105 +99,97 @@
 
 //   return (
 //     <Box p={6}>
-//       <Heading mb={4}>Filter through yoga poses using drop down menus:</Heading>
-
-//       {/* Wrap filters and search in a box */}
 //       <Box
-//         mb={6}
+//         bg="#BEB1AE"
 //         p={4}
-//         borderRadius="md"
-//         border="1px solid"
-//         borderColor="#A18E88"
-//         display="flex"
-//         gap={4}
-//         flexWrap="wrap"
-//         alignItems="center"
+//         borderRadius="lg"
+//         mb={6}
 //       >
-//         {/* Filter dropdown */}
-//         <Select
-//           placeholder="Filter by..."
-//           value={filterKey}
-//           onChange={(e) => {
-//             setFilterKey(e.target.value);
-//             setFilterValue("");
-//           }}
-//           bg="#BEB1AE"
-//           color="#353325"
-//           borderColor="#A18E88"
-//           borderRadius="md"
-//           _hover={{ borderColor: "#A18E88" }}
-//           _focus={{
-//             borderColor: "#A18E88",
-//             boxShadow: "0 0 0 1px #A18E88",
-//           }}
-//           sx={{
-//             appearance: "none",
-//             WebkitAppearance: "none",
-//             MozAppearance: "none",
-//             backgroundImage: `url("data:image/svg+xml,%3csvg fill='${encodeURIComponent(
-//               "#353325"
-//             )}' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5 7l5 5 5-5z'/%3e%3c/svg%3e")`,
-//             backgroundRepeat: "no-repeat",
-//             backgroundPosition: "right 0.75rem center",
-//             backgroundSize: "1rem",
-//             paddingRight: "2.25rem",
-//             minWidth: "180px",
-//           }}
-//         >
-//           <option value="category">Category</option>
-//           <option value="level">Level</option>
-//           <option value="anatomy">Anatomy</option>
-//           <option value="indications">Indications</option>
-//           <option value="counterIndications">Counter Indications</option>
-//         </Select>
+//         <Heading size="md" mb={4} color="#353325">
+//           Filter through yoga poses using drop down menus:
+//         </Heading>
 
-//         {/* Value dropdown */}
-//         <Select
-//           placeholder="Choose value"
-//           value={filterValue}
-//           onChange={(e) => setFilterValue(e.target.value)}
-//           isDisabled={!filterOptions.length}
-//           bg="#BEB1AE"
-//           color="#353325"
-//           borderColor="#A18E88"
-//           borderRadius="md"
-//           _hover={{ borderColor: "#A18E88" }}
-//           _focus={{
-//             borderColor: "#A18E88",
-//             boxShadow: "0 0 0 1px #A18E88",
-//           }}
-//           sx={{
-//             appearance: "none",
-//             WebkitAppearance: "none",
-//             MozAppearance: "none",
-//             backgroundImage: `url("data:image/svg+xml,%3csvg fill='${encodeURIComponent(
-//               "#353325"
-//             )}' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5 7l5 5 5-5z'/%3e%3c/svg%3e")`,
-//             backgroundRepeat: "no-repeat",
-//             backgroundPosition: "right 0.75rem center",
-//             backgroundSize: "1rem",
-//             paddingRight: "2.25rem",
-//             minWidth: "180px",
-//           }}
-//         >
-//           {filterOptions.map((val, i) => (
-//             <option
-//               key={i}
-//               value={val}
-//               style={{ backgroundColor: "#A18E88", color: "#FAEDEC" }}
-//             >
-//               {val}
-//             </option>
-//           ))}
-//         </Select>
+//         <Box display="flex" gap={4} flexWrap="wrap" mb={4}>
+//           <Select
+//             placeholder="Filter by..."
+//             value={filterKey}
+//             onChange={(e) => {
+//               setFilterKey(e.target.value);
+//               setFilterValue("");
+//             }}
+//             bg="#FAEDEC"
+//             color="#353325"
+//             borderColor="#A18E88"
+//             borderRadius="md"
+//             _hover={{ borderColor: "#A18E88" }}
+//             _focus={{
+//               borderColor: "#A18E88",
+//               boxShadow: "0 0 0 1px #A18E88",
+//             }}
+//             sx={{
+//               appearance: "none",
+//               WebkitAppearance: "none",
+//               MozAppearance: "none",
+//               backgroundImage: `url("data:image/svg+xml,%3csvg fill='${encodeURIComponent(
+//                 "#353325"
+//               )}' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5 7l5 5 5-5z'/%3e%3c/svg%3e")`,
+//               backgroundRepeat: "no-repeat",
+//               backgroundPosition: "right 0.75rem center",
+//               backgroundSize: "1rem",
+//               paddingRight: "2.25rem",
+//             }}
+//           >
+//             <option value="category">Category</option>
+//             <option value="level">Level</option>
+//             <option value="anatomy">Anatomy</option>
+//             <option value="indications">Indications</option>
+//             <option value="counterIndications">Counter Indications</option>
+//           </Select>
 
-//         {/* Search by name */}
+//           <Select
+//             placeholder="Choose value"
+//             value={filterValue}
+//             onChange={(e) => setFilterValue(e.target.value)}
+//             isDisabled={!filterOptions.length}
+//             bg="#FAEDEC"
+//             color="#353325"
+//             borderColor="#A18E88"
+//             borderRadius="md"
+//             _hover={{ borderColor: "#A18E88" }}
+//             _focus={{
+//               borderColor: "#A18E88",
+//               boxShadow: "0 0 0 1px #A18E88",
+//             }}
+//             sx={{
+//               appearance: "none",
+//               WebkitAppearance: "none",
+//               MozAppearance: "none",
+//               backgroundImage: `url("data:image/svg+xml,%3csvg fill='${encodeURIComponent(
+//                 "#353325"
+//               )}' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5 7l5 5 5-5z'/%3e%3c/svg%3e")`,
+//               backgroundRepeat: "no-repeat",
+//               backgroundPosition: "right 0.75rem center",
+//               backgroundSize: "1rem",
+//               paddingRight: "2.25rem",
+//             }}
+//           >
+//             {filterOptions.map((val, i) => (
+//               <option
+//                 key={i}
+//                 value={val}
+//                 style={{ backgroundColor: "#A18E88", color: "#FAEDEC" }}
+//               >
+//                 {val}
+//               </option>
+//             ))}
+//           </Select>
+//         </Box>
+
 //         <Input
-//           placeholder="Search by name"
+//           placeholder="Search poses by name"
 //           value={searchTerm}
 //           onChange={(e) => setSearchTerm(e.target.value)}
-//           maxW="200px"
-//           bg="#BEB1AE"
+//           bg="#FAEDEC"
 //           color="#353325"
 //           borderColor="#A18E88"
 //           borderRadius="md"
@@ -222,7 +214,7 @@
 //             onClick={() => navigate(`/pose/${pose._id}`)}
 //           >
 //             <img
-//               src={`/images/${pose.image || "MissingPhoto.png"}`}
+//               src={poseImages[getImageKey(pose)] || poseImages.MissingPhoto}
 //               alt={pose.name}
 //               style={{
 //                 width: "100px",
@@ -243,7 +235,6 @@
 // };
 
 // export default AllPosesPage;
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -254,7 +245,6 @@ import {
   Select,
   Input,
 } from "@chakra-ui/react";
-import PoseCard from "../components/PoseCard";
 import { useNavigate } from "react-router-dom";
 import poseImages from "../images";
 
@@ -275,8 +265,10 @@ const AllPosesPage = () => {
   const getImageKey = (pose) => {
     if (!pose) return "MissingPhoto";
     const keyRaw = pose.photoName || pose.name || "";
-    // remove spaces, dashes, apostrophes to match your images keys
-    return keyRaw.replace(/\s+/g, "").replace(/-/g, "").replace(/'/g, "") || "MissingPhoto";
+    return (
+      keyRaw.replace(/\s+/g, "").replace(/-/g, "").replace(/'/g, "") ||
+      "MissingPhoto"
+    );
   };
 
   useEffect(() => {
@@ -315,7 +307,6 @@ const AllPosesPage = () => {
     setFilterOptions(Array.from(values).sort());
   }, [filterKey, poses]);
 
-  // Filter poses by filter key/value and search term
   const filteredPoses = poses
     .filter((pose) => {
       if (filterKey && filterValue) {
@@ -328,7 +319,7 @@ const AllPosesPage = () => {
       return true;
     })
     .filter((pose) =>
-      pose.name.toLowerCase().includes(searchTerm.toLowerCase())
+      pose.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
     );
 
   if (loading) {
@@ -348,28 +339,36 @@ const AllPosesPage = () => {
   }
 
   return (
-    <Box p={6}>
-      <Heading mb={4}>Filter through yoga poses using drop down menus:</Heading>
-
+    <Box p={6} pt={10}>
       <Box
-        p={4}
+        bg="#BEB1AE"
+        p={6}
         mb={6}
         borderRadius="md"
         boxShadow="md"
-        bg="#beb1ae"
-        maxW="600px"
       >
+        <Heading mb={4} color="#353325">
+          Filter through yoga poses using drop down menus:
+        </Heading>
+
+        {/* Search by name */}
         <Input
           mb={4}
-          placeholder="Search by pose name..."
+          placeholder="Search poses by name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           bg="white"
+          color="#353325"
           borderColor="#A18E88"
-          _hover={{ borderColor: "#92636B" }}
-          _focus={{ borderColor: "#92636B", boxShadow: "0 0 0 1px #92636B" }}
+          borderRadius="md"
+          _hover={{ borderColor: "#A18E88" }}
+          _focus={{
+            borderColor: "#A18E88",
+            boxShadow: "0 0 0 1px #A18E88",
+          }}
         />
 
+        {/* Filters */}
         <Box display="flex" gap={4} flexWrap="wrap">
           <Select
             placeholder="Filter by..."
@@ -379,10 +378,26 @@ const AllPosesPage = () => {
               setFilterValue("");
             }}
             bg="white"
+            color="#353325"
             borderColor="#A18E88"
-            _hover={{ borderColor: "#92636B" }}
-            _focus={{ borderColor: "#92636B", boxShadow: "0 0 0 1px #92636B" }}
-            flex="1"
+            borderRadius="md"
+            _hover={{ borderColor: "#A18E88" }}
+            _focus={{
+              borderColor: "#A18E88",
+              boxShadow: "0 0 0 1px #A18E88",
+            }}
+            sx={{
+              appearance: "none",
+              WebkitAppearance: "none",
+              MozAppearance: "none",
+              backgroundImage: `url("data:image/svg+xml,%3csvg fill='${encodeURIComponent(
+                "#353325"
+              )}' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5 7l5 5 5-5z'/%3e%3c/svg%3e")`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right 0.75rem center",
+              backgroundSize: "1rem",
+              paddingRight: "2.25rem",
+            }}
           >
             <option value="category">Category</option>
             <option value="level">Level</option>
@@ -397,16 +412,32 @@ const AllPosesPage = () => {
             onChange={(e) => setFilterValue(e.target.value)}
             isDisabled={!filterOptions.length}
             bg="white"
+            color="#353325"
             borderColor="#A18E88"
-            _hover={{ borderColor: "#92636B" }}
-            _focus={{ borderColor: "#92636B", boxShadow: "0 0 0 1px #92636B" }}
-            flex="1"
+            borderRadius="md"
+            _hover={{ borderColor: "#A18E88" }}
+            _focus={{
+              borderColor: "#A18E88",
+              boxShadow: "0 0 0 1px #A18E88",
+            }}
+            sx={{
+              appearance: "none",
+              WebkitAppearance: "none",
+              MozAppearance: "none",
+              backgroundImage: `url("data:image/svg+xml,%3csvg fill='${encodeURIComponent(
+                "#353325"
+              )}' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5 7l5 5 5-5z'/%3e%3c/svg%3e")`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right 0.75rem center",
+              backgroundSize: "1rem",
+              paddingRight: "2.25rem",
+            }}
           >
             {filterOptions.map((val, i) => (
               <option
                 key={i}
                 value={val}
-                style={{ backgroundColor: "#92636B", color: "#FAEDEC" }}
+                style={{ backgroundColor: "#A18E88", color: "#FAEDEC" }}
               >
                 {val}
               </option>
