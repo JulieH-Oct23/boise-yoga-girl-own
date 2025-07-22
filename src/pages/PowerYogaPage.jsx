@@ -15,17 +15,17 @@ const PowerYogaPage = () => {
   const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
   useEffect(() => {
-    async function fetchPowerSequences() {
-      try {
-        const res = await axios.get(`${API_BASE}/api/sequences`);
-        const filtered = res.data.filter(seq => seq.style.toLowerCase() === "power");
-        setPowerSequences(filtered);
-      } catch (err) {
-        console.error("Error fetching Power sequences:", err);
-      }
+  async function fetchPowerSequences() {
+    try {
+      const res = await axios.get(`${API_BASE}/api/sequences`);
+      const filtered = res.data.filter(seq => seq.style.toLowerCase() === "power");
+      setPowerSequences(filtered);
+    } catch (err) {
+      console.error("Error fetching Power sequences:", err);
     }
-    fetchPowerSequences();
-  }, [API_BASE]);
+  }
+  fetchPowerSequences();
+}, [API_BASE]);;
 
   const getRandomPoseImage = (poses) => {
     if (!poses || poses.length === 0) return images.MissingPhoto;

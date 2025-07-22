@@ -13,18 +13,19 @@ const YinYogaPage = () => {
 
   const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
+
   useEffect(() => {
-    async function fetchYinSequences() {
-      try {
-        const res = await axios.get(`${API_BASE}/api/sequences`);
-        const filtered = res.data.filter(seq => seq.style.toLowerCase() === "yin");
-        setYinSequences(filtered);
-      } catch (err) {
-        console.error("Error fetching Yin sequences:", err);
-      }
+  async function fetchYinSequences() {
+    try {
+      const res = await axios.get(`${API_BASE}/api/sequences`);
+      const filtered = res.data.filter(seq => seq.style.toLowerCase() === "yin");
+      setYinSequences(filtered);
+    } catch (err) {
+      console.error("Error fetching Yin sequences:", err);
     }
-    fetchYinSequences();
-  }, []);
+  }
+  fetchYinSequences();
+}, [API_BASE]);
 
   const getRandomPoseImage = (poses) => {
     if (!poses || poses.length === 0) return images.MissingPhoto;

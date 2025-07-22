@@ -16,17 +16,17 @@ const RestorativeYogaPage = () => {
   const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
   useEffect(() => {
-    async function fetchRestorativeSequences() {
-      try {
-        const res = await axios.get(`${API_BASE}/api/sequences`);
-        const filtered = res.data.filter(seq => seq.style.toLowerCase() === "restorative");
-        setRestorativeSequences(filtered);
-      } catch (err) {
-        console.error("Error fetching Restorative sequences:", err);
-      }
+  async function fetchRestorativeSequences() {
+    try {
+      const res = await axios.get(`${API_BASE}/api/sequences`);
+      const filtered = res.data.filter(seq => seq.style.toLowerCase() === "restorative");
+      setRestorativeSequences(filtered);
+    } catch (err) {
+      console.error("Error fetching Restorative sequences:", err);
     }
-    fetchRestorativeSequences();
-  }, [API_BASE]);
+  }
+  fetchRestorativeSequences();
+}, [API_BASE]);
 
   const getRandomPoseImage = (poses) => {
     if (!poses || poses.length === 0) return images.MissingPhoto;
