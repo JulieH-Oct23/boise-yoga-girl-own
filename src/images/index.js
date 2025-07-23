@@ -6,6 +6,7 @@ import Butterfly from "./Butterfly.png";
 import Camel from "./Camel.png";
 import Cat from "./Cat.png";
 import Chair from "./Chair.png";
+import ChairTwist from "./ChairTwist.png";
 import Cobra from "./Cobra.png";
 import Cow from "./Cow.png";
 import CowFace from "./CowFace.png";
@@ -17,6 +18,7 @@ import DownwardDog from "./DownwardDog.png";
 import Dragonfly from "./Dragonfly.png";
 import DragonFlyingHigh from "./DragonFlyingHigh.png";
 import DragonFlyingLow from "./DragonFlyingLow.png";
+import Dolphin from "./Dolphin.png";
 import Eagle from "./Eagle.png";
 import Easy from "./Easy.png";
 import ExtendedSideAngle from "./ExtendedSideAngle.png";
@@ -53,6 +55,7 @@ import Puppy from "./Puppy.png";
 import Pyramid from "./Pyramid.png";
 import ReclinedBoundAngle from "./ReclinedBoundAngle.png";
 import ReverseTableTop from "./ReverseTableTop.png";
+import ReverseWarrior from "./ReverseWarrior.png";
 import RevolvedHalfMoon from "./RevolvedHalfMoon.png";
 import RevolvedSeatedHeadToKnee from "./RevolvedSeatedHeadToKnee.png";
 import RevolvedTriangle from "./RevolvedTriangle.png";
@@ -60,6 +63,7 @@ import Saddle from "./Saddle.png";
 import Savasana from "./Savasana.png";
 import SeatedForwardFold from "./SeatedForwardFold.png";
 import SeatedHeadToKnee from "./SeatedHeadToKnee.png";
+import SeatedWideLegForwardFold from "./SeatedWideLegForwardFold.png";
 import SeatedTwist from "./SeatedTwist.png";
 import Shoelace from "./Shoelace.png";
 import ShoulderStand from "./ShoulderStand.png";
@@ -70,6 +74,7 @@ import SideGarland from "./SideGarland.png";
 import SidePlank from "./SidePlank.png";
 import SideStanding from "./SideStanding.png";
 import Snail from "./Snail.png";
+import Sphinx from "./Sphinx.png";
 import Staff from "./Staff.png";
 import StandingForwardFold from "./StandingForwardFold.png";
 import StandingSeparateLegForwardFold from "./StandingSeparateLegForwardFold.png";
@@ -107,6 +112,7 @@ export default {
   Camel,
   Cat,
   Chair,
+  ChairTwist,
   Cobra,
   Cow,
   CowFace,
@@ -114,6 +120,7 @@ export default {
   CrescentMoon,
   Crow,
   Dancer,
+  Dolphin,
   DownwardDog,
   Dragonfly,
   DragonFlyingHigh,
@@ -154,11 +161,13 @@ export default {
   Puppy,
   Pyramid,
   ReverseTableTop,
+  ReverseWarrior,
   RevolvedSeatedHeadToKnee,
   RevolvedTriangle,
   Savasana,
   Saddle,
   SeatedForwardFold,
+  SeatedWideLegForwardFold,
   SeatedHeadToKnee,
   SeatedTwist,
   Shoelace,
@@ -170,6 +179,7 @@ export default {
   SidePlank,
   SideStanding,
   Snail,
+  Sphinx,
   Staff,
   StandingForwardFold,
   StandingSeparateLegForwardFold,
