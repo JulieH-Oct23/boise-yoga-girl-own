@@ -22,6 +22,7 @@ import Dolphin from "./Dolphin.png";
 import Eagle from "./Eagle.png";
 import Easy from "./Easy.png";
 import ExtendedSideAngle from "./ExtendedSideAngle.png";
+import Firefly from "./Firefly.png";
 import Fish from "./Fish.png";
 import FixedFirm from "./FixedFirm.png";
 import FlyingPigeon from "./FlyingPigeon.png";
@@ -133,6 +134,7 @@ export default {
   Easy,
   ExtendedSideAngle,
   Fish,
+  Firefly,
   FixedFirm,
   FlyingPigeon,
   FloorBow,
