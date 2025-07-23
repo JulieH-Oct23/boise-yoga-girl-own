@@ -36,12 +36,15 @@ import HalfButterfly from "./HalfButterfly.png";
 import HalfFrog from "./HalfFrog.png";
 import HalfLordOfFishes from "./HalfLordOfFishes.png";
 import HalfMoon from "./HalfMoon.png";
+import HappyBaby from "./HappyBaby.png";
 import Headstand from "./Headstand.png";
 import HeartMelting from "./HeartMelting.png";
 import Hero from "./Hero.png";
 import HighLunge from "./HighLunge.png";
 import HighPlank from "./HighPlank.png";
+import HumbleWarrior from "./HumbleWarrior.png";
 import LegUpWall from "./LegUpWall.png";
+import Lion from "./Lion.png";
 import Locust from "./Locust.png";
 import LowLunge from "./LowLunge.png";
 import LowPlank from "./LowPlank.png";
@@ -89,6 +92,7 @@ import ToeStand from "./ToeStand.png";
 import TopSeatedHeadToKnee from "./TopSeatedHeadToKnee.png";
 import Tree from "./Tree.png";
 import Triangle from "./Triangle.png";
+import TwistedDragon from "./TwistedDragon.png";
 import UpwardFacingDog from "./UpwardFacingDog.png";
 import Warrior1 from "./Warrior1.png";
 import Warrior2 from "./Warrior2.png";
@@ -142,12 +146,15 @@ export default {
   HalfFrog,
   HalfLordOfFishes,
   HalfMoon,
+  HappyBaby,
   Headstand,
   HeartMelting,
   Hero,
   HighLunge,
   HighPlank,
+  HumbleWarrior,
   LegUpWall,
+  Lion, 
   Locust,
   LowLunge,
   LowPlank,
@@ -194,6 +201,7 @@ export default {
   TopSeatedHeadToKnee,
   Tree,
   Triangle,
+  TwistedDragon,
   UpwardFacingDog,
   Warrior1,
   Warrior2,
