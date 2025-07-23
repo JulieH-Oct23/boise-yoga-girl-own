@@ -22,10 +22,12 @@ import Easy from "./Easy.png";
 import ExtendedSideAngle from "./ExtendedSideAngle.png";
 import Fish from "./Fish.png";
 import FixedFirm from "./FixedFirm.png";
+import FlyingPigeon from "./FlyingPigeon.png";
 import FloorBow from "./FloorBow.png";
 import ForearmStand from "./ForearmStand.png";
 import ForwardFold from "./ForwardFold.png";
 import FourLimbbedStaff from "./FourLimbbedStaff.png";
+import Frog from "./Frog.png";
 import Garland from "./Garland.png";
 import Goddess from "./Goddess.png";
 import HalfButterfly from "./HalfButterfly.png";
@@ -49,7 +51,9 @@ import Plank from "./Plank.png";
 import Plow from "./Plow.png";
 import Puppy from "./Puppy.png";
 import Pyramid from "./Pyramid.png";
+import ReclinedBoundAngle from "./ReclinedBoundAngle.png";
 import ReverseTableTop from "./ReverseTableTop.png";
+import RevolvedHalfMoon from "./RevolvedHalfMoon.png";
 import RevolvedSeatedHeadToKnee from "./RevolvedSeatedHeadToKnee.png";
 import RevolvedTriangle from "./RevolvedTriangle.png";
 import Saddle from "./Saddle.png";
@@ -71,8 +75,10 @@ import StandingForwardFold from "./StandingForwardFold.png";
 import StandingSeparateLegForwardFold from "./StandingSeparateLegForwardFold.png";
 import StandingSideStretch from "./StandingSideStretch.png";
 import StandingSplit from "./StandingSplit.png";
+import Square from "./Square.png";
 import SupineTwist from "./SupineTwist.png";
 import TempSquare from "./TempSquare.png";
+import ThreadTheNeedle from "./ThreadTheNeedle.png";
 import ThreeLegDownDog from "./ThreeLegDownDog.png";
 import ToeStand from "./ToeStand.png";
 import TopSeatedHeadToKnee from "./TopSeatedHeadToKnee.png";
@@ -117,10 +123,12 @@ export default {
   ExtendedSideAngle,
   Fish,
   FixedFirm,
+  FlyingPigeon,
   FloorBow,
   ForearmStand,
   ForwardFold,
   FourLimbbedStaff,
+  Frog,
   Garland,
   Goddess,
   HalfButterfly,
@@ -167,8 +175,10 @@ export default {
   StandingSeparateLegForwardFold,
   StandingSideStretch,
   StandingSplit,
+  Square,
   SupineTwist,
   TempSquare,
+  ThreadTheNeedle,
   ThreeLegDownDog,
   ToeStand,
   TopSeatedHeadToKnee,
@@ -185,4 +195,6 @@ export default {
   WingedDragon,
   landingpagebackground,
   StandingHand,
+  ReclinedBoundAngle,
+  RevolvedHalfMoon,
 };
