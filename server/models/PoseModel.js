@@ -20,3 +20,5 @@ const PoseSchema = new mongoose.Schema({
 
 const Pose = mongoose.model("Pose", PoseSchema);
 export default Pose;
+
+
