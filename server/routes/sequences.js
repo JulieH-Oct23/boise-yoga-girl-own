@@ -1,3 +1,4 @@
+
 // import express from "express";
 // import Sequence from "../models/Sequences.js";
 
@@ -8,6 +9,19 @@
 //   try {
 //     const sequences = await Sequence.find();
 //     res.json(sequences);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
+// // GET a sequence by ID  <=== ADD THIS
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const sequence = await Sequence.findById(req.params.id);
+//     if (!sequence) {
+//       return res.status(404).json({ message: "Sequence not found" });
+//     }
+//     res.json(sequence);
 //   } catch (error) {
 //     res.status(500).json({ message: error.message });
 //   }
@@ -52,7 +66,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET a sequence by ID  <=== ADD THIS
+// GET a sequence by ID
 router.get("/:id", async (req, res) => {
   try {
     const sequence = await Sequence.findById(req.params.id);
@@ -85,6 +99,23 @@ router.post("/", async (req, res) => {
     res.status(201).json(savedSequence);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// PUT update a sequence by ID  <=== THIS WAS MISSING
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedSequence = await Sequence.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedSequence) {
+      return res.status(404).json({ message: "Sequence not found" });
+    }
+    res.json(updatedSequence);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 

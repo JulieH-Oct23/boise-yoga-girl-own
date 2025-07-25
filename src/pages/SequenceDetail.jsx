@@ -1,247 +1,236 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Heading,
-  Text,
   Image,
-  Spinner,
+  Text,
+  Input,
   Button,
-  VStack,
+  Select,
   useColorModeValue,
-  IconButton,
-  HStack,
+  Flex,
 } from "@chakra-ui/react";
-import { CloseIcon } from "@chakra-ui/icons";
-import { useParams, useNavigate } from "react-router-dom";
-import {
-  DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-  useSortable,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { GripVertical } from "lucide-react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import images from "../images";
 
-import poseImages from "../images";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
-const SequenceDetail = () => {
+const SequenceDetailPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [sequence, setSequence] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [poses, setPoses] = useState([]);
+  const [allPoses, setAllPoses] = useState([]);
+  const [timers, setTimers] = useState([]);
+  const [units, setUnits] = useState("seconds");
+  const [playingIndex, setPlayingIndex] = useState(null);
+  const [progress, setProgress] = useState(0);
 
-  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+  const bg = useColorModeValue("#FAEDEC", "#353325");
+  const text = useColorModeValue("#353325", "#FAEDEC");
 
-  const fetchSequence = async () => {
-    try {
-      const response = await fetch(`${API_BASE}/api/sequences/${id}`);
-      const data = await response.json();
-      setSequence(data);
-      setPoses(data.poses || []);
-    } catch (error) {
-      console.error("Error fetching sequence:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Fetch sequence data by ID
   useEffect(() => {
+    const fetchSequence = async () => {
+      try {
+        const res = await axios.get(`${API_BASE}/api/sequences/${id}`);
+        setSequence(res.data);
+        const initialTimers = res.data.poses.map((pose) => pose.timer || 60);
+        setTimers(initialTimers);
+      } catch (err) {
+        console.error("Failed to load sequence:", err);
+      }
+    };
     fetchSequence();
   }, [id]);
 
-  const sensors = useSensors(useSensor(PointerSensor));
+  // Fetch all poses (to get cues)
+  useEffect(() => {
+    const fetchAllPoses = async () => {
+      try {
+        const res = await axios.get(`${API_BASE}/api/poses`);
+        setAllPoses(res.data);
+      } catch (err) {
+        console.error("Failed to load poses:", err);
+      }
+    };
+    fetchAllPoses();
+  }, []);
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      const oldIndex = poses.findIndex((p) => p._id === active.id);
-      const newIndex = poses.findIndex((p) => p._id === over.id);
-      const newPoses = arrayMove(poses, oldIndex, newIndex);
-      setPoses(newPoses);
-    }
+  // Get cue text for a pose by matching name
+  const getCueForPose = (poseName) => {
+    const pose = allPoses.find((p) => p.name === poseName);
+    return pose?.cue || "No cue available";
   };
 
-  const handleRemove = (poseId) => {
-    setPoses((prev) => prev.filter((p) => p._id !== poseId));
+  // Handle timer input changes
+  const handleTimerChange = (index, value) => {
+    const newTimers = [...timers];
+    newTimers[index] = parseInt(value, 10) || 0;
+    setTimers(newTimers);
   };
 
-  const handleSave = async () => {
+  // Save updated timers to backend
+  const saveSequence = async () => {
+    if (!sequence) return;
+    const updatedSequence = {
+      ...sequence,
+      poses: sequence.poses.map((pose, idx) => ({
+        ...pose,
+        timer: timers[idx],
+      })),
+    };
     try {
-      const updatedPoseIds = poses.map((p) => p._id);
-      const response = await fetch(`${API_BASE}/api/sequences/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ poseIds: updatedPoseIds }),
-      });
-
-      if (!response.ok) throw new Error("Failed to save");
-
-      alert("Sequence updated!");
-      fetchSequence();
+      await axios.put(`${API_BASE}/api/sequences/${id}`, updatedSequence);
+      alert("Timers saved!");
     } catch (err) {
-      console.error("Save error:", err);
-      alert("Could not save.");
+      console.error("Failed to save timers:", err);
+      alert("Failed to save timers. Check console for details.");
     }
   };
 
-  const bgColor = useColorModeValue("#FAEDEC", "#353325");
-  const cardColor = useColorModeValue("#FFFFFF", "#4A4A4A");
-  const textColor = useColorModeValue("#353325", "#FAEDEC");
+  // Start playing the sequence timers
+  const playSequence = () => {
+    setPlayingIndex(0);
+    setProgress(0);
+  };
 
-  if (loading) {
-    return (
-      <Box p={4}>
-        <Spinner />
-      </Box>
-    );
-  }
+  // Play progress timer effect
+  useEffect(() => {
+    if (playingIndex === null || !sequence) return;
+
+    const timeInSeconds =
+      units === "minutes" ? timers[playingIndex] * 60 : timers[playingIndex];
+    const startTime = Date.now();
+
+    const interval = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      setProgress(Math.min(100, (elapsed / timeInSeconds) * 100));
+
+      if (elapsed >= timeInSeconds) {
+        clearInterval(interval);
+        if (playingIndex < sequence.poses.length - 1) {
+          setPlayingIndex(playingIndex + 1);
+          setProgress(0);
+        } else {
+          setPlayingIndex(null);
+          setProgress(0);
+        }
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [playingIndex, sequence, timers, units]);
 
   if (!sequence) {
-    return (
-      <Box p={4}>
-        <Text>Sequence not found.</Text>
-      </Box>
-    );
+    return <Text>Loading sequence...</Text>;
   }
 
   return (
-    <Box p={4} bg={bgColor} minHeight="100vh">
-      <Button onClick={() => navigate(-1)} mb={4} colorScheme="pink">
-        ← Back
-      </Button>
+    <Box bg={bg} color={text} p={5} maxW="600px" mx="auto">
+      <Text fontSize="2xl" fontWeight="bold" mb={4}>
+        {sequence.name}
+      </Text>
 
-      <VStack spacing={4} align="start" bg={cardColor} p={4} rounded="xl" shadow="md">
-        <Heading color={textColor}>{sequence.name}</Heading>
-        <Text color={textColor}><strong>Style:</strong> {sequence.style}</Text>
-        <Text color={textColor}><strong>Difficulty:</strong> {sequence.difficulty}</Text>
+      <Box mb={4}>
+        <Select
+          value={units}
+          onChange={(e) => setUnits(e.target.value)}
+          width="200px"
+          mb={2}
+        >
+          <option value="seconds">Seconds</option>
+          <option value="minutes">Minutes</option>
+        </Select>
+        <Button onClick={saveSequence} mr={3} colorScheme="pink" disabled={playingIndex !== null}>
+          Save Timers
+        </Button>
+        <Button onClick={playSequence} colorScheme="green" disabled={playingIndex !== null}>
+          Play Sequence
+        </Button>
+      </Box>
 
-        <Box mt={4} w="100%">
-          <Heading size="md" mb={2} color={textColor}>Poses:</Heading>
+      {sequence.poses.map((pose, idx) => {
+        const isPlaying = idx === playingIndex;
+        const imageKey = pose.image ? pose.image.replace(/\.png$/i, "") : null;
 
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={poses.map((p) => p._id)} strategy={verticalListSortingStrategy}>
-              <VStack spacing={3} align="stretch">
-                {poses.map((pose) => (
-                  <SortablePoseRow
-                    key={pose._id}
-                    pose={pose}
-                    onRemove={() => handleRemove(pose._id)}
-                    textColor={textColor}
-                  />
-                ))}
-              </VStack>
-            </SortableContext>
-          </DndContext>
+        return (
+          <Flex
+            key={idx}
+            bg="white"
+            p={4}
+            mb={4}
+            borderRadius="2xl"
+            borderWidth="1px"
+            alignItems="center"
+            position="relative"
+          >
+            {/* Progress overlay */}
+            {/* {isPlaying && (
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                height="100%"
+                width={`${100 - progress}%`}
+                bg="rgba(0,0,0,0.4)"
+                borderRadius="2xl"
+                transition="width 0.1s linear"
+                zIndex={1}
+              />
+            )} */}{isPlaying && (
+  <Box
+    position="absolute"
+    top="0"
+    left="0"
+    height="100%"
+    width={`${progress}%`}
+    bg="rgba(0,0,0,0.4)"
+    borderRadius="2xl"
+    transition="width 0.1s linear"
+    zIndex={1}
+  />
+)}
 
-          <Button mt={6} colorScheme="pink" onClick={handleSave}>
-            Save Order
-          </Button>
-        </Box>
-      </VStack>
+            <Image
+              src={images[imageKey] || images.MissingPhoto || null}
+              alt={pose.name}
+              boxSize="100px"
+              objectFit="contain"
+              borderRadius="md"
+              mr={4}
+              zIndex={2}
+            />
+
+            <Box flex="1" zIndex={2}>
+              <Text fontSize="xl" fontWeight="semibold">
+                {pose.name}
+              </Text>
+              <Text
+                fontSize="sm"
+                color="gray.600"
+                mt={1}
+                whiteSpace="pre-wrap"
+                userSelect="text"
+              >
+                {getCueForPose(pose.name)}
+              </Text>
+            </Box>
+
+            <Box textAlign="center" minW="120px" ml={4} zIndex={2}>
+              <Input
+                type="number"
+                value={timers[idx]}
+                onChange={(e) => handleTimerChange(idx, e.target.value)}
+                width="100px"
+                disabled={playingIndex !== null}
+                mb={1}
+              />
+              <Text fontSize="sm">{units}</Text>
+            </Box>
+          </Flex>
+        );
+      })}
     </Box>
   );
 };
 
-const SortablePoseRow = ({ pose, onRemove, textColor }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: pose._id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  // Strip .png extension if present to match poseImages keys
-  const key = (pose.image ? pose.image.replace(/\.png$/i, "") :
-               pose.photoName ? pose.photoName.replace(/\s+/g, "") :
-               pose.name ? pose.name.replace(/\s+/g, "") : "") || "MissingPhoto";
-
-  return (
-    <HStack
-      ref={setNodeRef}
-      style={style}
-      spacing={4}
-      p={2}
-      bg="whiteAlpha.200"
-      rounded="md"
-      shadow="sm"
-    >
-      <Box {...attributes} {...listeners} cursor="grab" color={textColor}>
-        <GripVertical />
-      </Box>
-      <Image
-        src={poseImages[key] || poseImages.MissingPhoto}
-        alt={pose.name}
-        boxSize="60px"
-        objectFit="contain"
-        borderRadius="md"
-      />
-      <Text flex="1" color={textColor}>
-        {pose.name}
-      </Text>
-      <IconButton
-        icon={<CloseIcon />}
-        size="sm"
-        onClick={onRemove}
-        aria-label="Remove pose"
-        colorScheme="pink"
-        variant="ghost"
-      />
-    </HStack>
-  );
-};
-// const SortablePoseRow = ({ pose, onRemove, textColor }) => {
-//   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: pose._id });
-
-//   const style = {
-//     transform: CSS.Transform.toString(transform),
-//     transition,
-//   };
-
-//   const key = pose.image || pose.photoName || pose.name?.replace(/\s+/g, "") || "";
-
-//   return (
-//     <HStack
-//       ref={setNodeRef}
-//       style={style}
-//       spacing={4}
-//       p={2}
-//       bg="whiteAlpha.200"
-//       rounded="md"
-//       shadow="sm"
-//     >
-//       <Box {...attributes} {...listeners} cursor="grab" color={textColor}>
-//         <GripVertical />
-//       </Box>
-//       <Image
-//         src={poseImages[key] || poseImages.MissingPhoto}
-//         alt={pose.name}
-//         boxSize="60px"
-//         objectFit="cover"
-//         borderRadius="md"
-//       />
-//       <Text flex="1" color={textColor}>
-//         {pose.name}
-//       </Text>
-//       <IconButton
-//         icon={<CloseIcon />}
-//         size="sm"
-//         onClick={onRemove}
-//         aria-label="Remove pose"
-//         colorScheme="pink"
-//         variant="ghost"
-//       />
-//     </HStack>
-//   );
-// };
-
-export default SequenceDetail;
+export default SequenceDetailPage;
