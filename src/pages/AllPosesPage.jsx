@@ -8,7 +8,6 @@ import {
   Select,
   Input,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import PoseCard from "../components/PoseCard";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
@@ -21,7 +20,6 @@ const AllPosesPage = () => {
   const [filterOptions, setFilterOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const navigate = useNavigate();
 
   // Fetch all poses on mount
   useEffect(() => {
@@ -206,128 +204,3 @@ const AllPosesPage = () => {
 };
 
 export default AllPosesPage;
-// import React, { useEffect, useState } from "react";
-// import {
-//   Box,
-//   Heading,
-//   Spinner,
-//   Text,
-//   SimpleGrid,
-//   Select,
-//   Input,
-//   useColorModeValue,
-// } from "@chakra-ui/react";
-// import { useNavigate } from "react-router-dom";
-// import PoseCard from "../components/PoseCard";
-// import images from "../images";
-
-// const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
-
-// const AllPosesPage = () => {
-//   const [poses, setPoses] = useState([]);
-//   const [filteredPoses, setFilteredPoses] = useState([]);
-//   const [filterKey, setFilterKey] = useState("all");
-//   const [filterValue, setFilterValue] = useState("");
-//   const [searchTerm, setSearchTerm] = useState("");
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   const bg = useColorModeValue("#FAEDEC", "#353325");
-//   const textColor = useColorModeValue("#353325", "#FAEDEC");
-
-//   useEffect(() => {
-//     const fetchPoses = async () => {
-//       try {
-//         const res = await fetch(`${API_BASE}/api/poses`);
-//         const data = await res.json();
-//         setPoses(data);
-//         setFilteredPoses(data);
-//         setIsLoading(false);
-//       } catch (err) {
-//         console.error("Error fetching poses:", err);
-//         setIsLoading(false);
-//       }
-//     };
-
-//     fetchPoses();
-//   }, []);
-
-//   useEffect(() => {
-//     let filtered = poses;
-
-//     if (filterKey !== "all" && filterValue) {
-//       filtered = filtered.filter((pose) => pose[filterKey] === filterValue);
-//     }
-
-//     if (searchTerm.trim() !== "") {
-//       filtered = filtered.filter((pose) =>
-//         pose.name.toLowerCase().includes(searchTerm.toLowerCase())
-//       );
-//     }
-
-//     setFilteredPoses(filtered);
-//   }, [filterKey, filterValue, searchTerm, poses]);
-
-//   const getUniqueValues = (key) => {
-//     return [...new Set(poses.map((pose) => pose[key]).filter(Boolean))];
-//   };
-
-//   return (
-//     <Box bg={bg} minHeight="100vh" p={6}>
-//       <Heading color={textColor} mb={4}>
-//         All Yoga Poses
-//       </Heading>
-
-//       <Box mb={4}>
-//         <Select
-//           placeholder="Filter by..."
-//           value={filterKey}
-//           onChange={(e) => setFilterKey(e.target.value)}
-//           mb={2}
-//           bg="white"
-//         >
-//           <option value="all">All</option>
-//           <option value="anatomy">Anatomy</option>
-//           <option value="level">Level</option>
-//           <option value="style">Style</option>
-//         </Select>
-
-//         {filterKey !== "all" && (
-//           <Select
-//             placeholder={`Select ${filterKey}`}
-//             value={filterValue}
-//             onChange={(e) => setFilterValue(e.target.value)}
-//             mb={2}
-//             bg="white"
-//           >
-//             {getUniqueValues(filterKey).map((val) => (
-//               <option key={val} value={val}>
-//                 {val}
-//               </option>
-//             ))}
-//           </Select>
-//         )}
-
-//         <Input
-//           placeholder="Search by name"
-//           value={searchTerm}
-//           onChange={(e) => setSearchTerm(e.target.value)}
-//           bg="white"
-//         />
-//       </Box>
-
-//       {isLoading ? (
-//         <Spinner />
-//       ) : filteredPoses.length === 0 ? (
-//         <Text color={textColor}>No poses found.</Text>
-//       ) : (
-//         <SimpleGrid columns={[1, 2, 3, 4]} spacing={4}>
-//           {filteredPoses.map((pose) => (
-//             <PoseCard key={pose._id} pose={pose} />
-//           ))}
-//         </SimpleGrid>
-//       )}
-//     </Box>
-//   );
-// };
-
-// export default AllPosesPage;
