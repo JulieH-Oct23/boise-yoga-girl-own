@@ -56,6 +56,7 @@ import Meditation from "./Meditation.png";
 import Mermaid from "./Mermaid.png";
 import MissingPhoto from "./MissingPhoto.png";
 import Mountain from "./Mountain.png";
+import Peacock from "./Peacock.png";
 import Pigeon from "./Pigeon.png";
 import Plank from "./Plank.png";
 import Plow from "./Plow.png";
@@ -172,11 +173,13 @@ export default {
   MissingPhoto,
   Mountain,
   OpenChild,
+  Peacock,
   Pigeon,
   Plank,
   Plow,
   Puppy,
   Pyramid,
+  ReclinedBoundAngle,
   ReverseTableTop,
   ReverseWarrior,
   RevolvedSeatedHeadToKnee,
@@ -223,6 +226,5 @@ export default {
   WingedDragon,
   landingpagebackground,
   StandingHand,
-  ReclinedBoundAngle,
   RevolvedHalfMoon,
 };
