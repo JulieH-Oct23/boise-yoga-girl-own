@@ -1,7 +1,9 @@
 import BabyDragon from "./BabyDragon.png";
 import BackwardBending from "./BackwardBending.png";
+import Banana from "./Banana.png";
 import Boat from "./Boat.png";
 import Bridge from "./Bridge.png";
+import BrokenWing from "./BrokenWing.png";
 import Butterfly from "./Butterfly.png";
 import Camel from "./Camel.png";
 import Cat from "./Cat.png";
@@ -49,6 +51,8 @@ import Lion from "./Lion.png";
 import Locust from "./Locust.png";
 import LowLunge from "./LowLunge.png";
 import LowPlank from "./LowPlank.png";
+import KneesToChest from "./KneesToChest.png";
+import Meditation from "./Meditation.png";
 import Mermaid from "./Mermaid.png";
 import MissingPhoto from "./MissingPhoto.png";
 import Mountain from "./Mountain.png";
@@ -111,8 +115,10 @@ import OpenChild from "./OpenChild.png";
 export default {
   BabyDragon,
   BackwardBending,
+  Banana,
   Boat,
   Bridge,
+  BrokenWing,
   Butterfly,
   Camel,
   Cat,
@@ -155,11 +161,13 @@ export default {
   HighLunge,
   HighPlank,
   HumbleWarrior,
+  KneesToChest,
   LegUpWall,
   Lion, 
   Locust,
   LowLunge,
   LowPlank,
+  Meditation,
   Mermaid,
   MissingPhoto,
   Mountain,

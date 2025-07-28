@@ -21,6 +21,7 @@ import RestorativeYogaPage from "./pages/RestorativeYogaPage";
 import SequenceBuilderPage from "./pages/SequenceBuilderPage";
 import YinYogaPage from "./pages/YinYogaPage";
 import SequenceDetail from "./pages/SequenceDetail";
+import PoseCard from "./components/PoseCard";
 
 import { useColorMode } from "@chakra-ui/react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
@@ -148,7 +149,7 @@ function AppContent() {
             <Route path="/restorativeyoga" element={<RestorativeYogaPage />} />
             <Route path="/yinyoga" element={<YinYogaPage />} />
             <Route path="/sequencebuilder" element={<SequenceBuilderPage />} />
-            <Route path="/pose/:poseId" element={<PoseDetailPage />} />
+            <Route path="/poses/:poseId" element={<PoseDetailPage />} />
             <Route path="/sequence/:id" element={<SequenceDetail />} />
           </Routes>
         </Box>
