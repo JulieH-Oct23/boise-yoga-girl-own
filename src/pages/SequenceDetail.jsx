@@ -204,7 +204,7 @@ const SequenceDetailPage = () => {
               <Text fontSize="xl" fontWeight="semibold">
                 {pose.name}
               </Text>
-              <Text
+              {/* <Text
                 fontSize="sm"
                 color="gray.600"
                 mt={1}
@@ -212,7 +212,7 @@ const SequenceDetailPage = () => {
                 userSelect="text"
               >
                 {getCueForPose(pose.name)}
-              </Text>
+              </Text> */}
             </Box>
 
             <Box textAlign="center" minW="120px" ml={4} zIndex={2}>
