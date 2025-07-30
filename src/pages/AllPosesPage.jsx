@@ -195,9 +195,19 @@ const AllPosesPage = () => {
 
       {/* Pose Cards Grid */}
       <SimpleGrid columns={[2, null, 3, 4]} spacing={4}>
-        {filteredPoses.map((pose) => (
+        {/* {filteredPoses.map((pose) => (
           <PoseCard key={pose._id} pose={pose} />
-        ))}
+        ))} */}
+        {filteredPoses.map((pose) => (
+  <PoseCard
+    key={pose._id}
+    pose={pose}
+    bgColorLight="#FAEDEC"
+    bgColorDark="#353325"
+    textColorLight="#353325"
+    textColorDark="#FAEDEC"
+  />
+))}
       </SimpleGrid>
     </Box>
   );

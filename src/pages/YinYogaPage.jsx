@@ -47,6 +47,11 @@ const YinYogaPage = () => {
           Yin Yoga is a slow-paced, meditative style of yoga that targets the deep connective tissues of the body such as ligaments, joints, and fascia. Unlike more dynamic yoga practices, Yin holds poses for extended periods—typically 3 to 5 minutes or longer—to gently stretch and strengthen these often neglected areas. This practice encourages relaxation, mindfulness, and increased flexibility, helping to balance the more active, yang aspects of daily life and exercise.
           In a typical Yin Yoga class, you can expect a calm and quiet environment where poses are mostly floor-based and supported, allowing you to surrender into each stretch without strain. The focus is on stillness, breath awareness, and cultivating patience as you explore your body’s limits. Over time, this practice can improve joint mobility, reduce stress, relieve tension, and enhance overall energy flow, making it especially beneficial for those seeking deeper release and restorative balance.
       </Text>
+      <Text fontSize="lg" color={textColor} mb={6}>
+       
+        Yin & Yang Poses can look very similar, but are practiced differently. A great example is the differnce between Lunges(Yang) and Dragons(Yin). The Yin version, Dragon, begins similarly from Downward Dog, but once the knee is down and hands or forearms are grounded, there is no muscle activation—only surrender. The breath is slow and minimal effort is used as you allow connective tissue to stretch with time. There’s no pushing, no reaching—only staying. In contrast, Lunges(Yang) is practiced actively,
+        often with the back leg lifted and engaged. The spine is upright, the core is on, and breath fuels muscular strength. Inhale to lengthen the back leg and lift the chest; exhale to stabilize and deepen. Yin is passive and meditative, Yang is dynamic and energizing. This is an important point of differentiation if your aim is to practice effectively.
+      </Text>
 
       <Box
         bg="#FAEDEC"
