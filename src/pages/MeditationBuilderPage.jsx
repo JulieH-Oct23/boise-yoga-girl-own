@@ -145,6 +145,326 @@
 // };
 
 // export default MeditationBuilderPage;
+// import React, { useState } from "react";
+// import {
+//   Box,
+//   Button,
+//   FormControl,
+//   FormLabel,
+//   Input,
+//   Select,
+//   Textarea,
+//   Heading,
+//   useColorModeValue,
+// } from "@chakra-ui/react";
+
+// const MeditationBuilderPage = () => {
+//   const [meditation, setMeditation] = useState({
+//     title: "",
+//     type: "",
+//     difficulty: "",
+//     description: "",
+//   });
+
+//   const handleChange = (e) => {
+//     setMeditation({ ...meditation, [e.target.name]: e.target.value });
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     console.log("Meditation Saved:", meditation);
+//     // You could add axios POST here
+//   };
+
+//   const bgColor = useColorModeValue("#FAEDEC", "#BEB1AE");
+//   const inputBg = useColorModeValue("white", "white");
+//   const inputColor = useColorModeValue("black", "black");
+
+//   return (
+//     <Box
+//       maxW="600px"
+//       mx="auto"
+//       mt={8}
+//       p={6}
+//       borderRadius="lg"
+//       bg={bgColor}
+//       boxShadow="md"
+//     >
+//       <Heading
+//         as="h2"
+//         size="lg"
+//         mb={6}
+//         textAlign="center"
+//         color={useColorModeValue("#353325", "#FAEDEC")}
+//       >
+//         Build a New Meditation
+//       </Heading>
+//       <form onSubmit={handleSubmit}>
+//         <FormControl mb={4}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Title
+//           </FormLabel>
+//           <Input
+//             name="title"
+//             value={meditation.title}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//           />
+//         </FormControl>
+
+//         <FormControl mb={4}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Type
+//           </FormLabel>
+//           <Select
+//             name="type"
+//             value={meditation.type}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//           >
+//             <option value="">Select Type</option>
+//             <option value="Mindfulness">Mindfulness</option>
+//             <option value="Body Scan">Body Scan</option>
+//             <option value="Loving-Kindness">Loving-Kindness</option>
+//             <option value="Visualization">Visualization</option>
+//           </Select>
+//         </FormControl>
+
+//         <FormControl mb={4}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Difficulty
+//           </FormLabel>
+//           <Select
+//             name="difficulty"
+//             value={meditation.difficulty}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//           >
+//             <option value="">Select Difficulty</option>
+//             <option value="Beginner">Beginner</option>
+//             <option value="Intermediate">Intermediate</option>
+//             <option value="Advanced">Advanced</option>
+//           </Select>
+//         </FormControl>
+
+//         <FormControl mb={6}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Description
+//           </FormLabel>
+//           <Textarea
+//             name="description"
+//             value={meditation.description}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//             rows={6}
+//             resize="vertical"
+//           />
+//         </FormControl>
+
+//         <Button
+//           type="submit"
+//           colorScheme="pink"
+//           bg="#92636B"
+//           color="white"
+//           borderRadius="xl"
+//           px={6}
+//           py={2}
+//           _hover={{ bg: "#7f4e57" }}
+//           width="100%"
+//         >
+//           Save Meditation
+//         </Button>
+//       </form>
+//     </Box>
+//   );
+// };
+
+// export default MeditationBuilderPage;
+// import React, { useState } from "react";
+// import {
+//   Box,
+//   Button,
+//   FormControl,
+//   FormLabel,
+//   Input,
+//   Select,
+//   Textarea,
+//   Heading,
+//   useColorModeValue,
+//   useToast,
+// } from "@chakra-ui/react";
+
+// const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+
+// const MeditationBuilderPage = () => {
+//   const [meditation, setMeditation] = useState({
+//     title: "",
+//     type: "",
+//     difficulty: "",
+//     description: "",
+//   });
+
+//   const toast = useToast();
+
+//   const handleChange = (e) => {
+//     setMeditation({ ...meditation, [e.target.name]: e.target.value });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const res = await fetch(`${API_BASE}/api/meditations`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(meditation),
+//       });
+
+//       if (!res.ok) {
+//         throw new Error("Failed to save meditation");
+//       }
+
+//       toast({
+//         title: "Meditation saved.",
+//         status: "success",
+//         duration: 3000,
+//         isClosable: true,
+//       });
+
+//       // Reset form
+//       setMeditation({
+//         title: "",
+//         type: "",
+//         difficulty: "",
+//         description: "",
+//       });
+//     } catch (err) {
+//       console.error(err);
+//       toast({
+//         title: "Error saving meditation.",
+//         status: "error",
+//         duration: 3000,
+//         isClosable: true,
+//       });
+//     }
+//   };
+
+//   const bgColor = useColorModeValue("#FAEDEC", "#BEB1AE");
+//   const inputBg = useColorModeValue("white", "white");
+//   const inputColor = useColorModeValue("black", "black");
+
+//   return (
+//     <Box
+//       maxW="600px"
+//       mx="auto"
+//       mt={8}
+//       p={6}
+//       borderRadius="lg"
+//       bg={bgColor}
+//       boxShadow="md"
+//     >
+//       <Heading
+//         as="h2"
+//         size="lg"
+//         mb={6}
+//         textAlign="center"
+//         color={useColorModeValue("#353325", "#FAEDEC")}
+//       >
+//         Build a New Meditation
+//       </Heading>
+//       <form onSubmit={handleSubmit}>
+//         <FormControl mb={4}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Title
+//           </FormLabel>
+//           <Input
+//             name="title"
+//             value={meditation.title}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//             required
+//           />
+//         </FormControl>
+
+//         <FormControl mb={4}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Type
+//           </FormLabel>
+//           <Select
+//             name="type"
+//             value={meditation.type}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//             required
+//           >
+//             <option value="">Select Type</option>
+//             <option value="Mindfulness">Mindfulness</option>
+//             <option value="Body Scan">Body Scan</option>
+//             <option value="Loving-Kindness">Loving-Kindness</option>
+//             <option value="Visualization">Visualization</option>
+//           </Select>
+//         </FormControl>
+
+//         <FormControl mb={4}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Difficulty
+//           </FormLabel>
+//           <Select
+//             name="difficulty"
+//             value={meditation.difficulty}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//             required
+//           >
+//             <option value="">Select Difficulty</option>
+//             <option value="Beginner">Beginner</option>
+//             <option value="Intermediate">Intermediate</option>
+//             <option value="Advanced">Advanced</option>
+//           </Select>
+//         </FormControl>
+
+//         <FormControl mb={6}>
+//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
+//             Description
+//           </FormLabel>
+//           <Textarea
+//             name="description"
+//             value={meditation.description}
+//             onChange={handleChange}
+//             bg={inputBg}
+//             color={inputColor}
+//             rows={6}
+//             resize="vertical"
+//             required
+//           />
+//         </FormControl>
+
+//         <Button
+//           type="submit"
+//           colorScheme="pink"
+//           bg="#92636B"
+//           color="white"
+//           borderRadius="xl"
+//           px={6}
+//           py={2}
+//           _hover={{ bg: "#7f4e57" }}
+//           width="100%"
+//         >
+//           Save Meditation
+//         </Button>
+//       </form>
+//     </Box>
+//   );
+// };
+
+// export default MeditationBuilderPage;
 import React, { useState } from "react";
 import {
   Box,
@@ -155,25 +475,51 @@ import {
   Select,
   Textarea,
   Heading,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  CloseButton,
   useColorModeValue,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 const MeditationBuilderPage = () => {
   const [meditation, setMeditation] = useState({
-    title: "",
-    type: "",
-    difficulty: "",
-    description: "",
+    name: "",
+    text: "",
+    category: "",
   });
+
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setMeditation({ ...meditation, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Meditation Saved:", meditation);
-    // You could add axios POST here
+
+    if (!meditation.name || !meditation.text || !meditation.category) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    try {
+      await axios.post(`${API_BASE}/api/meditations`, meditation);
+      setSaveSuccess(true);
+      setSaveError(false);
+      setMeditation({ name: "", text: "", category: "" });
+    } catch (err) {
+      console.error("Failed to save meditation:", err);
+      setSaveSuccess(false);
+      setSaveError(true);
+    }
   };
 
   const bgColor = useColorModeValue("#FAEDEC", "#BEB1AE");
@@ -181,87 +527,70 @@ const MeditationBuilderPage = () => {
   const inputColor = useColorModeValue("black", "black");
 
   return (
-    <Box
-      maxW="600px"
-      mx="auto"
-      mt={8}
-      p={6}
-      borderRadius="lg"
-      bg={bgColor}
-      boxShadow="md"
-    >
-      <Heading
-        as="h2"
-        size="lg"
-        mb={6}
-        textAlign="center"
-        color={useColorModeValue("#353325", "#FAEDEC")}
-      >
+    <Box maxW="600px" mx="auto" mt={8} p={6} borderRadius="lg" bg={bgColor} boxShadow="md">
+      <Heading as="h2" size="lg" mb={6} textAlign="center" color={useColorModeValue("#353325", "#FAEDEC")}>
         Build a New Meditation
       </Heading>
+
+      {saveSuccess && (
+        <Alert status="success" mb={4} borderRadius="md" position="relative">
+          <AlertIcon boxSize={6}/>
+          <AlertTitle> Success!</AlertTitle>
+          <AlertDescription>Meditation saved successfully.</AlertDescription>
+          <CloseButton position="absolute" right="8px" top="8px" onClick={() => setSaveSuccess(false)} />
+        </Alert>
+      )}
+
+      {saveError && (
+        <Alert status="error" mb={4} borderRadius="md" position="relative">
+          <AlertIcon boxSize={6}/>
+          <AlertTitle> Error!</AlertTitle>
+          <AlertDescription>Failed to save meditation.</AlertDescription>
+          <CloseButton position="absolute" right="8px" top="8px" onClick={() => setSaveError(false)} />
+        </Alert>
+      )}
+
       <form onSubmit={handleSubmit}>
         <FormControl mb={4}>
-          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-            Title
-          </FormLabel>
+          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>Title</FormLabel>
           <Input
-            name="title"
-            value={meditation.title}
+            name="name"
+            value={meditation.name}
             onChange={handleChange}
             bg={inputBg}
             color={inputColor}
+            placeholder="Meditation Title"
           />
         </FormControl>
 
         <FormControl mb={4}>
-          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-            Type
-          </FormLabel>
+          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>Category</FormLabel>
           <Select
-            name="type"
-            value={meditation.type}
+            name="category"
+            value={meditation.category}
             onChange={handleChange}
             bg={inputBg}
             color={inputColor}
           >
-            <option value="">Select Type</option>
-            <option value="Mindfulness">Mindfulness</option>
-            <option value="Body Scan">Body Scan</option>
-            <option value="Loving-Kindness">Loving-Kindness</option>
-            <option value="Visualization">Visualization</option>
-          </Select>
-        </FormControl>
-
-        <FormControl mb={4}>
-          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-            Difficulty
-          </FormLabel>
-          <Select
-            name="difficulty"
-            value={meditation.difficulty}
-            onChange={handleChange}
-            bg={inputBg}
-            color={inputColor}
-          >
-            <option value="">Select Difficulty</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
+            <option value="">Select Category</option>
+            <option value="Body">Body</option>
+            <option value="Mind">Mind</option>
+            <option value="Heart">Heart</option>
+            <option value="Breath">Breath</option>
           </Select>
         </FormControl>
 
         <FormControl mb={6}>
-          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-            Description
-          </FormLabel>
+          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>Description</FormLabel>
           <Textarea
-            name="description"
-            value={meditation.description}
+            name="text"
+            value={meditation.text}
             onChange={handleChange}
             bg={inputBg}
             color={inputColor}
-            rows={6}
+            rows={8}
             resize="vertical"
+            placeholder="Write the meditation script here..."
           />
         </FormControl>
 
