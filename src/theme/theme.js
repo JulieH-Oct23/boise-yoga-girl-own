@@ -26,7 +26,7 @@ export const chakraTheme = extendTheme({
       dark: {
         surface: "#27241D",
         muted: "#BFA39D",
-        header: "#A18E88",
+        header: "#BEB1AE",
         sidebarBg: "#332F27",
         mainBg: "#27241D",
         mainTitleText: "#FAFAF9",

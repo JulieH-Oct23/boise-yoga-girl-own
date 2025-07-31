@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import process from "process";
 import posesRoutes from "./routes/poses.js";
 import sequencesRoutes from "./routes/sequences.js";
+import meditationRoutes from "./routes/meditations.js"
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -33,6 +34,7 @@ mongoose
 // Register your API routes
 app.use("/api/poses", posesRoutes);
 app.use("/api/sequences", sequencesRoutes);
+app.use("/api/meditations", meditationRoutes);
 
 // Root route - must come after API routes
 app.get("/", (req, res) => {
