@@ -1,613 +1,327 @@
-// import React, { useState } from "react";
+// import React, { useEffect, useState } from "react";
 // import {
 //   Box,
 //   Button,
+//   Flex,
 //   Heading,
 //   Input,
 //   Textarea,
-//   VStack,
-//   FormControl,
-//   FormLabel,
-//   Select,
-//   Alert,
-//   AlertIcon,
-//   AlertTitle,
-//   AlertDescription,
-//   CloseButton,
 //   useColorModeValue,
+//   Text,
+//   IconButton,
 // } from "@chakra-ui/react";
+// import { CloseIcon } from "@chakra-ui/icons";
 // import axios from "axios";
-// import { useNavigate } from "react-router-dom";
 
 // const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 // const MeditationBuilderPage = () => {
-//   const [name, setName] = useState("");
-//   const [text, setText] = useState("");
-//   const [category, setCategory] = useState("");
-//   const [saveSuccess, setSaveSuccess] = useState(false);
-//   const [saveError, setSaveError] = useState(false);
-//   const navigate = useNavigate();
+//   const [title, setTitle] = useState("");
+//   const [cue, setCue] = useState("");
+//   const [cues, setCues] = useState([]);
+//   const [savedMeditations, setSavedMeditations] = useState([]);
 
-//   const cardBg = useColorModeValue("#FAEDEC", "#353325");
-//   const cardTextColor = useColorModeValue("#353325", "#FAEDEC");
+//   const bg = useColorModeValue("#FAEDEC", "#2D2D2D");
+//   const boxBg = useColorModeValue("#92636B", "#444");
+//   const textColor = useColorModeValue("#353325", "#FAEDEC");
 
-//   const handleSaveMeditation = async () => {
-//     if (!name.trim() || !text.trim() || !category) {
-//       alert("Please enter a name, meditation text, and select a category.");
-//       return;
+//   useEffect(() => {
+//     fetchMeditations();
+//   }, []);
+
+//   const fetchMeditations = async () => {
+//     try {
+//       const res = await axios.get(`${API_BASE}/api/meditations`);
+//       setSavedMeditations(res.data);
+//     } catch (err) {
+//       console.error("Error fetching meditations", err);
 //     }
+//   };
+
+//   const handleAddCue = () => {
+//     if (cue.trim() !== "") {
+//       setCues([...cues, cue]);
+//       setCue("");
+//     }
+//   };
+
+//   const handleRemoveCue = (index) => {
+//     const updated = [...cues];
+//     updated.splice(index, 1);
+//     setCues(updated);
+//   };
+
+//   const handleSubmit = async () => {
+//     if (!title || cues.length === 0) return;
 
 //     try {
-//       await axios.post(`${API_BASE}/api/meditations`, { name, text, category });
-//       setSaveSuccess(true);
-//       setSaveError(false);
-//       setName("");
-//       setText("");
-//       setCategory("");
+//       const meditationData = {
+//         title,
+//         cues, // This will be an array of cue strings
+//       };
+
+//       await axios.post(`${API_BASE}/api/meditations`, meditationData);
+//       setTitle("");
+//       setCues([]);
+//       fetchMeditations();
 //     } catch (err) {
-//       console.error("Failed to save meditation:", err);
-//       setSaveSuccess(false);
-//       setSaveError(true);
+//       console.error("Error saving meditation", err);
 //     }
 //   };
 
 //   return (
-//     <Box p={4}>
-//       <Button mb={4} colorScheme="pink" onClick={() => navigate(-1)}>
-//         ← Back
-//       </Button>
+//     <Box p={4} bg={bg} minHeight="100vh">
+//       <Heading mb={4} color={textColor}>
+//         Build a Meditation
+//       </Heading>
 
-//       <VStack spacing={4} align="center">
-//         <Box
-//           bg="#BEB1AE"
-//           color={cardTextColor}
-//           p={6}
-//           borderRadius="xl"
-//           boxShadow="md"
-//           w="100%"
-//           maxW="800px"
-//         >
-//           <Heading size="lg" mb={4} textAlign="center">
-//             Create a New Meditation
-//           </Heading>
+//       <Box
+//         bg={boxBg}
+//         p={4}
+//         rounded="xl"
+//         boxShadow="md"
+//         color="white"
+//         maxWidth="600px"
+//         mb={8}
+//       >
+//         <Input
+//           placeholder="Meditation Title"
+//           mb={3}
+//           value={title}
+//           onChange={(e) => setTitle(e.target.value)}
+//           bg="white"
+//           color="black"
+//         />
+//         <Textarea
+//           placeholder="Enter a cue"
+//           mb={3}
+//           value={cue}
+//           onChange={(e) => setCue(e.target.value)}
+//           bg="white"
+//           color="black"
+//         />
+//         <Button onClick={handleAddCue} colorScheme="pink" mb={4}>
+//           Add Cue
+//         </Button>
 
-//           {saveSuccess && (
-//             <Alert status="success" mb={4} borderRadius="md" position="relative">
-//               <AlertIcon boxSize="20px" />
-//               <AlertTitle> Success!</AlertTitle>
-//               <AlertDescription>Your meditation has been saved.</AlertDescription>
-//               <CloseButton
-//                 position="absolute"
-//                 right="8px"
-//                 top="8px"
-//                 onClick={() => setSaveSuccess(false)}
-//               />
-//             </Alert>
-//           )}
-
-//           {saveError && (
-//             <Alert status="error" mb={4} borderRadius="md" position="relative">
-//               <AlertIcon boxSize="20px" />
-//               <AlertTitle> Error!</AlertTitle>
-//               <AlertDescription>Failed to save meditation.</AlertDescription>
-//               <CloseButton
-//                 position="absolute"
-//                 right="8px"
-//                 top="8px"
-//                 onClick={() => setSaveError(false)}
-//               />
-//             </Alert>
-//           )}
-
-//           <FormControl mb={4}>
-//             <FormLabel>Meditation Name</FormLabel>
-//             <Input
-//               placeholder="Enter meditation name"
-//               value={name}
-//               onChange={(e) => setName(e.target.value)}
-//             />
-//           </FormControl>
-
-//           <FormControl mb={4}>
-//             <FormLabel>Category</FormLabel>
-//             <Select
-//               placeholder="Select category"
-//               value={category}
-//               onChange={(e) => setCategory(e.target.value)}
-//               bg="#FAEDEC"
-//               color="#353325"
+//         <Box>
+//           {cues.map((c, index) => (
+//             <Flex
+//               key={index}
+//               align="center"
+//               justify="space-between"
+//               bg="white"
+//               color="black"
+//               p={2}
+//               rounded="md"
+//               mb={2}
 //             >
-//               <option value="Body">Body</option>
-//               <option value="Mind">Mind</option>
-//               <option value="Heart">Heart</option>
-//               <option value="Breath">Breath</option>
-//             </Select>
-//           </FormControl>
-
-//           <FormControl mb={6}>
-//             <FormLabel>Meditation Text</FormLabel>
-//             <Textarea
-//               placeholder="Write the meditation script here..."
-//               value={text}
-//               onChange={(e) => setText(e.target.value)}
-//               rows={10}
-//             />
-//           </FormControl>
-
-//           <Button colorScheme="pink" onClick={handleSaveMeditation}>
-//             Save Meditation
-//           </Button>
+//               <Text>{c}</Text>
+//               <IconButton
+//                 icon={<CloseIcon boxSize={2} />}
+//                 size="xs"
+//                 onClick={() => handleRemoveCue(index)}
+//                 aria-label="Remove cue"
+//               />
+//             </Flex>
+//           ))}
 //         </Box>
-//       </VStack>
-//     </Box>
-//   );
-// };
 
-// export default MeditationBuilderPage;
-// import React, { useState } from "react";
-// import {
-//   Box,
-//   Button,
-//   FormControl,
-//   FormLabel,
-//   Input,
-//   Select,
-//   Textarea,
-//   Heading,
-//   useColorModeValue,
-// } from "@chakra-ui/react";
-
-// const MeditationBuilderPage = () => {
-//   const [meditation, setMeditation] = useState({
-//     title: "",
-//     type: "",
-//     difficulty: "",
-//     description: "",
-//   });
-
-//   const handleChange = (e) => {
-//     setMeditation({ ...meditation, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log("Meditation Saved:", meditation);
-//     // You could add axios POST here
-//   };
-
-//   const bgColor = useColorModeValue("#FAEDEC", "#BEB1AE");
-//   const inputBg = useColorModeValue("white", "white");
-//   const inputColor = useColorModeValue("black", "black");
-
-//   return (
-//     <Box
-//       maxW="600px"
-//       mx="auto"
-//       mt={8}
-//       p={6}
-//       borderRadius="lg"
-//       bg={bgColor}
-//       boxShadow="md"
-//     >
-//       <Heading
-//         as="h2"
-//         size="lg"
-//         mb={6}
-//         textAlign="center"
-//         color={useColorModeValue("#353325", "#FAEDEC")}
-//       >
-//         Build a New Meditation
-//       </Heading>
-//       <form onSubmit={handleSubmit}>
-//         <FormControl mb={4}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Title
-//           </FormLabel>
-//           <Input
-//             name="title"
-//             value={meditation.title}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//           />
-//         </FormControl>
-
-//         <FormControl mb={4}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Type
-//           </FormLabel>
-//           <Select
-//             name="type"
-//             value={meditation.type}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//           >
-//             <option value="">Select Type</option>
-//             <option value="Mindfulness">Mindfulness</option>
-//             <option value="Body Scan">Body Scan</option>
-//             <option value="Loving-Kindness">Loving-Kindness</option>
-//             <option value="Visualization">Visualization</option>
-//           </Select>
-//         </FormControl>
-
-//         <FormControl mb={4}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Difficulty
-//           </FormLabel>
-//           <Select
-//             name="difficulty"
-//             value={meditation.difficulty}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//           >
-//             <option value="">Select Difficulty</option>
-//             <option value="Beginner">Beginner</option>
-//             <option value="Intermediate">Intermediate</option>
-//             <option value="Advanced">Advanced</option>
-//           </Select>
-//         </FormControl>
-
-//         <FormControl mb={6}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Description
-//           </FormLabel>
-//           <Textarea
-//             name="description"
-//             value={meditation.description}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//             rows={6}
-//             resize="vertical"
-//           />
-//         </FormControl>
-
-//         <Button
-//           type="submit"
-//           colorScheme="pink"
-//           bg="#92636B"
-//           color="white"
-//           borderRadius="xl"
-//           px={6}
-//           py={2}
-//           _hover={{ bg: "#7f4e57" }}
-//           width="100%"
-//         >
+//         <Button onClick={handleSubmit} colorScheme="green" mt={4}>
 //           Save Meditation
 //         </Button>
-//       </form>
-//     </Box>
-//   );
-// };
+//       </Box>
 
-// export default MeditationBuilderPage;
-// import React, { useState } from "react";
-// import {
-//   Box,
-//   Button,
-//   FormControl,
-//   FormLabel,
-//   Input,
-//   Select,
-//   Textarea,
-//   Heading,
-//   useColorModeValue,
-//   useToast,
-// } from "@chakra-ui/react";
-
-// const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
-
-// const MeditationBuilderPage = () => {
-//   const [meditation, setMeditation] = useState({
-//     title: "",
-//     type: "",
-//     difficulty: "",
-//     description: "",
-//   });
-
-//   const toast = useToast();
-
-//   const handleChange = (e) => {
-//     setMeditation({ ...meditation, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       const res = await fetch(`${API_BASE}/api/meditations`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(meditation),
-//       });
-
-//       if (!res.ok) {
-//         throw new Error("Failed to save meditation");
-//       }
-
-//       toast({
-//         title: "Meditation saved.",
-//         status: "success",
-//         duration: 3000,
-//         isClosable: true,
-//       });
-
-//       // Reset form
-//       setMeditation({
-//         title: "",
-//         type: "",
-//         difficulty: "",
-//         description: "",
-//       });
-//     } catch (err) {
-//       console.error(err);
-//       toast({
-//         title: "Error saving meditation.",
-//         status: "error",
-//         duration: 3000,
-//         isClosable: true,
-//       });
-//     }
-//   };
-
-//   const bgColor = useColorModeValue("#FAEDEC", "#BEB1AE");
-//   const inputBg = useColorModeValue("white", "white");
-//   const inputColor = useColorModeValue("black", "black");
-
-//   return (
-//     <Box
-//       maxW="600px"
-//       mx="auto"
-//       mt={8}
-//       p={6}
-//       borderRadius="lg"
-//       bg={bgColor}
-//       boxShadow="md"
-//     >
-//       <Heading
-//         as="h2"
-//         size="lg"
-//         mb={6}
-//         textAlign="center"
-//         color={useColorModeValue("#353325", "#FAEDEC")}
-//       >
-//         Build a New Meditation
+//       <Heading size="md" mb={4} color={textColor}>
+//         Saved Meditations
 //       </Heading>
-//       <form onSubmit={handleSubmit}>
-//         <FormControl mb={4}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Title
-//           </FormLabel>
-//           <Input
-//             name="title"
-//             value={meditation.title}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//             required
-//           />
-//         </FormControl>
 
-//         <FormControl mb={4}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Type
-//           </FormLabel>
-//           <Select
-//             name="type"
-//             value={meditation.type}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//             required
-//           >
-//             <option value="">Select Type</option>
-//             <option value="Mindfulness">Mindfulness</option>
-//             <option value="Body Scan">Body Scan</option>
-//             <option value="Loving-Kindness">Loving-Kindness</option>
-//             <option value="Visualization">Visualization</option>
-//           </Select>
-//         </FormControl>
-
-//         <FormControl mb={4}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Difficulty
-//           </FormLabel>
-//           <Select
-//             name="difficulty"
-//             value={meditation.difficulty}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//             required
-//           >
-//             <option value="">Select Difficulty</option>
-//             <option value="Beginner">Beginner</option>
-//             <option value="Intermediate">Intermediate</option>
-//             <option value="Advanced">Advanced</option>
-//           </Select>
-//         </FormControl>
-
-//         <FormControl mb={6}>
-//           <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>
-//             Description
-//           </FormLabel>
-//           <Textarea
-//             name="description"
-//             value={meditation.description}
-//             onChange={handleChange}
-//             bg={inputBg}
-//             color={inputColor}
-//             rows={6}
-//             resize="vertical"
-//             required
-//           />
-//         </FormControl>
-
-//         <Button
-//           type="submit"
-//           colorScheme="pink"
-//           bg="#92636B"
+//       {savedMeditations.map((meditation) => (
+//         <Box
+//           key={meditation._id}
+//           bg={boxBg}
+//           p={4}
+//           mb={4}
+//           rounded="xl"
+//           boxShadow="md"
 //           color="white"
-//           borderRadius="xl"
-//           px={6}
-//           py={2}
-//           _hover={{ bg: "#7f4e57" }}
-//           width="100%"
+//           maxWidth="600px"
 //         >
-//           Save Meditation
-//         </Button>
-//       </form>
+//           <Heading size="md" mb={2}>
+//             {meditation.title}
+//           </Heading>
+//           {meditation.cues?.map((cueText, idx) => (
+//             <Text key={idx} mb={1}>
+//               - {cueText}
+//             </Text>
+//           ))}
+//         </Box>
+//       ))}
 //     </Box>
 //   );
 // };
 
 // export default MeditationBuilderPage;
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
-  Textarea,
+  Flex,
   Heading,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  CloseButton,
+  Input,
+  Textarea,
   useColorModeValue,
+  Text,
+  IconButton,
 } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
 const MeditationBuilderPage = () => {
-  const [meditation, setMeditation] = useState({
-    name: "",
-    text: "",
-    category: "",
-  });
+  const [title, setTitle] = useState("");
+  const [cue, setCue] = useState("");
+  const [cues, setCues] = useState([]);
+  const [savedMeditations, setSavedMeditations] = useState([]);
 
-  const [saveSuccess, setSaveSuccess] = useState(false);
-  const [saveError, setSaveError] = useState(false);
-  const navigate = useNavigate();
+  const bg = useColorModeValue("#FAEDEC", "#2D2D2D");
+  const boxBg = useColorModeValue("#92636B", "#444");
+  const textColor = useColorModeValue("#353325", "#FAEDEC");
 
-  const handleChange = (e) => {
-    setMeditation({ ...meditation, [e.target.name]: e.target.value });
+  useEffect(() => {
+    fetchMeditations();
+  }, []);
+
+  const fetchMeditations = async () => {
+    try {
+      const res = await axios.get(`${API_BASE}/api/meditations`);
+      setSavedMeditations(res.data);
+    } catch (err) {
+      console.error("Error fetching meditations", err);
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleAddCue = () => {
+    if (cue.trim() !== "") {
+      setCues([...cues, cue.trim()]);
+      setCue("");
+    }
+  };
 
-    if (!meditation.name || !meditation.text || !meditation.category) {
-      alert("Please fill out all fields.");
+  const handleRemoveCue = (index) => {
+    const updated = [...cues];
+    updated.splice(index, 1);
+    setCues(updated);
+  };
+
+  const handleSubmit = async () => {
+    if (!title.trim() || cues.length === 0) {
+      alert("Please enter a title and at least one cue.");
       return;
     }
 
     try {
-      await axios.post(`${API_BASE}/api/meditations`, meditation);
-      setSaveSuccess(true);
-      setSaveError(false);
-      setMeditation({ name: "", text: "", category: "" });
+      const meditationData = {
+        title: title.trim(),
+        cue: cues.join("\n\n"), // join cues as one string with double line breaks
+      };
+
+      await axios.post(`${API_BASE}/api/meditations`, meditationData);
+      setTitle("");
+      setCues([]);
+      fetchMeditations();
     } catch (err) {
-      console.error("Failed to save meditation:", err);
-      setSaveSuccess(false);
-      setSaveError(true);
+      console.error("Error saving meditation", err);
+      alert("Failed to save meditation");
     }
   };
 
-  const bgColor = useColorModeValue("#FAEDEC", "#BEB1AE");
-  const inputBg = useColorModeValue("white", "white");
-  const inputColor = useColorModeValue("black", "black");
-
   return (
-    <Box maxW="600px" mx="auto" mt={8} p={6} borderRadius="lg" bg={bgColor} boxShadow="md">
-      <Heading as="h2" size="lg" mb={6} textAlign="center" color={useColorModeValue("#353325", "#FAEDEC")}>
-        Build a New Meditation
+    <Box p={4} bg={bg} minHeight="100vh">
+      <Heading mb={4} color={textColor}>
+        Build a Meditation
       </Heading>
 
-      {saveSuccess && (
-        <Alert status="success" mb={4} borderRadius="md" position="relative">
-          <AlertIcon boxSize={6}/>
-          <AlertTitle> Success!</AlertTitle>
-          <AlertDescription>Meditation saved successfully.</AlertDescription>
-          <CloseButton position="absolute" right="8px" top="8px" onClick={() => setSaveSuccess(false)} />
-        </Alert>
-      )}
+      <Box
+        bg={boxBg}
+        p={4}
+        rounded="xl"
+        boxShadow="md"
+        color="white"
+        maxWidth="600px"
+        mb={8}
+      >
+        <Input
+          placeholder="Meditation Title"
+          mb={3}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          bg="white"
+          color="black"
+        />
+        <Textarea
+          placeholder="Enter a cue"
+          mb={3}
+          value={cue}
+          onChange={(e) => setCue(e.target.value)}
+          bg="white"
+          color="black"
+          rows={3}
+        />
+        <Button onClick={handleAddCue} colorScheme="pink" mb={4}>
+          Add Cue
+        </Button>
 
-      {saveError && (
-        <Alert status="error" mb={4} borderRadius="md" position="relative">
-          <AlertIcon boxSize={6}/>
-          <AlertTitle> Error!</AlertTitle>
-          <AlertDescription>Failed to save meditation.</AlertDescription>
-          <CloseButton position="absolute" right="8px" top="8px" onClick={() => setSaveError(false)} />
-        </Alert>
-      )}
+        <Box>
+          {cues.map((c, index) => (
+            <Flex
+              key={index}
+              align="center"
+              justify="space-between"
+              bg="white"
+              color="black"
+              p={2}
+              rounded="md"
+              mb={2}
+            >
+              <Text>{c}</Text>
+              <IconButton
+                icon={<CloseIcon boxSize={2} />}
+                size="xs"
+                onClick={() => handleRemoveCue(index)}
+                aria-label="Remove cue"
+              />
+            </Flex>
+          ))}
+        </Box>
 
-      <form onSubmit={handleSubmit}>
-        <FormControl mb={4}>
-          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>Title</FormLabel>
-          <Input
-            name="name"
-            value={meditation.name}
-            onChange={handleChange}
-            bg={inputBg}
-            color={inputColor}
-            placeholder="Meditation Title"
-          />
-        </FormControl>
-
-        <FormControl mb={4}>
-          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>Category</FormLabel>
-          <Select
-            name="category"
-            value={meditation.category}
-            onChange={handleChange}
-            bg={inputBg}
-            color={inputColor}
-          >
-            <option value="">Select Category</option>
-            <option value="Body">Body</option>
-            <option value="Mind">Mind</option>
-            <option value="Heart">Heart</option>
-            <option value="Breath">Breath</option>
-          </Select>
-        </FormControl>
-
-        <FormControl mb={6}>
-          <FormLabel color={useColorModeValue("#353325", "#FAEDEC")}>Description</FormLabel>
-          <Textarea
-            name="text"
-            value={meditation.text}
-            onChange={handleChange}
-            bg={inputBg}
-            color={inputColor}
-            rows={8}
-            resize="vertical"
-            placeholder="Write the meditation script here..."
-          />
-        </FormControl>
-
-        <Button
-          type="submit"
-          colorScheme="pink"
-          bg="#92636B"
-          color="white"
-          borderRadius="xl"
-          px={6}
-          py={2}
-          _hover={{ bg: "#7f4e57" }}
-          width="100%"
-        >
+        <Button onClick={handleSubmit} colorScheme="green" mt={4} width="100%">
           Save Meditation
         </Button>
-      </form>
+      </Box>
+
+      <Heading size="md" mb={4} color={textColor}>
+        Saved Meditations
+      </Heading>
+
+      {savedMeditations.map((meditation) => (
+        <Box
+          key={meditation._id}
+          bg={boxBg}
+          p={4}
+          mb={4}
+          rounded="xl"
+          boxShadow="md"
+          color="white"
+          maxWidth="600px"
+        >
+          <Heading size="md" mb={2}>
+            {meditation.title}
+          </Heading>
+          <Text whiteSpace="pre-wrap">{meditation.cue}</Text>
+        </Box>
+      ))}
     </Box>
   );
 };
