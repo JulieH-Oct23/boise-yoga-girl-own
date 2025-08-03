@@ -119,7 +119,9 @@ import RestorativeMeditation from "./RestorativeMeditation.png";
 import RestorativeBackbend from "./RestorativeBackbend.png";
 import RestorativeLegsUpTheWall from "./RestorativeLegsUpTheWall.png";
 import RestorativeRecliningButterfly from "./RestorativeRecliningButterfly.png";
-
+import RestorativeCorpse from "./RestorativeCorpse.png";
+import RestorativeSidelying from "./RestorativeSidelying.png";
+import ReversePrayer from "./ReversePrayer.png";
 
 // ✅ Export as key-value dictionary
 export default {
@@ -192,13 +194,16 @@ export default {
   ReclinedBoundAngle,
   RestorativeBackbend,
   RestorativeChild,
+  RestorativeCorpse,
   RestorativeLegsUpTheWall,
   RestorativeMeditation,
   RestorativeRecliningButterfly,
   RestorativeSaddle,
+  RestorativeSidelying,
   RestorativeSphinx,
   ReverseTableTop,
   ReverseWarrior,
+  ReversePrayer,
   RevolvedSeatedHeadToKnee,
   RevolvedTriangle,
   Savasana,
