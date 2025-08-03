@@ -111,6 +111,15 @@ import WingedDragon from "./WingedDragon.png";
 import landingpagebackground from "./landingpagebackground.jpeg";
 import StandingHand from "./StandingHand.png";
 import OpenChild from "./OpenChild.png";
+import RestorativeChild from "./RestorativeChild.png";
+import RestorativeSphinx from "./RestorativeSphinx.png";
+import RestorativeSaddle from "./RestorativeSaddle.png";
+import Caterpillar from "./Caterpillar.png";
+import RestorativeMeditation from "./RestorativeMeditation.png";
+import RestorativeBackbend from "./RestorativeBackbend.png";
+import RestorativeLegsUpTheWall from "./RestorativeLegsUpTheWall.png";
+import RestorativeRecliningButterfly from "./RestorativeRecliningButterfly.png";
+
 
 // ✅ Export as key-value dictionary
 export default {
@@ -123,6 +132,7 @@ export default {
   Butterfly,
   Camel,
   Cat,
+  Caterpillar,
   Chair,
   ChairTwist,
   Cobra,
@@ -180,6 +190,13 @@ export default {
   Puppy,
   Pyramid,
   ReclinedBoundAngle,
+  RestorativeBackbend,
+  RestorativeChild,
+  RestorativeLegsUpTheWall,
+  RestorativeMeditation,
+  RestorativeRecliningButterfly,
+  RestorativeSaddle,
+  RestorativeSphinx,
   ReverseTableTop,
   ReverseWarrior,
   RevolvedSeatedHeadToKnee,
