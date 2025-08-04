@@ -1,5 +1,5 @@
 import express from 'express';
-import Meditation from '../models/Meditations.js'; // Make sure this is correct path and model
+import Meditation from '../models/Meditations.js';
 
 const router = express.Router();
 
@@ -14,11 +14,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST new meditation (you already have this)
+// POST a new meditation
 router.post('/', async (req, res) => {
   try {
-    const { name, text, category } = req.body;
-    const newMeditation = new Meditation({ name, text, category });
+    const { name, cue, category } = req.body;
+    const newMeditation = new Meditation({ name, cue, category });
     await newMeditation.save();
     res.status(201).json(newMeditation);
   } catch (error) {

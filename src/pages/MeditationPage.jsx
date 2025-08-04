@@ -16,7 +16,7 @@ const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 const MeditationPage = () => {
   const [meditations, setMeditations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [expandedId, setExpandedId] = useState(null); // track expanded meditation id
+  const [expandedId, setExpandedId] = useState(null);
 
   const cardBg = useColorModeValue("#FAEDEC", "#353325");
   const cardTextColor = useColorModeValue("#353325", "#FAEDEC");
@@ -60,7 +60,13 @@ const MeditationPage = () => {
         >
           <Text fontWeight="bold" fontSize="lg">
             {name}{" "}
-            <Text as="span" fontWeight="normal" fontStyle="italic" fontSize="sm" color="gray.500">
+            <Text
+              as="span"
+              fontWeight="normal"
+              fontStyle="italic"
+              fontSize="sm"
+              color="gray.500"
+            >
               [{category}]
             </Text>
           </Text>
