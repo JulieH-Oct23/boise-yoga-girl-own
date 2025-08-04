@@ -122,12 +122,22 @@ import RestorativeRecliningButterfly from "./RestorativeRecliningButterfly.png";
 import RestorativeCorpse from "./RestorativeCorpse.png";
 import RestorativeSidelying from "./RestorativeSidelying.png";
 import ReversePrayer from "./ReversePrayer.png";
+import ReclinedHandToBigToe from "./ReclinedHandToBigToe.png";
+import SideLunge from "./SideLunge.png";
+import CradleBaby from "./CradleBaby.png";
+import FivePointedStar from "./FivePointedStar.png";
+import Beam from "./Beam.png";
+import GentleTwist from "./GentleTwist.png";
+import YogiBicycle from "./YogiBicycle.png";
+import SeatedFigureFour from "./SeatedFigureFour.png";
+
 
 // ✅ Export as key-value dictionary
 export default {
   BabyDragon,
   BackwardBending,
   Banana,
+  Beam,
   Boat,
   Bridge,
   BrokenWing,
@@ -140,6 +150,7 @@ export default {
   Cobra,
   Cow,
   CowFace,
+  CradleBaby,
   CrescentLunge,
   CrescentMoon,
   Crow,
@@ -154,6 +165,7 @@ export default {
   ExtendedSideAngle,
   Fish,
   Firefly22,
+  FivePointedStar,
   FixedFirm,
   FlyingPigeon,
   FloorBow,
@@ -162,6 +174,7 @@ export default {
   FourLimbbedStaff,
   Frog,
   Garland,
+  GentleTwist,
   Goddess,
   HalfButterfly,
   HalfFrog,
@@ -192,6 +205,7 @@ export default {
   Puppy,
   Pyramid,
   ReclinedBoundAngle,
+  ReclinedHandToBigToe,
   RestorativeBackbend,
   RestorativeChild,
   RestorativeCorpse,
@@ -208,6 +222,7 @@ export default {
   RevolvedTriangle,
   Savasana,
   Saddle,
+  SeatedFigureFour,
   SeatedForwardFold,
   SeatedWideLegForwardFold,
   SeatedHeadToKnee,
@@ -218,6 +233,7 @@ export default {
   SideChair,
   SideEagle,
   SideGarland,
+  SideLunge,
   SidePlank,
   SideStanding,
   Snail,
@@ -242,6 +258,7 @@ export default {
   Warrior2,
   Warrior3,
   WildThing,
+  YogiBicycle,
   Wheel,
   WideLegForwardFold,
   WindRemoving,
