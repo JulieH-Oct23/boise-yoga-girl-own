@@ -130,6 +130,12 @@ import Beam from "./Beam.png";
 import GentleTwist from "./GentleTwist.png";
 import YogiBicycle from "./YogiBicycle.png";
 import SeatedFigureFour from "./SeatedFigureFour.png";
+import ExtendedMountain from "./ExtendedMountain.png";
+import ExtendedHalflift from "./ExtendedHalflift.png";
+import Gorilla from "./Gorilla.png";
+import Splits from "./Splits.png";
+import YogiSitUp from "./YogiSitUp.png";
+import Heron from "./Heron.png";
 
 
 // ✅ Export as key-value dictionary
@@ -162,6 +168,8 @@ export default {
   DragonFlyingLow,
   Eagle,
   Easy,
+  ExtendedHalflift,
+  ExtendedMountain,
   ExtendedSideAngle,
   Fish,
   Firefly22,
@@ -176,6 +184,7 @@ export default {
   Garland,
   GentleTwist,
   Goddess,
+  Gorilla,
   HalfButterfly,
   HalfFrog,
   HalfLordOfFishes,
@@ -184,12 +193,13 @@ export default {
   Headstand,
   HeartMelting,
   Hero,
+  Heron,
   HighLunge,
   HighPlank,
   HumbleWarrior,
   KneesToChest,
   LegUpWall,
-  Lion, 
+  Lion,
   Locust,
   LowLunge,
   LowPlank,
@@ -238,6 +248,7 @@ export default {
   SideStanding,
   Snail,
   Sphinx,
+  Splits,
   Staff,
   StandingForwardFold,
   StandingSeparateLegForwardFold,
@@ -259,6 +270,7 @@ export default {
   Warrior3,
   WildThing,
   YogiBicycle,
+  YogiSitUp,
   Wheel,
   WideLegForwardFold,
   WindRemoving,
