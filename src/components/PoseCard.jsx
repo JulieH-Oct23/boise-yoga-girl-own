@@ -53,6 +53,11 @@ const PoseCard = ({ pose, size = "default" }) => {
       <Heading fontSize={fontSize} color={textColor} noOfLines={1}>
         {name}
       </Heading>
+      {pose.anatomy && Array.isArray(pose.anatomy) && (
+  <Box mt={1} fontSize="sm" color={textColor}>
+    Anatomy: {pose.anatomy.join(', ')}
+  </Box>
+)}
     </Box>
   );
 };
