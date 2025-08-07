@@ -11,7 +11,7 @@ const PoseSchema = new mongoose.Schema({
   category: [String], // array of categories
   level: String,
   cue: String,
-  anatomy: String, // comma-separated string (e.g., "spine, hamstrings")
+  anatomy: [String], // comma-separated string (e.g., "spine, hamstrings")
   indications: [String],
   counterIndications: [String],
   timing: [String],

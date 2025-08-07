@@ -63,6 +63,7 @@ router.get("/:id", async (req, res) => {
     if (!pose) {
       return res.status(404).json({ message: "Pose not found" });
     }
+    console.log('Larry: ', pose)
     res.json(pose);
   } catch (err) {
     res.status(500).json({ message: err.message });
