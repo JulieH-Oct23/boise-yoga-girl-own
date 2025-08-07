@@ -1,4 +1,3 @@
-
 import {
   Box,
   Button,
@@ -18,7 +17,6 @@ const PoseDetailPage = () => {
   const [pose, setPose] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // THEME COLORS
   const bg = useColorModeValue("brand.light.surface", "brand.dark.surface");
   const textColor = useColorModeValue(
     "brand.light.poseCardText",
@@ -48,7 +46,6 @@ const PoseDetailPage = () => {
       });
   }, [poseId]);
 
-  // NEW helper to get image src from pose.image string (like in SequenceBuilderPage)
   const getImageSrc = (imageName) => {
     if (!imageName) return images.MissingPhoto;
     const key = imageName.replace(/\.png$/i, "");
@@ -58,7 +55,6 @@ const PoseDetailPage = () => {
   if (loading) return <Spinner size="xl" />;
   if (!pose) return <Text>Pose not found</Text>;
 
-  // Use pose.image here, fallback to MissingPhoto
   const imageSrc = getImageSrc(pose.image);
 
   return (
@@ -79,6 +75,11 @@ const PoseDetailPage = () => {
       <Heading color={titleColor} mb={4}>
         {pose.name}
       </Heading>
+      {pose.sanskritName && (
+      <Text fontStyle="italic" mb={4}>
+      {pose.sanskritName}
+      </Text>
+      )}
 
       {imageSrc && (
         <Image
@@ -100,6 +101,16 @@ const PoseDetailPage = () => {
           <Text>{pose.cue}</Text>
         </Box>
       )}
+      {pose.anatomy && (
+  <Box>
+    <Text fontWeight="bold">Anatomy:</Text>
+    <ul>
+      {pose.anatomy.map((part, index) => (
+        <li key={index}>{part}</li>
+      ))}
+    </ul>
+  </Box>
+)}
 
       <Text mb={2}>
         <strong>Category:</strong> {pose.category?.join(", ")}
@@ -110,8 +121,8 @@ const PoseDetailPage = () => {
       <Text mb={2}>
         <strong>Timing:</strong> {pose.timing?.join(", ")}
       </Text>
-      <Text mb={2}>
-        <strong>Anatomy:</strong> {pose.anatomy}
+       <Text mb={2}>
+        <strong>Anatomy:</strong> {pose.anatomy?.join(", ")}
       </Text>
       <Text mb={2}>
         <strong>Indications:</strong> {pose.indications?.join(", ")}
@@ -130,3 +141,4 @@ const PoseDetailPage = () => {
 };
 
 export default PoseDetailPage;
+

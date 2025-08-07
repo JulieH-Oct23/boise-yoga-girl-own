@@ -77,6 +77,9 @@ const LandingPage = () => {
           <ChakraLink as={RouterLink} to="/allposes">
             <Button {...menuButtonStyle}>Pose Encyclopedia</Button>
           </ChakraLink>
+           <ChakraLink as={RouterLink} to="/meditations">
+            <Button {...menuButtonStyle}>Meditations</Button>
+          </ChakraLink>
           <ChakraLink as={RouterLink} to="/poweryoga">
             <Button {...menuButtonStyle}>Power Yoga Sequences</Button>
           </ChakraLink>

@@ -63,43 +63,74 @@
 // };
 
 // export default PoseCard;
+// import React from "react";
+// import { Box, Image, Text, useColorModeValue } from "@chakra-ui/react";
+// import poseImages from "../images"; // Assuming this maps names to image imports
+
+// const PoseCard = ({ pose }) => {
+//   const cardBg = useColorModeValue("#FAEDEC", "#353325");
+//   const textColor = useColorModeValue("#353325", "#FAEDEC");
+
+//   return (
+//     <Box
+//       bg={cardBg}
+//       p={4}
+//       borderRadius="xl"
+//       boxShadow="md"
+//       maxW="250px"
+//       textAlign="center"
+//       m={2}
+//     >
+//       <Image
+//         src={poseImages[pose.englishName]}
+//         alt={pose.englishName}
+//         mb={3}
+//         borderRadius="md"
+//       />
+//       <Text fontWeight="bold" fontSize="lg" color={textColor}>
+//         {pose.englishName}
+//       </Text>
+//       <Text fontStyle="italic" fontSize="sm" color={textColor}>
+//         {pose.sanskritName}
+//       </Text>
+//       <Text fontSize="xs" color="#92636B" noOfLines={1}>
+//         {Array.isArray(pose.anatomy) ? pose.anatomy.join(", ") : ""}
+//       </Text>
+
+//       {/* ✅ Display Anatomy Array */}
+// {Array.isArray(pose.anatomy) && pose.anatomy.length > 0 && (
+//   <Box mt={1} fontSize="sm" color={textColor}>
+//     Anatomy: {pose.anatomy.join(", ")}
+//   </Box>
+// )}
+//     </Box>
+//   );
+// };
+
+// export default PoseCard;
+
 import React from "react";
-import { Box, Image, Text, useColorModeValue } from "@chakra-ui/react";
-import poseImages from "../images"; // Assuming this maps names to image imports
+import { Box, Image, Text, VStack } from "@chakra-ui/react";
 
-const PoseCard = ({ pose }) => {
-  const cardBg = useColorModeValue("#FAEDEC", "#353325");
-  const textColor = useColorModeValue("#353325", "#FAEDEC");
-
+const PoseCard = ({ pose, onClick }) => {
   return (
     <Box
-      bg={cardBg}
+      onClick={onClick}
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
       p={4}
-      borderRadius="xl"
-      boxShadow="md"
-      maxW="250px"
-      textAlign="center"
-      m={2}
+      cursor="pointer"
+      bg="pink.50"
     >
-      <Image
-        src={poseImages[pose.englishName]}
-        alt={pose.englishName}
-        mb={3}
-        borderRadius="md"
-      />
-      <Text fontWeight="bold" fontSize="lg" color={textColor}>
-        {pose.englishName}
-      </Text>
-      <Text fontStyle="italic" fontSize="sm" color={textColor}>
-        {pose.sanskritName}
-      </Text>
-
-      {/* ✅ Display Anatomy Array */}
-      {pose.anatomy && pose.anatomy.length > 0 && (
-        <Text mt={2} fontSize="sm" color={textColor}>
-          <strong>Anatomy:</strong> {pose.anatomy.join(", ")}
-        </Text>
-      )}
+      <VStack spacing={2}>
+        <Image src={pose.imageUrl} alt={pose.englishName} boxSize="150px" objectFit="cover" />
+        <Text fontWeight="bold">{pose.englishName}</Text>
+        <Text fontStyle="italic">{pose.sanskritName}</Text>
+        {pose.anatomy && pose.anatomy.length > 0 && (
+          <Text fontSize="sm">Anatomy: {pose.anatomy.join(", ")}</Text>
+        )}
+      </VStack>
     </Box>
   );
 };
