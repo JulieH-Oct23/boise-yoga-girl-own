@@ -10,6 +10,8 @@ const YinYogaPage = () => {
   const textColor = useColorModeValue("brand.light.poseCardText", "brand.dark.poseCardText");
   const navigate = useNavigate();
   const [yinSequences, setYinSequences] = useState([]);
+  const [sequenceTimers, setSequenceTimers] = useState({});
+// { [sequenceId]: [timer1, timer2, ...] }
 
   const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 
@@ -20,6 +22,13 @@ const YinYogaPage = () => {
       const res = await axios.get(`${API_BASE}/api/sequences`);
       const filtered = res.data.filter(seq => seq.style.toLowerCase() === "yin");
       setYinSequences(filtered);
+      
+      const timersObj = {};
+      filtered.forEach(seq => {
+        timersObj[seq._id] = seq.poses.map(p => p.duration || 60);
+      });
+      setSequenceTimers(timersObj);
+
     } catch (err) {
       console.error("Error fetching Yin sequences:", err);
     }
@@ -33,6 +42,20 @@ const YinYogaPage = () => {
     // Try by _id first, then by name, else fallback
     return images[randomPose._id] || images[randomPose.name] || images.MissingPhoto;
   };
+
+  const handleTimerChange = (sequenceId, poseIndex, newDuration) => {
+  setSequenceTimers(prev => {
+    const updated = { ...prev };
+    updated[sequenceId][poseIndex] = newDuration;
+    return updated;
+  });
+
+  // Optionally persist immediately to backend
+  axios.patch(`${API_BASE}/api/sequences/${sequenceId}/pose-duration`, {
+    index: poseIndex,
+    duration: newDuration
+  }).catch(err => console.error("Failed to save timer:", err));
+};
 
   return (
     <Box p={6}>
@@ -74,6 +97,8 @@ const YinYogaPage = () => {
                 onClick={() => navigate(`/sequence/${seq._id}`)}
                 size="small"
               />
+
+              
             ))}
           </SimpleGrid>
         )}

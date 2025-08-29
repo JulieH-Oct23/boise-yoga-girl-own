@@ -14,7 +14,7 @@
 //   }
 // });
 
-// // GET a sequence by ID  <=== ADD THIS
+// // GET a sequence by ID
 // router.get("/:id", async (req, res) => {
 //   try {
 //     const sequence = await Sequence.findById(req.params.id);
@@ -50,11 +50,36 @@
 //   }
 // });
 
+// // PUT update a sequence by ID  <=== THIS WAS MISSING
+// router.put("/:id", async (req, res) => {
+//   try {
+//     const updatedSequence = await Sequence.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true, runValidators: true }
+//     );
+//     if (!updatedSequence) {
+//       return res.status(404).json({ message: "Sequence not found" });
+//     }
+//     res.json(updatedSequence);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// });
+
 // export default router;
 import express from "express";
 import Sequence from "../models/Sequences.js";
 
 const router = express.Router();
+
+// Helper to ensure poses always have duration array
+const ensureDuration = (poses) =>
+  poses.map((p) => ({
+    name: p.name,
+    image: p.image || null,
+    duration: Array.isArray(p.duration) && p.duration.length ? p.duration : [15],
+  }));
 
 // GET all sequences
 router.get("/", async (req, res) => {
@@ -86,12 +111,13 @@ router.post("/", async (req, res) => {
   if (!name || !difficulty || !style || !poses) {
     return res.status(400).json({ message: "Please provide all required fields" });
   }
+  
 
   const newSequence = new Sequence({
     name,
     difficulty,
     style,
-    poses,
+    poses: ensureDuration(poses), // <- enforce duration array
   });
 
   try {
@@ -102,14 +128,22 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT update a sequence by ID  <=== THIS WAS MISSING
+// PUT update a sequence by ID
 router.put("/:id", async (req, res) => {
   try {
+    const { name, difficulty, style, poses } = req.body;
+
     const updatedSequence = await Sequence.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      {
+        name,
+        difficulty,
+        style,
+        poses: ensureDuration(poses), // <- enforce duration array
+      },
       { new: true, runValidators: true }
     );
+
     if (!updatedSequence) {
       return res.status(404).json({ message: "Sequence not found" });
     }

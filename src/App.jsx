@@ -25,6 +25,7 @@ import YinYogaPage from "./pages/YinYogaPage";
 import SequenceDetail from "./pages/SequenceDetail";
 import MeditationBuilderPage from "./pages/MeditationBuilderPage";
 import MeditationPage from "./pages/MeditationPage";
+import HathaYogaPage from "./pages/HathaYogaPage";
 
 import { useColorMode } from "@chakra-ui/react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
@@ -110,6 +111,15 @@ function AppContent() {
   </ChakraLink>
   <ChakraLink
     as={RouterLink}
+    to="/hathayoga"
+    color={sidebarTextColor}
+    textDecoration="none"
+    display="block"
+  >
+    Hatha Yoga
+  </ChakraLink>
+  <ChakraLink
+    as={RouterLink}
     to="/yinyoga"
     color={sidebarTextColor}
     textDecoration="none"
@@ -174,6 +184,7 @@ function AppContent() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/allposes" element={<AllPosesPage />} />
             <Route path="/poweryoga" element={<PowerYogaPage />} />
+            <Route path="/hathayoga" element={<HathaYogaPage />} />
             <Route path="/restorativeyoga" element={<RestorativeYogaPage />} />
             <Route path="/yinyoga" element={<YinYogaPage />} />
             <Route path="/sequencebuilder" element={<SequenceBuilderPage />} />
