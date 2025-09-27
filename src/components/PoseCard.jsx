@@ -12,7 +12,7 @@ const PoseCard = ({ pose, onClick }) => {
       cursor="pointer"
       bg="pink.50"
     >
-      <VStack spacing={2}>
+      <VStack spacing={2} align="start">
         <Image src={pose.imageUrl} alt={pose.englishName} boxSize="200px" objectFit="cover" />
         <Text fontWeight="bold">{pose.englishName}</Text>
         <Text fontStyle="italic">{pose.sanskritName}</Text>
