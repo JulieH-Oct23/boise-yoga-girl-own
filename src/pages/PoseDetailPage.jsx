@@ -104,7 +104,7 @@ const PoseDetailPage = () => {
       )}
 
       {pose.cue && (
-        <Box mb={4} p={1} bg={cueBoxBg} borderRadius="sm">
+        <Box mb={8} p={1} bg={cueBoxBg} borderRadius="sm">
           <Text fontWeight="semibold" mb={3}>
             Cue:
           </Text>
@@ -113,21 +113,9 @@ const PoseDetailPage = () => {
       )}
 
       {anatomyArray.length > 0 && (
-  // <Box mb={4}>
-  //   <Text fontWeight="bold" mb={2}>
-  //     Anatomy:
-  //   </Text>
-  //   <VStack align="start" spacing={0.5}>
-  //     {anatomyArray.map((part, index) => (
-  //       <Text key={index} fontSize="md">
-  //         {part}
-  //       </Text>
-  //     ))}
-  //   </VStack>
-  // </Box>
-  <Text mb={2}>
-  <strong>Anatomy:</strong> {pose.anatomy?.join(", ")}
-</Text>
+        <Text mb={2}>
+          <strong>Anatomy:</strong> {pose.anatomy?.join(", ")}
+        </Text>
       )}
 
       <Text mb={2}>
