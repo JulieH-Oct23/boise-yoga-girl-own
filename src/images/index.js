@@ -135,7 +135,10 @@ import ExtendedHalflift from "./ExtendedHalflift.png";
 import Gorilla from "./Gorilla.png";
 import Splits from "./Splits.png";
 import YogiSitUp from "./YogiSitUp.png";
+import StandingTwist from "./StandingTwist.png";
 import Heron from "./Heron.png";
+import RestorativePuppy from "./RestorativePuppy.png";
+
 
 
 // ✅ Export as key-value dictionary
@@ -221,6 +224,7 @@ export default {
   RestorativeCorpse,
   RestorativeLegsUpTheWall,
   RestorativeMeditation,
+  RestorativePuppy,
   RestorativeRecliningButterfly,
   RestorativeSaddle,
   RestorativeSidelying,
@@ -254,6 +258,7 @@ export default {
   StandingSeparateLegForwardFold,
   StandingSideStretch,
   StandingSplit,
+  StandingTwist,
   Square,
   SupineTwist,
   TempSquare,
