@@ -23,6 +23,7 @@ import DragonFlyingLow from "./DragonFlyingLow.png";
 import Dolphin from "./Dolphin.png";
 import Eagle from "./Eagle.png";
 import Easy from "./Easy.png";
+import EasyTwist from "./EasyTwist.png";
 import ExtendedSideAngle from "./ExtendedSideAngle.png";
 import Firefly22 from "./Firefly22.png";
 import Fish from "./Fish.png";
@@ -178,6 +179,7 @@ export default {
   DragonFlyingLow,
   Eagle,
   Easy,
+  EasyTwist,
   ExtendedHalflift,
   ExtendedMountain,
   ExtendedSideAngle,
