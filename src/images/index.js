@@ -70,6 +70,7 @@ import RevolvedSeatedHeadToKnee from "./RevolvedSeatedHeadToKnee.png";
 import RevolvedTriangle from "./RevolvedTriangle.png";
 import Saddle from "./Saddle.png";
 import Savasana from "./Savasana.png";
+import SeatedEagle from "./SeatedEagle.png";
 import SeatedForwardFold from "./SeatedForwardFold.png";
 import SeatedHeadToKnee from "./SeatedHeadToKnee.png";
 import SeatedWideLegForwardFold from "./SeatedWideLegForwardFold.png";
@@ -244,6 +245,7 @@ export default {
   RevolvedTriangle,
   Savasana,
   Saddle,
+  SeatedEagle,
   SeatedFigureFour,
   SeatedForwardFold,
   SeatedWideLegForwardFold,
