@@ -138,6 +138,9 @@ import YogiSitUp from "./YogiSitUp.png";
 import StandingTwist from "./StandingTwist.png";
 import Heron from "./Heron.png";
 import RestorativePuppy from "./RestorativePuppy.png";
+import CrescentLungeTwist from "./CrescentLungeTwist.png";
+import RestorativeBow from "./RestorativeBow.png";
+import RevolvedWideLegFF from "./RevolvedWidelegFF.png";
 
 
 
@@ -161,6 +164,7 @@ export default {
   CowFace,
   CradleBaby,
   CrescentLunge,
+  CrescentLungeTwist,
   CrescentMoon,
   Crow,
   Dancer,
@@ -220,6 +224,7 @@ export default {
   ReclinedBoundAngle,
   ReclinedHandToBigToe,
   RestorativeBackbend,
+  RestorativeBow,
   RestorativeChild,
   RestorativeCorpse,
   RestorativeLegsUpTheWall,
@@ -233,6 +238,7 @@ export default {
   ReverseWarrior,
   ReversePrayer,
   RevolvedSeatedHeadToKnee,
+  RevolvedWideLegFF,
   RevolvedTriangle,
   Savasana,
   Saddle,
