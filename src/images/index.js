@@ -141,6 +141,7 @@ import RestorativePuppy from "./RestorativePuppy.png";
 import CrescentLungeTwist from "./CrescentLungeTwist.png";
 import RestorativeBow from "./RestorativeBow.png";
 import RevolvedWideLegFF from "./RevolvedWidelegFF.png";
+import ClosedChild from "./ClosedChild.png";
 
 
 
@@ -159,6 +160,7 @@ export default {
   Caterpillar,
   Chair,
   ChairTwist,
+  ClosedChild,
   Cobra,
   Cow,
   CowFace,
