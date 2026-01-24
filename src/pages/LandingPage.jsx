@@ -95,9 +95,6 @@ const LandingPage = () => {
           <ChakraLink as={RouterLink} to="/sequencebuilder">
             <Button {...menuButtonStyle}>Build A Personalized Sequence</Button>
           </ChakraLink>
-          <ChakraLink as={RouterLink} to="/hathavinyasasequence">
-            <Button {...menuButtonStyle}>TEMPHatha/Vinyasa Sequence</Button>
-          </ChakraLink>
         </VStack>
       </Box>
     </Box>
