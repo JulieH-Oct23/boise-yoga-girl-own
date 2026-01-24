@@ -144,6 +144,9 @@ import CrescentLungeTwist from "./CrescentLungeTwist.png";
 import RestorativeBow from "./RestorativeBow.png";
 import RevolvedWideLegFF from "./RevolvedWidelegFF.png";
 import ClosedChild from "./ClosedChild.png";
+import BirdDog from "./BirdDog.png";
+import StandingForeheadToKnee from "./StandingForeheadToKnee.png";
+import TableTop from "./TableTop.png";
 
 
 
@@ -153,6 +156,7 @@ export default {
   BackwardBending,
   Banana,
   Beam,
+  BirdDog,
   Boat,
   Bridge,
   BrokenWing,
@@ -267,12 +271,14 @@ export default {
   Splits,
   Staff,
   StandingForwardFold,
+  StandingForeheadToKnee,
   StandingSeparateLegForwardFold,
   StandingSideStretch,
   StandingSplit,
   StandingTwist,
   Square,
   SupineTwist,
+  TableTop,
   TempSquare,
   ThreadTheNeedle,
   ThreeLegDownDog,
