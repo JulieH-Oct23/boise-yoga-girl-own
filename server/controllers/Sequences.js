@@ -1,12 +1,20 @@
 import Sequence from "../models/Sequence.js";
 
 // Helper: Ensure poses always have duration array
+// const ensureDuration = (poses) =>
+//   poses.map((p) => ({
+//     name: p.name,
+//     image: p.image || null,
+//     duration: Array.isArray(p.duration) && p.duration.length ? p.duration : [15],
+//   }));// Helper: Ensure poses always have duration array and skip invalid entries
 const ensureDuration = (poses) =>
-  poses.map((p) => ({
-    name: p.name,
-    image: p.image || null,
-    duration: Array.isArray(p.duration) && p.duration.length ? p.duration : [15],
-  }));
+  (poses || [])
+    .filter(Boolean) // skip null/undefined
+    .map((p) => ({
+      name: p.name || "Unknown Pose",
+      image: p.image || null,
+      duration: Array.isArray(p.duration) && p.duration.length ? p.duration : [15],
+    }));
 
 // Create a new sequence
 export const createSequence = async (req, res) => {
@@ -16,6 +24,7 @@ export const createSequence = async (req, res) => {
     if (!name || !style || !difficulty || !poses) {
       return res.status(400).json({ message: "Please provide all required fields" });
     }
+
 
     const sequence = new Sequence({
       name,

@@ -1013,6 +1013,7 @@ const SequenceBuilderPage = () => {
     }
   };
 
+
   // Save timers for existing sequence
   const handleSaveTimers = async () => {
     if (!sequenceId || selectedPoses.length === 0) return;
@@ -1091,7 +1092,7 @@ const SequenceBuilderPage = () => {
             <FormLabel>Style</FormLabel>
             <Select
               value={sequenceStyle}
-              onChange={(e) => setSequenceStyle(e.target.value)}
+              onChange={(e) => setSequenceStyle(e.target.value.trim())}
             >
               <option value="Power">Power</option>
               <option value="Hatha">Hatha</option>

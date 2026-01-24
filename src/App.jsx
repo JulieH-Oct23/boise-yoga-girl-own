@@ -26,6 +26,7 @@ import SequenceDetail from "./pages/SequenceDetail";
 import MeditationBuilderPage from "./pages/MeditationBuilderPage";
 import MeditationPage from "./pages/MeditationPage";
 import HathaYogaPage from "./pages/HathaYogaPage";
+import SequenceGridPage from "./pages/SequenceGridPage";
 
 import { useColorMode } from "@chakra-ui/react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
@@ -192,7 +193,9 @@ function AppContent() {
             <Route path="/sequence/:id" element={<SequenceDetail />} />
             <Route path="/meditation-builder" element={<MeditationBuilderPage />} />
             <Route path="/meditations" element={<MeditationPage />} />
+            <Route path="/sequencegrid" element={<SequenceGridPage />} />
           </Routes>
+ 
         </Box>
       </Box>
     </MUIThemeProvider>
