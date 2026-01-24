@@ -465,14 +465,158 @@
 // };
 
 // export default SequenceDetailPage;
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+// import {
+//   Box,
+//   Image,
+//   Text,
+//   Flex,
+//   SimpleGrid,
+//   Spinner,
+//   useColorModeValue,
+// } from "@chakra-ui/react";
+// import { useParams } from "react-router-dom";
+// import axios from "axios";
+// import images from "../images";
+
+// const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+
+// const SequenceDetailPage = () => {
+//   const { id } = useParams();
+//   const [sequence, setSequence] = useState(null);
+//   const [posesFull, setPosesFull] = useState([]);
+
+//   const bg = useColorModeValue("#FAEDEC", "#353325");
+//   const text = useColorModeValue("#353325", "#FAEDEC");
+
+//   // Fetch sequence and full pose info
+//   useEffect(() => {
+//     const fetchSequenceAndPoses = async () => {
+//       try {
+//         const seqRes = await axios.get(`${API_BASE}/api/sequences/${id}`);
+//         const seqData = seqRes.data;
+//         setSequence(seqData);
+
+//         const poseIds =
+//           seqData.poses.map((p) => p._id || p.poseId || p.id) || [];
+
+//         if (poseIds.length) {
+//           const posesRes = await axios.get(`${API_BASE}/api/poses`, {
+//             params: { ids: poseIds.join(",") },
+//           });
+//           setPosesFull(posesRes.data);
+//         }
+//       } catch (err) {
+//         console.error("Failed to load sequence or poses:", err);
+//       }
+//     };
+
+//     fetchSequenceAndPoses();
+//   }, [id]);
+
+//   if (!sequence) {
+//     return (
+//       <Box p={5} textAlign="center" color={text}>
+//         <Spinner size="xl" mx="auto" mt={20} />
+//         <Text mt={4}>Loading sequence...</Text>
+//       </Box>
+//     );
+//   }
+
+//   const isGrid = sequence.style === "Power" || sequence.style === "Hatha";
+
+//   const getPoseImage = (pose) => {
+//     const key = pose?.image?.replace(/\.(png|jpg|jpeg)$/i, "");
+//     return images[key] || images.MissingPhoto;
+//   };
+
+//   // ---------- GRID LAYOUT FOR POWER/HATHA ----------
+//   if (isGrid) {
+//     return (
+//       <Box p={6} maxW="1400px" mx="auto">
+//         <Text fontSize="2xl" fontWeight="bold" mb={6} textAlign="center">
+//           {sequence.name}
+//         </Text>
+
+//         <SimpleGrid columns={{ base: 2, sm: 3, md: 6, lg: 8 }} spacing={4}>
+//           {sequence.poses.map((pose, idx) => (
+//             <Box key={idx} textAlign="center">
+//               <Image
+//                 src={getPoseImage(pose)}
+//                 alt={pose.name || "Pose"}
+//                 borderRadius="md"
+//                 objectFit="cover"
+//                 w="100%"
+//                 maxH="150px"
+//                 mb={2}
+//               />
+//               <Text fontSize="sm">{pose.name || "Unnamed"}</Text>
+//             </Box>
+//           ))}
+//         </SimpleGrid>
+//       </Box>
+//     );
+//   }
+
+//   // ---------- LONG LAYOUT FOR YIN/RESTORATIVE ----------
+//   return (
+//     <Box bg={bg} color={text} p={5} maxW="600px" mx="auto" borderRadius="md">
+//       <Text fontSize="2xl" fontWeight="bold" mb={4} textAlign="center">
+//         {sequence.name}
+//       </Text>
+
+//       {sequence.poses.map((pose, idx) => {
+//         const foundPose =
+//           posesFull.find(
+//             (p) =>
+//               p._id === (pose._id || pose.poseId || pose.id) ||
+//               p.name === pose.name
+//           ) || {};
+
+//         return (
+//           <Flex
+//             key={idx}
+//             bg="white"
+//             p={4}
+//             mb={4}
+//             borderRadius="2xl"
+//             borderWidth="1px"
+//             align="center"
+//           >
+//             <Image
+//               src={getPoseImage(pose)}
+//               alt={pose.name || "Pose"}
+//               boxSize="100px"
+//               objectFit="contain"
+//               borderRadius="md"
+//               mr={4}
+//             />
+//             <Box flex="1">
+//               <Text fontSize="xl" fontWeight="semibold">
+//                 {pose.name || foundPose.name || "Unnamed"}
+//               </Text>
+//               <Text fontStyle="italic" mt={2}>
+//                 {pose.cue || foundPose.cue || "No cue provided."}
+//               </Text>
+//             </Box>
+//           </Flex>
+//         );
+//       })}
+//     </Box>
+//   );
+// };
+
+// export default SequenceDetailPage;
+import React, { useEffect, useState, useRef } from "react";
 import {
   Box,
   Image,
   Text,
+  Select,
+  Input,
+  Button,
   Flex,
   SimpleGrid,
-  Spinner,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
@@ -485,26 +629,37 @@ const SequenceDetailPage = () => {
   const { id } = useParams();
   const [sequence, setSequence] = useState(null);
   const [posesFull, setPosesFull] = useState([]);
+  const [units, setUnits] = useState("seconds");
+  const [playingIndex, setPlayingIndex] = useState(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const timerRef = useRef(null);
 
   const bg = useColorModeValue("#FAEDEC", "#353325");
   const text = useColorModeValue("#353325", "#FAEDEC");
+
+  const isGridStyle =
+    sequence?.style === "Power" || sequence?.style === "Hatha";
 
   // Fetch sequence and full pose info
   useEffect(() => {
     const fetchSequenceAndPoses = async () => {
       try {
-        const seqRes = await axios.get(`${API_BASE}/api/sequences/${id}`);
-        const seqData = seqRes.data;
-        setSequence(seqData);
+        const res = await axios.get(`${API_BASE}/api/sequences/${id}`);
+        const seq = res.data;
+        setSequence(seq);
 
         const poseIds =
-          seqData.poses.map((p) => p._id || p.poseId || p.id) || [];
+          seq.poses.map((pose) => pose._id || pose.poseId || pose.id) || [];
 
-        if (poseIds.length) {
+        if (poseIds.length > 0) {
           const posesRes = await axios.get(`${API_BASE}/api/poses`, {
             params: { ids: poseIds.join(",") },
           });
           setPosesFull(posesRes.data);
+        } else {
+          setPosesFull([]);
         }
       } catch (err) {
         console.error("Failed to load sequence or poses:", err);
@@ -514,94 +669,242 @@ const SequenceDetailPage = () => {
     fetchSequenceAndPoses();
   }, [id]);
 
+  const currentPoseFull =
+    playingIndex !== null && sequence?.poses?.length > 0
+      ? (() => {
+          const seqItem = sequence.poses[playingIndex];
+          if (!seqItem) return null;
+
+          if (seqItem.type === "meditation") {
+            return {
+              name: seqItem.title || "Meditation",
+              cue: seqItem.cue || "No cue provided.",
+              type: "meditation",
+              duration: seqItem.duration || 60,
+            };
+          }
+
+          const foundPose = posesFull.find(
+            (p) =>
+              p._id === (seqItem._id || seqItem.poseId || seqItem.id) ||
+              p.name === seqItem.name
+          );
+          return {
+            ...foundPose,
+            duration: seqItem.duration || foundPose?.duration || 60,
+          };
+        })()
+      : null;
+
+  const handleTimerChange = async (index, value) => {
+    const intValue = parseInt(value, 10) > 0 ? parseInt(value, 10) : 60;
+    const updatedSequence = { ...sequence };
+    updatedSequence.poses[index].duration = intValue;
+    setSequence(updatedSequence);
+
+    try {
+      await axios.put(`${API_BASE}/api/sequences/${id}`, updatedSequence);
+    } catch (err) {
+      console.error("Failed to save duration:", err);
+    }
+  };
+
+  const playSequence = () => {
+    setPlayingIndex(0);
+    setElapsedTime(0);
+    setIsPaused(false);
+  };
+
+  const pauseSequence = () => {
+    setIsPaused(true);
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  const resumeSequence = () => setIsPaused(false);
+
+  // Timer effect for Yin/Restorative only
+  useEffect(() => {
+    if (isGridStyle || playingIndex === null || isPaused) return;
+
+    const duration =
+      sequence.poses[playingIndex].duration || currentPoseFull?.duration || 60;
+    const timeInSeconds = units === "minutes" ? duration * 60 : duration;
+    const startTime = Date.now() - elapsedTime * 1000;
+
+    timerRef.current = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      if (elapsed >= timeInSeconds) {
+        clearInterval(timerRef.current);
+        setElapsedTime(0);
+        if (playingIndex < sequence.poses.length - 1) setPlayingIndex((prev) => prev + 1);
+        else setPlayingIndex(null);
+      } else {
+        setElapsedTime(elapsed);
+      }
+    }, 100);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [playingIndex, sequence, units, isPaused, elapsedTime, isGridStyle]);
+
   if (!sequence) {
     return (
       <Box p={5} textAlign="center" color={text}>
-        <Spinner size="xl" mx="auto" mt={20} />
-        <Text mt={4}>Loading sequence...</Text>
+        <Text>Loading sequence...</Text>
       </Box>
     );
   }
 
-  const isGrid = sequence.style === "Power" || sequence.style === "Hatha";
-
-  const getPoseImage = (pose) => {
-    const key = pose?.image?.replace(/\.(png|jpg|jpeg)$/i, "");
-    return images[key] || images.MissingPhoto;
-  };
-
-  // ---------- GRID LAYOUT FOR POWER/HATHA ----------
-  if (isGrid) {
-    return (
-      <Box p={6} maxW="1400px" mx="auto">
-        <Text fontSize="2xl" fontWeight="bold" mb={6} textAlign="center">
-          {sequence.name}
-        </Text>
-
-        <SimpleGrid columns={{ base: 2, sm: 3, md: 6, lg: 8 }} spacing={4}>
-          {sequence.poses.map((pose, idx) => (
-            <Box key={idx} textAlign="center">
-              <Image
-                src={getPoseImage(pose)}
-                alt={pose.name || "Pose"}
-                borderRadius="md"
-                objectFit="cover"
-                w="100%"
-                maxH="150px"
-                mb={2}
-              />
-              <Text fontSize="sm">{pose.name || "Unnamed"}</Text>
-            </Box>
-          ))}
-        </SimpleGrid>
-      </Box>
-    );
-  }
-
-  // ---------- LONG LAYOUT FOR YIN/RESTORATIVE ----------
   return (
-    <Box bg={bg} color={text} p={5} maxW="600px" mx="auto" borderRadius="md">
+    <Box bg={bg} color={text} p={5} borderRadius="md" maxW={isGridStyle ? "100%" : "600px"} mx="auto">
       <Text fontSize="2xl" fontWeight="bold" mb={4} textAlign="center">
         {sequence.name}
       </Text>
 
-      {sequence.poses.map((pose, idx) => {
-        const foundPose =
-          posesFull.find(
-            (p) =>
-              p._id === (pose._id || pose.poseId || pose.id) ||
-              p.name === pose.name
-          ) || {};
-
-        return (
-          <Flex
-            key={idx}
-            bg="white"
-            p={4}
+      {isGridStyle ? (
+        // Grid style for Power/Hatha
+        <SimpleGrid columns={{ base: 2, md: 6 }} spacing={4}>
+          {sequence.poses.map((pose, idx) => {
+            const imageKey = pose.image
+              ? pose.image.replace(/\.(png|jpg|jpeg)$/i, "")
+              : null;
+            return (
+              <Box
+                key={idx}
+                bg="white"
+                borderRadius="md"
+                overflow="hidden"
+                cursor="pointer"
+              >
+                <Image
+                  src={images[imageKey] || images.MissingPhoto || ""}
+                  alt={pose.name || "Pose image"}
+                  objectFit="cover"
+                  boxSize="100%"
+                />
+                <Text p={2} fontSize="sm" textAlign="center">
+                  {pose.name || "Unnamed"}
+                </Text>
+              </Box>
+            );
+          })}
+        </SimpleGrid>
+      ) : (
+        // Long style for Yin/Restorative
+        <>
+          <Box
             mb={4}
-            borderRadius="2xl"
-            borderWidth="1px"
-            align="center"
+            display="flex"
+            flexWrap="wrap"
+            gap={3}
+            justifyContent="center"
+            alignItems="center"
           >
-            <Image
-              src={getPoseImage(pose)}
-              alt={pose.name || "Pose"}
-              boxSize="100px"
-              objectFit="contain"
-              borderRadius="md"
-              mr={4}
-            />
-            <Box flex="1">
-              <Text fontSize="xl" fontWeight="semibold">
-                {pose.name || foundPose.name || "Unnamed"}
-              </Text>
-              <Text fontStyle="italic" mt={2}>
-                {pose.cue || foundPose.cue || "No cue provided."}
-              </Text>
-            </Box>
-          </Flex>
-        );
-      })}
+            <Select
+              value={units}
+              onChange={(e) => setUnits(e.target.value)}
+              width="140px"
+            >
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+            </Select>
+
+            {playingIndex === null ? (
+              <Button onClick={playSequence} colorScheme="green">
+                Play Sequence
+              </Button>
+            ) : isPaused ? (
+              <Button onClick={resumeSequence} colorScheme="green">
+                Resume
+              </Button>
+            ) : (
+              <Button onClick={pauseSequence} colorScheme="yellow">
+                Pause
+              </Button>
+            )}
+          </Box>
+
+          {/* Cue Box */}
+          <Box
+            mt={2}
+            mb={6}
+            p={4}
+            bg="white"
+            borderRadius="lg"
+            borderWidth="1px"
+            minHeight="80px"
+            textAlign="center"
+            fontStyle="italic"
+          >
+            {playingIndex === null
+              ? "Play the sequence to see cues here."
+              : currentPoseFull?.cue || "There is no cue for this item."}
+          </Box>
+
+          {sequence.poses.map((pose, idx) => {
+            const isPlaying = idx === playingIndex;
+            const imageKey = pose.image
+              ? pose.image.replace(/\.(png|jpg|jpeg)$/i, "")
+              : null;
+
+            return (
+              <Flex
+                key={idx}
+                bg="white"
+                p={4}
+                mb={4}
+                borderRadius="2xl"
+                borderWidth="1px"
+                alignItems="center"
+                position="relative"
+              >
+                {isPlaying && (
+                  <Box
+                    position="absolute"
+                    top="0"
+                    left="0"
+                    height="100%"
+                    width={`${(elapsedTime / (pose.duration || 60)) * 100}%`}
+                    bg="rgba(0,0,0,0.3)"
+                    borderRadius="2xl"
+                    transition="width 0.1s linear"
+                    zIndex={1}
+                  />
+                )}
+
+                <Image
+                  src={images[imageKey] || images.MissingPhoto || ""}
+                  alt={pose.name || "Pose image"}
+                  boxSize="100px"
+                  objectFit="contain"
+                  borderRadius="md"
+                  mr={4}
+                  zIndex={2}
+                />
+
+                <Box flex="1" zIndex={2}>
+                  <Text fontSize="xl" fontWeight="semibold" noOfLines={1}>
+                    {pose.name || pose.title || "Unnamed"}
+                  </Text>
+                </Box>
+
+                <Box textAlign="center" minW="120px" ml={4} zIndex={2}>
+                  <Input
+                    type="number"
+                    value={pose.duration || 60}
+                    onChange={(e) => handleTimerChange(idx, e.target.value)}
+                    width="100px"
+                    mb={1}
+                    min={1}
+                  />
+                  <Text fontSize="sm">{units}</Text>
+                </Box>
+              </Flex>
+            );
+          })}
+        </>
+      )}
     </Box>
   );
 };
