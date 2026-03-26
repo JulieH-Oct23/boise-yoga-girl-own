@@ -147,7 +147,10 @@ import ClosedChild from "./ClosedChild.png";
 import BirdDog from "./BirdDog.png";
 import StandingForeheadToKnee from "./StandingForeheadToKnee.png";
 import TableTop from "./TableTop.png";
-
+import SupineFigureFour from "./SupineFigureFour.png";
+import HalfSaddle from "./HalfSaddle.png";
+import Deer from "./Deer.png";
+import TwistedSupineTwist from "./TwistedSupineTwist.png";
 
 
 // ✅ Export as key-value dictionary
@@ -176,6 +179,7 @@ export default {
   CrescentMoon,
   Crow,
   Dancer,
+  Deer,
   Dolphin,
   DownwardDog,
   Dragonfly,
@@ -205,6 +209,7 @@ export default {
   HalfFrog,
   HalfLordOfFishes,
   HalfMoon,
+  HalfSaddle,
   HappyBaby,
   Headstand,
   HeartMelting,
@@ -278,6 +283,7 @@ export default {
   StandingTwist,
   Square,
   SupineTwist,
+  SupineFigureFour,
   TableTop,
   TempSquare,
   ThreadTheNeedle,
@@ -287,6 +293,7 @@ export default {
   Tree,
   Triangle,
   TwistedDragon,
+  TwistedSupineTwist,
   UpwardFacingDog,
   Warrior1,
   Warrior2,
