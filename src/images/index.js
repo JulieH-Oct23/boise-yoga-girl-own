@@ -40,7 +40,7 @@ import HalfButterfly from "./HalfButterfly.png";
 import HalfFrog from "./HalfFrog.png";
 import HalfLordOfFishes from "./HalfLordOfFishes.png";
 import HalfMoon from "./HalfMoon.png";
-import HappyBaby from "./HappyBaby.png";
+import HalfTortoise from "./HalfTortoise.png";
 import Headstand from "./Headstand.png";
 import HeartMelting from "./HeartMelting.png";
 import Hero from "./Hero.png";
@@ -92,6 +92,7 @@ import StandingSeparateLegForwardFold from "./StandingSeparateLegForwardFold.png
 import StandingSideStretch from "./StandingSideStretch.png";
 import StandingSplit from "./StandingSplit.png";
 import Square from "./Square.png";
+import SupportedBridge from "./SupportedBridge.png";
 import TempSquare from "./TempSquare.png";
 import ThreadTheNeedle from "./ThreadTheNeedle.png";
 import ThreeLegDownDog from "./ThreeLegDownDog.png";
@@ -150,6 +151,9 @@ import SupineFigureFour from "./SupineFigureFour.png";
 import HalfSaddle from "./HalfSaddle.png";
 import Deer from "./Deer.png";
 import TwistedSupineTwist from "./TwistedSupineTwist.png";
+import HappyBaby from "./HappyBaby.png";
+import CorpseBolster from "./CorpseBolster.png";
+
 
 
 // ✅ Export as key-value dictionary
@@ -172,6 +176,7 @@ export default {
   Cobra,
   Cow,
   CowFace,
+  CorpseBolster,
   CradleBaby,
   CrescentLunge,
   CrescentLungeTwist,
@@ -209,6 +214,7 @@ export default {
   HalfLordOfFishes,
   HalfMoon,
   HalfSaddle,
+  HalfTortoise,
   HappyBaby,
   Headstand,
   HeartMelting,
@@ -282,6 +288,7 @@ export default {
   StandingTwist,
   Square,
   SupineFigureFour,
+  SupportedBridge,
   TableTop,
   TempSquare,
   ThreadTheNeedle,
