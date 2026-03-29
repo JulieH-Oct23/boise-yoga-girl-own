@@ -92,7 +92,6 @@ import StandingSeparateLegForwardFold from "./StandingSeparateLegForwardFold.png
 import StandingSideStretch from "./StandingSideStretch.png";
 import StandingSplit from "./StandingSplit.png";
 import Square from "./Square.png";
-import SupineTwist from "./SupineTwist.png";
 import TempSquare from "./TempSquare.png";
 import ThreadTheNeedle from "./ThreadTheNeedle.png";
 import ThreeLegDownDog from "./ThreeLegDownDog.png";
@@ -282,7 +281,6 @@ export default {
   StandingSplit,
   StandingTwist,
   Square,
-  SupineTwist,
   SupineFigureFour,
   TableTop,
   TempSquare,
