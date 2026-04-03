@@ -153,6 +153,7 @@ import Deer from "./Deer.png";
 import TwistedSupineTwist from "./TwistedSupineTwist.png";
 import HappyBaby from "./HappyBaby.png";
 import CorpseBolster from "./CorpseBolster.png";
+import SleepingEagle from "./SleepingEagle.png";
 
 
 
@@ -313,4 +314,5 @@ export default {
   landingpagebackground,
   StandingHand,
   RevolvedHalfMoon,
+  SleepingEagle
 };
